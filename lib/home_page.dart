@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'create_list_view.dart';
+import 'lists/create_list_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
