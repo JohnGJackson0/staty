@@ -5,11 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:staty/lists/lists_bloc.dart';
 
+import 'form_submission_status.dart';
+
 class EditableDataPoint extends StatefulWidget {
-
-  const EditableDataPoint({Key? key
-  }) : super(key: key);
-
+  const EditableDataPoint({Key? key}) : super(key: key);
 
   // cannot place any logic like formKey to createState()
   @override
@@ -19,6 +18,7 @@ class EditableDataPoint extends StatefulWidget {
 class _EditableDataPointState extends State<EditableDataPoint> {
   final FocusNode _editableDataPointNode = FocusNode();
   final formKey = GlobalKey<FormState>();
+  final _controller = TextEditingController();
 
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
@@ -63,53 +63,59 @@ class _EditableDataPointState extends State<EditableDataPoint> {
             config: _buildConfig(context),
             child: Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: TextFormField(
-                  focusNode: _editableDataPointNode,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  autofocus: true,
-                  minLines: 1,
-                  maxLines: 1,
-                  onChanged: (value) {
-                    try {
-                      context
-                          .read<ListsBloc>()
-                          .add(DataPointChangedEvent(point: value));
-                    } catch (e) {
-                      if (kDebugMode) {
-                        print('error');
-                      }
+                child: BlocListener<ListsBloc, ListsState>(
+                  listener: (context, state) {
+                    if (state.formStatus is SubmissionSuccess) {
+                      _controller.clear();
                     }
                   },
-                  validator: (value) =>
-                      state.isValidDatapointInput()
-                      ? null
-                      : 'Datapoint invalid',
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(
-                        r'^[0-9]*[.]?[0-9]*',
-                      ),
-                    ),
-                    TextInputFormatter.withFunction((oldValue, newValue) {
-      
+                  child: TextFormField(
+                    controller: _controller,
+                    focusNode: _editableDataPointNode,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    autofocus: true,
+                    minLines: 1,
+                    maxLines: 1,
+                    onChanged: (value) {
                       try {
-                        final text = newValue.text;
-                        if (text.isNotEmpty) double.parse(text);
-                        return newValue;
+                        context
+                            .read<ListsBloc>()
+                            .add(DataPointChangedEvent(point: value));
                       } catch (e) {
                         if (kDebugMode) {
                           print('error');
                         }
                       }
-                      return oldValue;
-                    }),
-                  ],
-                  // controller: controller,
-                  decoration: const InputDecoration(
-                      icon: Icon(Icons.data_array_sharp),
-                      label: Text('Enter New Data Point'),
-                      border: OutlineInputBorder()),
+                    },
+                    validator: (value) => state.isValidDatapointInput()
+                        ? null
+                        : 'Datapoint invalid',
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(
+                          r'^[0-9]*[.]?[0-9]*',
+                        ),
+                      ),
+                      TextInputFormatter.withFunction((oldValue, newValue) {
+                        try {
+                          final text = newValue.text;
+                          if (text.isNotEmpty) double.parse(text);
+                          return newValue;
+                        } catch (e) {
+                          if (kDebugMode) {
+                            print('error');
+                          }
+                        }
+                        return oldValue;
+                      }),
+                    ],
+                    // controller: controller,
+                    decoration: const InputDecoration(
+                        icon: Icon(Icons.data_array_sharp),
+                        label: Text('Enter New Data Point'),
+                        border: OutlineInputBorder()),
+                  ),
                 )),
           );
         },
@@ -144,7 +150,6 @@ class _AddDataPoint extends StatelessWidget {
           ),
         );
       },
-     
     );
   }
 }
