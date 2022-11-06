@@ -6,16 +6,19 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:staty/lists/lists_bloc.dart';
 
 class EditableDataPoint extends StatefulWidget {
-  const EditableDataPoint({
-    Key? key,
+
+  const EditableDataPoint({Key? key
   }) : super(key: key);
 
+
+  // cannot place any logic like formKey to createState()
   @override
   State<EditableDataPoint> createState() => _EditableDataPointState();
 }
 
 class _EditableDataPointState extends State<EditableDataPoint> {
   final FocusNode _editableDataPointNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
 
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
@@ -41,7 +44,7 @@ class _EditableDataPointState extends State<EditableDataPoint> {
             },
             //button 2
             (node) {
-              return const _AddDataPoint();
+              return _AddDataPoint(formKey: formKey);
             }
           ],
         ),
@@ -51,66 +54,74 @@ class _EditableDataPointState extends State<EditableDataPoint> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ListsBloc, ListsState>(
-      builder: (context, state) {
-        return KeyboardActions(
-          tapOutsideBehavior: TapOutsideBehavior.opaqueDismiss,
-          config: _buildConfig(context),
-          child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: TextFormField(
-                focusNode: _editableDataPointNode,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                autofocus: true,
-                minLines: 1,
-                maxLines: 1,
-                onChanged: (value) {
-                  try {
-                    context
-                        .read<ListsBloc>()
-                        .add(DataPointChangedEvent(point: value));
-                  } catch (e) {
-                    if (kDebugMode) {
-                      print('error');
-                    }
-                  }
-                },
-                validator: (value) =>
-                    state.isValidDatapoint ? null : 'Datapoint invalid',
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                    RegExp(
-                      r'^[0-9]*[.]?[0-9]*',
-                    ),
-                  ),
-                  TextInputFormatter.withFunction((oldValue, newValue) {
+    return Form(
+      key: formKey,
+      child: BlocBuilder<ListsBloc, ListsState>(
+        builder: (context, state) {
+          return KeyboardActions(
+            tapOutsideBehavior: TapOutsideBehavior.opaqueDismiss,
+            config: _buildConfig(context),
+            child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: TextFormField(
+                  focusNode: _editableDataPointNode,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  autofocus: true,
+                  minLines: 1,
+                  maxLines: 1,
+                  onChanged: (value) {
                     try {
-                      final text = newValue.text;
-                      if (text.isNotEmpty) double.parse(text);
-                      return newValue;
+                      context
+                          .read<ListsBloc>()
+                          .add(DataPointChangedEvent(point: value));
                     } catch (e) {
                       if (kDebugMode) {
                         print('error');
                       }
                     }
-                    return oldValue;
-                  }),
-                ],
-                // controller: controller,
-                decoration: const InputDecoration(
-                    icon: Icon(Icons.data_array_sharp),
-                    label: Text('Enter New Data Point'),
-                    border: OutlineInputBorder()),
-              )),
-        );
-      },
+                  },
+                  validator: (value) =>
+                      state.isValidDatapointInput()
+                      ? null
+                      : 'Datapoint invalid',
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(
+                        r'^[0-9]*[.]?[0-9]*',
+                      ),
+                    ),
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+      
+                      try {
+                        final text = newValue.text;
+                        if (text.isNotEmpty) double.parse(text);
+                        return newValue;
+                      } catch (e) {
+                        if (kDebugMode) {
+                          print('error');
+                        }
+                      }
+                      return oldValue;
+                    }),
+                  ],
+                  // controller: controller,
+                  decoration: const InputDecoration(
+                      icon: Icon(Icons.data_array_sharp),
+                      label: Text('Enter New Data Point'),
+                      border: OutlineInputBorder()),
+                )),
+          );
+        },
+      ),
     );
   }
 }
 
 class _AddDataPoint extends StatelessWidget {
-  const _AddDataPoint({Key? key}) : super(key: key);
+  final GlobalKey<FormState> formKey;
+
+  const _AddDataPoint({Key? key, required this.formKey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -118,14 +129,8 @@ class _AddDataPoint extends StatelessWidget {
       builder: (context, state) {
         return GestureDetector(
           onTap: () {
-            try {
-              context
-                  .read<ListsBloc>()
-                  .add(DataPointAddedEvent(double.parse(state.newDataPoint)));
-            } catch (e) {
-              if (kDebugMode) {
-                print(e);
-              }
+            if (formKey.currentState!.validate()) {
+              context.read<ListsBloc>().add(DatapointSubmitted());
             }
 
             /** add to list, clear data point */
@@ -139,6 +144,7 @@ class _AddDataPoint extends StatelessWidget {
           ),
         );
       },
+     
     );
   }
 }

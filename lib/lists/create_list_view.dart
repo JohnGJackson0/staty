@@ -4,6 +4,7 @@ import 'package:staty/lists/lists_bloc.dart';
 import 'editable_data_point_view.dart';
 
 class CreateList extends StatelessWidget {
+
   const CreateList({super.key});
   static const id = 'create_list_screen';
 
