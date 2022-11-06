@@ -133,13 +133,13 @@ class _AddDataPoint extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ListsBloc, ListsState>(
       builder: (context, state) {
-        return GestureDetector(
+        return state.formStatus is FormSubmitting
+            ? const CircularProgressIndicator()
+            : GestureDetector(
           onTap: () {
             if (formKey.currentState!.validate()) {
               context.read<ListsBloc>().add(DatapointSubmitted());
-            }
-
-            /** add to list, clear data point */
+                  }
           },
           child: Container(
             padding: const EdgeInsets.only(right: 16.0, left: 16.0),

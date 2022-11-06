@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staty/lists/lists_bloc.dart';
 import 'editable_data_point_view.dart';
+import 'form_submission_status.dart';
 
 class CreateList extends StatelessWidget {
 
@@ -20,7 +21,9 @@ class CreateList extends StatelessWidget {
           const Flexible(child: Text('Data')),
           BlocBuilder<ListsBloc, ListsState>(
             builder: (context, state) {
-              return Flexible(
+              return state.formStatus is FormSubmitting
+                  ? const CircularProgressIndicator()
+                  : Flexible(
                 child: ListView.builder(
                     itemCount: state.lists.length,
                     itemBuilder: (context, index) {
