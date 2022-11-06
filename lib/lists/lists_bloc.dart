@@ -9,11 +9,31 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
   ListsBloc() : super(const ListsState()) {
     on<DataPointChangedEvent>(_onDataPointChanged);
     on<DatapointSubmitted>(_onDataPointSubmitted);
+    on<DeleteDataPointSubmitted>(_onDeleteDataPointSubmitted);
   }
 
   void _onDataPointChanged(
       DataPointChangedEvent event, Emitter<ListsState> emit) {
     return emit(ListsState(lists: state.lists, newDataPoint: event.point));
+  }
+
+  void _onDeleteDataPointSubmitted(
+      DeleteDataPointSubmitted event, Emitter<ListsState> emit) {
+    emit(ListsState(
+        lists: state.lists,
+        newDataPoint: state.newDataPoint,
+        formStatus: FormSubmitting()));
+    try {
+      emit(ListsState(
+          lists: List.from(state.lists)..remove(event.point),
+          newDataPoint: '',
+          formStatus: SubmissionSuccess()));
+    } catch (e) {
+      emit(ListsState(
+          lists: state.lists,
+          newDataPoint: state.newDataPoint,
+          formStatus: SubmissionFailed(e)));
+    }
   }
 
   void _onDataPointSubmitted(

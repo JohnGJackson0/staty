@@ -8,4 +8,10 @@ class DataPointChangedEvent extends ListsEvent {
   DataPointChangedEvent({this.point = ''});
 }
 
+class DeleteDataPointSubmitted extends ListsEvent {
+  final double point;
+
+  DeleteDataPointSubmitted({required this.point});
+}
+
 class DatapointSubmitted extends ListsEvent {}

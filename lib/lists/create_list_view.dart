@@ -26,7 +26,7 @@ class CreateList extends StatelessWidget {
             const SizedBox(
                 height: 85, child: Flexible(child: EditableDataPoint())),
             const Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(6.0),
               child: SizedBox(
                   height: 25,
                   child: Flexible(child: Text('Recently Entered:'))),
@@ -35,7 +35,14 @@ class CreateList extends StatelessWidget {
               builder: (context, state) {
                 return state.formStatus is FormSubmitting
                     ? const CircularProgressIndicator()
-                    : Expanded(
+                    : state.lists.isEmpty
+                        ? const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                                'There is nothing in the list. Add a new data point to see recently entered data here.',
+                                style: TextStyle(color: Colors.deepOrange)),
+                          )
+                        : Expanded(
                         child: Row(
                           children: [
                             const Align(
@@ -56,7 +63,7 @@ class CreateList extends StatelessWidget {
                                     constraints: const BoxConstraints(
                                         minHeight: 110, maxHeight: 110),
                                     child: SingleChildScrollView(
-                                      child: Wrap(
+                                          child: Wrap(
                                           runSpacing: 12.0,
                                           spacing: 12.0,
                                           direction: Axis.horizontal,
@@ -93,10 +100,26 @@ class DataPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text.rich(
-      TextSpan(
-        text: item.toString(),
-        style: const TextStyle(fontSize: 14),
+    return GestureDetector(
+      onTap: () {
+        context.read<ListsBloc>().add(DeleteDataPointSubmitted(point: item));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: Wrap(
+          children: [
+            const Icon(Icons.delete_forever_outlined, color: Colors.red),
+            Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Text.rich(
+                TextSpan(
+                  text: item.toString(),
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
