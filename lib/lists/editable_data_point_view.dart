@@ -61,9 +61,7 @@ class _EditableDataPointState extends State<EditableDataPoint> {
           return KeyboardActions(
             tapOutsideBehavior: TapOutsideBehavior.opaqueDismiss,
             config: _buildConfig(context),
-            child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: BlocListener<ListsBloc, ListsState>(
+            child: BlocListener<ListsBloc, ListsState>(
                   listener: (context, state) {
                     if (state.formStatus is SubmissionSuccess) {
                       _controller.clear();
@@ -116,7 +114,7 @@ class _EditableDataPointState extends State<EditableDataPoint> {
                         label: Text('Enter New Data Point'),
                         border: OutlineInputBorder()),
                   ),
-                )),
+            ),
           );
         },
       ),

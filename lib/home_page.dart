@@ -13,8 +13,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('My Lists'),
       ),
-      body: Center(
-        child: Padding(
+      body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: const [
@@ -25,7 +24,6 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
-        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

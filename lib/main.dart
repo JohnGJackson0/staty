@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
           title: 'Staty',
           theme: ThemeData(
             primarySwatch: Colors.blue,
+            backgroundColor: Colors.white
           ),
           home: const HomePage(),
           onGenerateRoute: appRouter.onGenerateRoute,
