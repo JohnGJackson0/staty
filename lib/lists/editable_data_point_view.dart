@@ -136,7 +136,9 @@ class _AddDataPoint extends StatelessWidget {
             : GestureDetector(
           onTap: () {
             if (formKey.currentState!.validate()) {
-              context.read<ListsBloc>().add(DatapointSubmitted());
+                    context
+                        .read<ListsBloc>()
+                        .add(DataPointSubmitted(listId: state.selectedTaskid));
                   }
           },
           child: Container(

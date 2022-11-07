@@ -14,4 +14,18 @@ class DeleteDataPointSubmitted extends ListsEvent {
   DeleteDataPointSubmitted({required this.point});
 }
 
-class DatapointSubmitted extends ListsEvent {}
+class DataPointSubmitted extends ListsEvent {
+  final String listId;
+
+  DataPointSubmitted({required this.listId});
+}
+
+class StatListCreatedEvent extends ListsEvent {}
+
+class OnErrorEvent extends ListsEvent {}
+
+class SelectedTaskIdEvent extends ListsEvent {
+  final String id;
+
+  SelectedTaskIdEvent({required this.id});
+}

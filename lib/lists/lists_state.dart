@@ -1,9 +1,10 @@
 part of 'lists_bloc.dart';
 
 class ListsState extends Equatable {
-  final List<double> lists;
+  final List<ListModel> listStore;
   final String newDataPoint;
   final FormSubmissionStatus formStatus;
+  final String selectedTaskid;
 
   bool isValidDatapointInput() {
     try {
@@ -14,13 +15,13 @@ class ListsState extends Equatable {
     }
   }
 
-
-
   const ListsState(
-      {this.lists = const [],
+      {this.listStore = const <ListModel>[],
       this.newDataPoint = '',
-      this.formStatus = const InitialFormStatus()});
+      this.formStatus = const InitialFormStatus(),
+      this.selectedTaskid = ''});
 
   @override
-  List<Object?> get props => [lists, newDataPoint, formStatus];
+  List<Object?> get props =>
+      [listStore, newDataPoint, formStatus, selectedTaskid];
 }
