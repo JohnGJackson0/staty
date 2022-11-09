@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:staty/lists/bloc/lists_bloc.dart';
-
+import '../../bloc/bloc_exports.dart';
 import '../createList/create_list_view.dart';
 
 class ListsPreview extends StatelessWidget {
