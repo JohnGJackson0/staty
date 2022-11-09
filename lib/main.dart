@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:staty/home_page.dart';
 import 'package:staty/services/app_router.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'lists/lists_bloc.dart';
 
-void main() {
-  runApp(MyApp(appRouter: AppRouter()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
+
+  HydratedBlocOverrides.runZoned(() => runApp(MyApp(appRouter: AppRouter())),
+      storage: storage);
 }
 
 class MyApp extends StatelessWidget {
@@ -27,9 +35,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'Staty',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
-            backgroundColor: Colors.white
-          ),
+              primarySwatch: Colors.blue, backgroundColor: Colors.white),
           home: const HomePage(),
           onGenerateRoute: appRouter.onGenerateRoute,
         ));

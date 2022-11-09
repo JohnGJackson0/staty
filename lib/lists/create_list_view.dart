@@ -21,7 +21,7 @@ class CreateList extends StatelessWidget {
         });
         return Scaffold(
           appBar: AppBar(
-            title: Text(filter[0].name),
+            title: filter.isEmpty ? const Text('') : Text(filter[0].name),
           ),
           body: Container(
             color: Theme.of(context).backgroundColor,
@@ -29,7 +29,7 @@ class CreateList extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: BlocBuilder<ListsBloc, ListsState>(
               builder: (context, state) {
-                return state.formStatus is SubmissionFailed
+                return state.formStatus is SubmissionFailed || filter.isEmpty
                     ? const Text('Something went wrong.')
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.start,

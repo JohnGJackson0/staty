@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:uuid/uuid.dart';
 import '../models/data_point.dart';
 import '../models/list_model.dart';
@@ -9,7 +9,7 @@ import 'form_submission_status.dart';
 part 'lists_state.dart';
 part 'lists_event.dart';
 
-class ListsBloc extends Bloc<ListsEvent, ListsState> {
+class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
   ListsBloc() : super(const ListsState()) {
     on<DataPointChangedEvent>(_onDataPointChanged);
     on<DataPointSubmitted>(_onDataPointSubmitted);
@@ -143,5 +143,15 @@ class ListsBloc extends Bloc<ListsEvent, ListsState> {
           selectedTaskid: state.selectedTaskid,
           formStatus: SubmissionFailed(e)));
     }
+  }
+
+  @override
+  ListsState? fromJson(Map<String, dynamic> json) {
+    return ListsState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(ListsState state) {
+    return state.toMap();
   }
 }

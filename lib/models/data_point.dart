@@ -11,4 +11,16 @@ class DataPoint extends Equatable {
 
   @override
   List<Object?> get props => [value];
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'value': value,
+    };
+  }
+
+  factory DataPoint.fromMap(Map<String, dynamic> map) {
+    return DataPoint(
+      value: map['value'] as double,
+    );
+  }
 }

@@ -11,4 +11,24 @@ class ListModel extends Equatable {
 
   @override
   List<Object?> get props => [data, uid, name];
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'data': data.map((x) => x.toMap()).toList(),
+      'uid': uid,
+      'name': name,
+    };
+  }
+
+  factory ListModel.fromMap(Map<String, dynamic> map) {
+    return ListModel(
+      data: List<DataPoint>.from(
+        (map['data'] as List<int>).map<DataPoint>(
+          (x) => DataPoint.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      uid: map['uid'] as String,
+      name: map['name'] as String,
+    );
+  } 
 }
