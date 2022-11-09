@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
-import 'package:staty/lists/lists_bloc.dart';
+import 'package:staty/lists/bloc/lists_bloc.dart';
 
-import 'form_submission_status.dart';
+import '../../model/form_submission_status.dart';
 
 class EditableDataPoint extends StatefulWidget {
   const EditableDataPoint({Key? key}) : super(key: key);
@@ -62,58 +62,57 @@ class _EditableDataPointState extends State<EditableDataPoint> {
             tapOutsideBehavior: TapOutsideBehavior.opaqueDismiss,
             config: _buildConfig(context),
             child: BlocListener<ListsBloc, ListsState>(
-                  listener: (context, state) {
-                    if (state.formStatus is SubmissionSuccess) {
-                      _controller.clear();
+              listener: (context, state) {
+                if (state.formStatus is SubmissionSuccess) {
+                  _controller.clear();
+                }
+              },
+              child: TextFormField(
+                controller: _controller,
+                focusNode: _editableDataPointNode,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                autofocus: true,
+                minLines: 1,
+                maxLines: 1,
+                onChanged: (value) {
+                  try {
+                    context
+                        .read<ListsBloc>()
+                        .add(DataPointChangedEvent(point: value));
+                  } catch (e) {
+                    if (kDebugMode) {
+                      print('error');
                     }
-                  },
-                  child: TextFormField(
-                    controller: _controller,
-                    focusNode: _editableDataPointNode,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    autofocus: true,
-                    minLines: 1,
-                    maxLines: 1,
-                    onChanged: (value) {
-                      try {
-                        context
-                            .read<ListsBloc>()
-                            .add(DataPointChangedEvent(point: value));
-                      } catch (e) {
-                        if (kDebugMode) {
-                          print('error');
-                        }
-                      }
-                    },
-                    validator: (value) => state.isValidDatapointInput()
-                        ? null
-                        : 'Datapoint invalid',
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        RegExp(
-                          r'^[0-9]*[.]?[0-9]*',
-                        ),
-                      ),
-                      TextInputFormatter.withFunction((oldValue, newValue) {
-                        try {
-                          final text = newValue.text;
-                          if (text.isNotEmpty) double.parse(text);
-                          return newValue;
-                        } catch (e) {
-                          if (kDebugMode) {
-                            print('error');
-                          }
-                        }
-                        return oldValue;
-                      }),
-                    ],
-                    // controller: controller,
-                    decoration: const InputDecoration(
-                        icon: Icon(Icons.data_array_sharp),
-                        label: Text('Enter New Data Point'),
-                        border: OutlineInputBorder()),
+                  }
+                },
+                validator: (value) =>
+                    state.isValidDatapointInput() ? null : 'Datapoint invalid',
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    RegExp(
+                      r'^[0-9]*[.]?[0-9]*',
+                    ),
                   ),
+                  TextInputFormatter.withFunction((oldValue, newValue) {
+                    try {
+                      final text = newValue.text;
+                      if (text.isNotEmpty) double.parse(text);
+                      return newValue;
+                    } catch (e) {
+                      if (kDebugMode) {
+                        print('error');
+                      }
+                    }
+                    return oldValue;
+                  }),
+                ],
+                // controller: controller,
+                decoration: const InputDecoration(
+                    icon: Icon(Icons.data_array_sharp),
+                    label: Text('Enter New Data Point'),
+                    border: OutlineInputBorder()),
+              ),
             ),
           );
         },
@@ -134,21 +133,21 @@ class _AddDataPoint extends StatelessWidget {
         return state.formStatus is FormSubmitting
             ? const CircularProgressIndicator()
             : GestureDetector(
-          onTap: () {
-            if (formKey.currentState!.validate()) {
+                onTap: () {
+                  if (formKey.currentState!.validate()) {
                     context
                         .read<ListsBloc>()
                         .add(DataPointSubmitted(listId: state.selectedTaskid));
                   }
-          },
-          child: Container(
-            padding: const EdgeInsets.only(right: 16.0, left: 16.0),
-            child: const Text(
-              "ADD",
-              style: TextStyle(color: Colors.blueAccent, fontSize: 20),
-            ),
-          ),
-        );
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(right: 16.0, left: 16.0),
+                  child: const Text(
+                    "ADD",
+                    style: TextStyle(color: Colors.blueAccent, fontSize: 20),
+                  ),
+                ),
+              );
       },
     );
   }

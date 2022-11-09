@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:staty/lists/lists_bloc.dart';
-import '../models/list_model.dart';
-import 'editable_data_point_view.dart';
-import 'form_submission_status.dart';
+import 'package:staty/lists/bloc/lists_bloc.dart';
+import '../../model/form_submission_status.dart';
+import '../../model/list_model.dart';
+import '../widgets/editable_data_point_view.dart';
 
 class CreateList extends StatelessWidget {
   const CreateList({super.key});

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:staty/lists/lists_bloc.dart';
+import 'package:staty/lists/bloc/lists_bloc.dart';
 
-import 'lists/create_list_view.dart';
+import '../createList/create_list_view.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class ListsPreview extends StatelessWidget {
+  const ListsPreview({super.key});
 
-  static const id = 'home_page_screen';
+  static const id = 'lists_preview_screen';
 
   @override
   Widget build(BuildContext context) {

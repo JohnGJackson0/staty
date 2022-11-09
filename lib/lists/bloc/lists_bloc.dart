@@ -2,9 +2,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:uuid/uuid.dart';
-import '../models/data_point.dart';
-import '../models/list_model.dart';
-import 'form_submission_status.dart';
+import '../model/list_model.dart';
+import '../model/form_submission_status.dart';
+import '../model/data_point.dart';
 
 part 'lists_state.dart';
 part 'lists_event.dart';
