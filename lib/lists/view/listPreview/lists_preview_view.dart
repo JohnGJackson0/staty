@@ -77,14 +77,35 @@ class _ListBodyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: SelectableText.rich(TextSpan(children: [
-        const TextSpan(
-          text: 'Title\n',
-          style: TextStyle(fontWeight: FontWeight.bold),
+    return Column(
+      children: [
+        ListTile(
+          title: SelectableText.rich(TextSpan(children: [
+            const TextSpan(
+              text: 'Title\n',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            TextSpan(text: listStore.name),
+          ])),
         ),
-        TextSpan(text: listStore.name),
-      ])),
+        const Text('Actions'),
+        GestureDetector(
+          onTap: () {
+            context
+                .read<ListsBloc>()
+                .add(SelectedTaskIdEvent(id: listStore.uid));
+            Navigator.of(context).pushNamed(CreateList.id);
+          },
+          child: const Chip(
+            backgroundColor: Colors.blueAccent,
+            avatar: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Text('+'),
+            ),
+            label: Text('Add To List', style: TextStyle(color: Colors.white)),
+          ),
+        )
+      ],
     );
   }
 }
@@ -98,12 +119,7 @@ class _ListHeaderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.read<ListsBloc>().add(SelectedTaskIdEvent(id: listStore.uid));
-        Navigator.of(context).pushNamed(CreateList.id);
-      },
-      child: Column(
+    return Column(
         children: [
           ListTile(
               leading: const Icon(Icons.list),
@@ -111,8 +127,7 @@ class _ListHeaderTile extends StatelessWidget {
                 listStore.name,
                 style: const TextStyle(color: Colors.black, fontSize: 20),
               ))
-        ],
-      ),
+      ],
     );
   }
 }
