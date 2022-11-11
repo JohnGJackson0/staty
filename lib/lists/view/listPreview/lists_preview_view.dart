@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:staty/view/drawer_view.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
 import '../createList/create_list_view.dart';
@@ -14,6 +15,7 @@ class ListsPreview extends StatelessWidget {
       appBar: AppBar(
         title: const Text('My Lists'),
       ),
+      drawer: const DrawerView(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -96,13 +98,14 @@ class _ListBodyTile extends StatelessWidget {
                 .add(SelectedTaskIdEvent(id: listStore.uid));
             Navigator.of(context).pushNamed(CreateList.id);
           },
-          child: const Chip(
-            backgroundColor: Colors.blueAccent,
-            avatar: CircleAvatar(
+          child: Chip(
+            backgroundColor: Theme.of(context).primaryColor,
+            avatar: const CircleAvatar(
               backgroundColor: Colors.white,
               child: Text('+'),
             ),
-            label: Text('Add To List', style: TextStyle(color: Colors.white)),
+            label: const Text('Add To List',
+                style: TextStyle(color: Colors.white)),
           ),
         )
       ],
@@ -125,7 +128,7 @@ class _ListHeaderTile extends StatelessWidget {
               leading: const Icon(Icons.list),
               title: Text(
                 listStore.name,
-                style: const TextStyle(color: Colors.black, fontSize: 20),
+              style: const TextStyle(fontSize: 20),
               ))
       ],
     );

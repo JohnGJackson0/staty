@@ -22,7 +22,6 @@ class CreateList extends StatelessWidget {
             title: filter.isEmpty ? const Text('') : Text(filter[0].name),
           ),
           body: Container(
-            color: Theme.of(context).backgroundColor,
             padding: const EdgeInsets.all(20),
             alignment: Alignment.topLeft,
             child: BlocBuilder<ListsBloc, ListsState>(

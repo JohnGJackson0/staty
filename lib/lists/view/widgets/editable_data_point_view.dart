@@ -22,7 +22,7 @@ class _EditableDataPointState extends State<EditableDataPoint> {
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
-      keyboardBarColor: Colors.grey[200],
+      keyboardBarColor: Theme.of(context).bottomAppBarColor,
       nextFocus: false,
       actions: [
         KeyboardActionsItem(
@@ -34,9 +34,10 @@ class _EditableDataPointState extends State<EditableDataPoint> {
                 onTap: () => node.unfocus(),
                 child: Container(
                   padding: const EdgeInsets.only(right: 16.0, left: 16.0),
-                  child: const Text(
+                  child: Text(
                     "DONE",
-                    style: TextStyle(color: Colors.blueAccent, fontSize: 20),
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor, fontSize: 20),
                   ),
                 ),
               );
@@ -106,11 +107,34 @@ class _EditableDataPointState extends State<EditableDataPoint> {
                     return oldValue;
                   }),
                 ],
+                
                 // controller: controller,
-                decoration: const InputDecoration(
-                    icon: Icon(Icons.data_array_sharp),
-                    label: Text('Enter New Data Point'),
-                    border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                  hintStyle: TextStyle(color: Theme.of(context).primaryColor),
+                  labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+                  label: const Text('Enter New Data Point'),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                      width: 2.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                      width: 2.0,
+                    ),
+                  ),
+                ),
+
               ),
             ),
           );
@@ -141,9 +165,10 @@ class _AddDataPoint extends StatelessWidget {
                 },
                 child: Container(
                   padding: const EdgeInsets.only(right: 16.0, left: 16.0),
-                  child: const Text(
+                  child: Text(
                     "ADD",
-                    style: TextStyle(color: Colors.blueAccent, fontSize: 20),
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor, fontSize: 20),
                   ),
                 ),
               );
