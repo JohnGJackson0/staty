@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:staty/lists/view/editList/edit_list_view.dart';
 import 'package:staty/view/drawer_view.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
 import '../createList/create_list_view.dart';
+import '../widgets/themed_chip.dart';
 
 class ListsPreview extends StatelessWidget {
   const ListsPreview({super.key});
@@ -79,36 +81,42 @@ class _ListBodyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          title: SelectableText.rich(TextSpan(children: [
-            const TextSpan(
-              text: 'Title\n',
-              style: TextStyle(fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Wrap(
+              spacing: 8.0,
+              runSpacing: 4.0,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    context
+                        .read<ListsBloc>()
+                        .add(SelectedTaskIdEvent(id: listStore.uid));
+                    Navigator.of(context).pushNamed(CreateList.id);
+                  },
+                  child: const ThemedChip(
+                      avatar: Icon(Icons.add), label: 'Add To List'),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    context
+                        .read<ListsBloc>()
+                        .add(SelectedTaskIdEvent(id: listStore.uid));
+                    Navigator.of(context).pushNamed(EditList.id);
+                  },
+                  child: const ThemedChip(
+                      avatar: Icon(Icons.edit), label: 'Edit List'),
+                )
+              ],
             ),
-            TextSpan(text: listStore.name),
-          ])),
-        ),
-        const Text('Actions'),
-        GestureDetector(
-          onTap: () {
-            context
-                .read<ListsBloc>()
-                .add(SelectedTaskIdEvent(id: listStore.uid));
-            Navigator.of(context).pushNamed(CreateList.id);
-          },
-          child: Chip(
-            backgroundColor: Theme.of(context).primaryColor,
-            avatar: const CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text('+'),
-            ),
-            label: const Text('Add To List',
-                style: TextStyle(color: Colors.white)),
           ),
-        )
-      ],
+        ],
+      ),
+      
     );
   }
 }
@@ -123,13 +131,13 @@ class _ListHeaderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: [
-          ListTile(
-              leading: const Icon(Icons.list),
-              title: Text(
-                listStore.name,
+      children: [
+        ListTile(
+            leading: const Icon(Icons.list),
+            title: Text(
+              listStore.name,
               style: const TextStyle(fontSize: 20),
-              ))
+            ))
       ],
     );
   }

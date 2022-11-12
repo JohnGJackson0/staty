@@ -19,7 +19,7 @@ class CreateList extends StatelessWidget {
         });
         return Scaffold(
           appBar: AppBar(
-            title: filter.isEmpty ? const Text('') : Text(filter[0].name),
+              title: filter.isEmpty ? const Text('') : Text(filter[0].name)
           ),
           body: Container(
             padding: const EdgeInsets.all(20),
