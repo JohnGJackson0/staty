@@ -32,7 +32,7 @@ class CreateList extends StatelessWidget {
                         children: [
                           const SizedBox(
                               height: 85,
-                              child: Flexible(child: EditableDataPoint())),
+                              child: EditableDataPoint()),
                           Flexible(
                               child: RecentlyEnteredData(list: filter[0].data)),
                         ],

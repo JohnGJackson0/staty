@@ -20,7 +20,7 @@ class RecentlyEnteredData extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.all(6.0),
           child: SizedBox(
-              height: 25, child: Flexible(child: Text('Recently Entered:'))),
+              height: 25, child: Text('Recently Entered:')),
         ),
         BlocBuilder<ListsBloc, ListsState>(
       builder: (context, state) {
@@ -33,8 +33,7 @@ class RecentlyEnteredData extends StatelessWidget {
                         'There is nothing in the list. Add a new data point to see recently entered data here.',
                         style: TextStyle(color: Colors.deepOrange)),
                   )
-                : Expanded(
-                    child: Row(
+                    : Row(
                       children: [
                         const Align(
                             alignment: Alignment.topLeft,
@@ -42,11 +41,11 @@ class RecentlyEnteredData extends StatelessWidget {
                               padding: EdgeInsets.only(
                                   top: 4, bottom: 4, left: 4, right: 4),
                               child:
-                                  Flexible(child: Icon(Icons.data_array_sharp)),
+                                  Icon(Icons.data_array_sharp),
                             )),
                             _DataPointList(list: list),
                           ],
-                        ),
+                        
                       );
           },
         )

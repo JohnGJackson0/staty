@@ -56,8 +56,7 @@ class _ListContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
         child: ExpansionPanelList.radio(
             children: listStore
                 .map((listStore) => ExpansionPanelRadio(
@@ -67,7 +66,7 @@ class _ListContent extends StatelessWidget {
                     body: _ListBodyTile(listStore: listStore)))
                 .toList()
                 .toList()),
-      ),
+      
     );
   }
 }

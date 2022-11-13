@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
 
@@ -31,7 +29,7 @@ class EditList extends StatelessWidget {
                     ? const Text('Something went wrong.')
                     : Column(
                         children: [
-                          Flexible(child: _EditableData(list: filter[0].data)),
+                          Expanded(child: _EditableData(list: filter[0].data)),
                         ],
                       );
               },
@@ -87,8 +85,7 @@ class _DataPointList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Padding(
+    return Padding(
             padding:
                 const EdgeInsets.only(top: 4, bottom: 4, left: 16, right: 4),
             child: Align(
@@ -97,7 +94,7 @@ class _DataPointList extends StatelessWidget {
                   itemCount: list.length,
                   itemBuilder: (BuildContext context, int index) =>
                       _DataPointItem(item: list[index])),
-            )));
+        ));
   }
 }
 
