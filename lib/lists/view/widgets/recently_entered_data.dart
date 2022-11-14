@@ -104,7 +104,8 @@ class _DataPoint extends StatelessWidget {
       onTap: () {
         context
             .read<ListsBloc>()
-            .add(DeleteDataPointSubmitted(point: item.value, id: item.id));
+            .add(DeleteDataPointSubmitted(
+            deletedDataPoint: DataPoint(value: item.value, id: item.id)));
       },
       child: Padding(
         padding: const EdgeInsets.all(3.0),

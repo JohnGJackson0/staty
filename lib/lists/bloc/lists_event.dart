@@ -16,10 +16,9 @@ class ExistingDataPointChangedInputEvent extends ListsEvent {
 }
 
 class DeleteDataPointSubmitted extends ListsEvent {
-  final double point;
-  final String id;
+  final DataPoint deletedDataPoint;
 
-  DeleteDataPointSubmitted({required this.point, required this.id});
+  DeleteDataPointSubmitted({required this.deletedDataPoint});
 }
 
 class NewDataPointSubmitted extends ListsEvent {

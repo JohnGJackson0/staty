@@ -88,7 +88,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
       });
 
       List<DataPoint> newList = List.from(filter[0].data)
-        ..remove(DataPoint(value: event.point, id: event.id));
+        ..remove(event.deletedDataPoint);
 
       List<ListModel> removedList = List.from(state.listStore)
         ..remove(filter[0]);

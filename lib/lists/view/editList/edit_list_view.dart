@@ -208,7 +208,8 @@ class _DataPointItemState extends State<_DataPointItem> {
                   onTap: () {
                     context.read<ListsBloc>().add(
                         DeleteDataPointSubmitted(
-                        point: widget.item.value, id: widget.item.id));
+                        deletedDataPoint: DataPoint(
+                            id: widget.item.id, value: widget.item.value)));
                   },
                   child: const Icon(Icons.delete_forever, color: Colors.red))
             ],
