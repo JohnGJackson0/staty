@@ -5,6 +5,7 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
+import 'form_submit.dart';
 
 class EditableDataPoint extends StatefulWidget {
   const EditableDataPoint({Key? key}) : super(key: key);
@@ -107,7 +108,7 @@ class _EditableDataPointState extends State<EditableDataPoint> {
                     return oldValue;
                   }),
                 ],
-                
+
                 // controller: controller,
                 decoration: InputDecoration(
                   hintStyle: TextStyle(color: Theme.of(context).primaryColor),
@@ -134,7 +135,6 @@ class _EditableDataPointState extends State<EditableDataPoint> {
                     ),
                   ),
                 ),
-
               ),
             ),
           );
@@ -151,29 +151,15 @@ class _AddDataPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ListsBloc, ListsState>(
-      builder: (context, state) {
-        return state.formStatus is FormSubmitting
-            ? const CircularProgressIndicator()
-            : GestureDetector(
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    context
-                        .read<ListsBloc>()
-                        .add(
-                        NewDataPointSubmitted(listId: state.selectedTaskid));
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(right: 16.0, left: 16.0),
-                  child: Text(
-                    "ADD",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 20),
-                  ),
-                ),
-              );
-      },
-    );
+    return BlocBuilder<ListsBloc, ListsState>(builder: (context, state) {
+      return FormSubmit(
+          formKey: formKey,
+          label: 'ADD',
+          onSubmitEvent: () => {
+                context
+                    .read<ListsBloc>()
+                    .add(NewDataPointSubmitted(listId: state.selectedTaskid))
+              });
+    });
   }
 }

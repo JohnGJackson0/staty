@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
+import '../widgets/form_submit.dart';
 
 class EditList extends StatelessWidget {
   const EditList({super.key});
@@ -168,9 +169,7 @@ class _DataPointItemState extends State<_DataPointItem> {
                     state.isValidDatapointInput() ? null : 'Datapoint invalid',
                 onChanged: (value) {
                   try {
-                    context
-                        .read<ListsBloc>()
-                        .add(
+                    context.read<ListsBloc>().add(
                         ExistingDataPointChangedInputEvent(
                             point: value, id: widget.item.id));
                   } catch (e) {
@@ -206,8 +205,7 @@ class _DataPointItemState extends State<_DataPointItem> {
             children: [
               GestureDetector(
                   onTap: () {
-                    context.read<ListsBloc>().add(
-                        DeleteDataPointSubmitted(
+                    context.read<ListsBloc>().add(DeleteDataPointSubmitted(
                         deletedDataPoint: DataPoint(
                             id: widget.item.id, value: widget.item.value)));
                   },
@@ -229,26 +227,16 @@ class _SubmitDataPoint extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ListsBloc, ListsState>(
       builder: (context, state) {
-        return state.formStatus is FormSubmitting
-            ? const CircularProgressIndicator()
-            : GestureDetector(
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    context
-                        .read<ListsBloc>()
-                        .add(UpdateDataPointSubmitted(listId: state.selectedTaskid));
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(right: 16.0, left: 16.0),
-                  child: Text(
-                    "UPDATE",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 20),
-                  ),
-                ),
-              );
+        return FormSubmit(
+            formKey: formKey,
+            label: 'UPDATE',
+            onSubmitEvent: () => {
+                  context.read<ListsBloc>()
+            .add(
+                      UpdateDataPointSubmitted(listId: state.selectedTaskid))
+                });
       },
     );
+          
   }
 }
