@@ -9,18 +9,20 @@ part 'lists_event.dart';
 
 class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
   ListsBloc() : super(const ListsState()) {
-    on<DataPointChangedEvent>(_onDataPointChanged);
-    on<DataPointSubmitted>(_onDataPointSubmitted);
+    on<NewDataPointInputChangedEvent>(_onNewDataPointChanged);
+    on<NewDataPointSubmitted>(_onNewDataPointSubmitted);
     on<DeleteDataPointSubmitted>(_onDeleteDataPointSubmitted);
     on<StatListCreatedEvent>(_onStatListCreated);
     on<SelectedTaskIdEvent>(_onSelectedTaskId);
     on<OnErrorEvent>(_onErrorEvent);
+    on<ExistingDataPointChangedInputEvent>(_onExistingDataPointChangedEvent);
+    on<UpdateDataPointSubmitted>(_onUpdateDataPointSubmitted);
   }
 
   void _onErrorEvent(OnErrorEvent event, Emitter<ListsState> emit) {
     emit(ListsState(
         listStore: state.listStore,
-        newDataPoint: state.newDataPoint,
+        submissionData: state.submissionData,
         selectedTaskid: state.selectedTaskid,
         formStatus: SubmissionFailed('Something went wrong')));
   }
@@ -28,7 +30,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
   void _onSelectedTaskId(SelectedTaskIdEvent event, Emitter<ListsState> emit) {
     return emit(ListsState(
         listStore: state.listStore,
-        newDataPoint: state.newDataPoint,
+        submissionData: state.submissionData,
         selectedTaskid: event.id));
   }
 
@@ -44,7 +46,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
                 uid: uid,
                 name: 'Untitled ${state.listStore.length + 1}')),
           selectedTaskid: uid,
-          newDataPoint: state.newDataPoint));
+          submissionData: const SubmissionData()));
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -52,12 +54,22 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
     }
   }
 
-  void _onDataPointChanged(
-      DataPointChangedEvent event, Emitter<ListsState> emit) {
+  void _onExistingDataPointChangedEvent(
+      ExistingDataPointChangedInputEvent event, Emitter<ListsState> emit) {
+    // todo
     return emit(ListsState(
         listStore: state.listStore,
         selectedTaskid: state.selectedTaskid,
-        newDataPoint: event.point));
+        submissionData:
+            SubmissionData(newDataPoint: event.point, uid: event.id)));
+  }
+
+  void _onNewDataPointChanged(
+      NewDataPointInputChangedEvent event, Emitter<ListsState> emit) {
+    return emit(ListsState(
+        listStore: state.listStore,
+        selectedTaskid: state.selectedTaskid,
+        submissionData: SubmissionData(newDataPoint: event.point, uid: '')));
   }
 
   void _onDeleteDataPointSubmitted(
@@ -65,7 +77,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
     emit(ListsState(
         listStore: state.listStore,
         selectedTaskid: state.selectedTaskid,
-        newDataPoint: state.newDataPoint,
+        submissionData: state.submissionData,
         formStatus: FormSubmitting()));
     try {
       List<ListModel> filter = [];
@@ -76,7 +88,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
       });
 
       List<DataPoint> newList = List.from(filter[0].data)
-        ..remove(DataPoint(value: event.point));
+        ..remove(DataPoint(value: event.point, id: event.id));
 
       List<ListModel> removedList = List.from(state.listStore)
         ..remove(filter[0]);
@@ -88,23 +100,74 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
       emit(ListsState(
           listStore: newListStore,
           selectedTaskid: state.selectedTaskid,
-          newDataPoint: '',
+          submissionData: const SubmissionData(newDataPoint: ''),
           formStatus: SubmissionSuccess()));
     } catch (e) {
       emit(ListsState(
           listStore: state.listStore,
           selectedTaskid: state.selectedTaskid,
-          newDataPoint: state.newDataPoint,
+          submissionData: state.submissionData,
           formStatus: SubmissionFailed(e)));
     }
   }
 
-  void _onDataPointSubmitted(
-      DataPointSubmitted event, Emitter<ListsState> emit) {
+  void _onUpdateDataPointSubmitted(
+      UpdateDataPointSubmitted event, Emitter<ListsState> emit) {
     emit(ListsState(
         listStore: state.listStore,
         selectedTaskid: state.selectedTaskid,
-        newDataPoint: state.newDataPoint,
+        submissionData: state.submissionData,
+        formStatus: FormSubmitting()));
+
+    try {
+      List<ListModel> filter = [];
+      filter.addAll(state.listStore);
+
+      filter.retainWhere((e) {
+        return e.uid == state.selectedTaskid;
+      });
+
+      filter[0]
+          .data
+          .retainWhere((element) => element.id != state.submissionData.uid);
+
+      // insert into new list
+      List<DataPoint> newList = List.from(filter[0].data)
+        ..add(DataPoint(
+            value: double.parse(state.submissionData.newDataPoint),
+            id: state.submissionData.uid));
+
+      List<ListModel> removedList = List.from(state.listStore)
+        ..remove(filter[0]);
+
+      List<ListModel> newListStore = List.from(removedList)
+        ..add(ListModel(
+            data: newList, uid: state.selectedTaskid, name: filter[0].name));
+
+      if (state.submissionData.newDataPoint.isEmpty) {
+        throw 'Empty Datapoint';
+      }
+      emit(ListsState(
+          listStore: newListStore,
+          submissionData: state.submissionData,
+          selectedTaskid: state.selectedTaskid,
+          formStatus: SubmissionSuccess()));
+    } catch (e) {
+      emit(ListsState(
+          listStore: state.listStore,
+          submissionData: state.submissionData,
+          selectedTaskid: state.selectedTaskid,
+          formStatus: SubmissionFailed(e)));
+    }
+  }
+
+  void _onNewDataPointSubmitted(
+      NewDataPointSubmitted event, Emitter<ListsState> emit) {
+    var uid = const Uuid().v1();
+    emit(ListsState(
+        listStore: state.listStore,
+        selectedTaskid: state.selectedTaskid,
+        submissionData: state.submissionData,
         formStatus: FormSubmitting()));
 
     try {
@@ -116,7 +179,8 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
       });
 
       List<DataPoint> newList = List.from(filter[0].data)
-        ..add(DataPoint(value: double.parse(state.newDataPoint)));
+        ..add(DataPoint(
+            value: double.parse(state.submissionData.newDataPoint), id: uid));
 
       List<ListModel> removedList = List.from(state.listStore)
         ..remove(filter[0]);
@@ -125,19 +189,19 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
         ..add(ListModel(
             data: newList, uid: state.selectedTaskid, name: filter[0].name));
 
-      if (state.newDataPoint.isEmpty) {
+      if (state.submissionData.newDataPoint.isEmpty) {
         throw 'Empty Datapoint';
       }
       emit(ListsState(
           // lists: List.from(state.lists)..add(double.parse(state.newDataPoint)),
           listStore: newListStore,
-          newDataPoint: '',
+          submissionData: state.submissionData,
           selectedTaskid: state.selectedTaskid,
           formStatus: SubmissionSuccess()));
     } catch (e) {
       emit(ListsState(
           listStore: state.listStore,
-          newDataPoint: state.newDataPoint,
+          submissionData: state.submissionData,
           selectedTaskid: state.selectedTaskid,
           formStatus: SubmissionFailed(e)));
     }

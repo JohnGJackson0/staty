@@ -170,7 +170,9 @@ class _DataPointItemState extends State<_DataPointItem> {
                   try {
                     context
                         .read<ListsBloc>()
-                        .add(DataPointChangedEvent(point: value));
+                        .add(
+                        ExistingDataPointChangedInputEvent(
+                            point: value, id: widget.item.id));
                   } catch (e) {
                     if (kDebugMode) {
                       print('error');
@@ -205,7 +207,8 @@ class _DataPointItemState extends State<_DataPointItem> {
               GestureDetector(
                   onTap: () {
                     context.read<ListsBloc>().add(
-                        DeleteDataPointSubmitted(point: widget.item.value));
+                        DeleteDataPointSubmitted(
+                        point: widget.item.value, id: widget.item.id));
                   },
                   child: const Icon(Icons.delete_forever, color: Colors.red))
             ],
@@ -232,7 +235,7 @@ class _SubmitDataPoint extends StatelessWidget {
                   if (formKey.currentState!.validate()) {
                     context
                         .read<ListsBloc>()
-                        .add(DataPointSubmitted(listId: state.selectedTaskid));
+                        .add(UpdateDataPointSubmitted(listId: state.selectedTaskid));
                   }
                 },
                 child: Container(

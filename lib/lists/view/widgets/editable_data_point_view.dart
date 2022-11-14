@@ -79,7 +79,7 @@ class _EditableDataPointState extends State<EditableDataPoint> {
                   try {
                     context
                         .read<ListsBloc>()
-                        .add(DataPointChangedEvent(point: value));
+                        .add(NewDataPointInputChangedEvent(point: value));
                   } catch (e) {
                     if (kDebugMode) {
                       print('error');
@@ -160,7 +160,8 @@ class _AddDataPoint extends StatelessWidget {
                   if (formKey.currentState!.validate()) {
                     context
                         .read<ListsBloc>()
-                        .add(DataPointSubmitted(listId: state.selectedTaskid));
+                        .add(
+                        NewDataPointSubmitted(listId: state.selectedTaskid));
                   }
                 },
                 child: Container(

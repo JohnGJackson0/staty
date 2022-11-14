@@ -2,22 +2,36 @@ part of 'lists_bloc.dart';
 
 abstract class ListsEvent {}
 
-class DataPointChangedEvent extends ListsEvent {
+class NewDataPointInputChangedEvent extends ListsEvent {
   final String point;
 
-  DataPointChangedEvent({this.point = ''});
+  NewDataPointInputChangedEvent({this.point = ''});
+}
+
+class ExistingDataPointChangedInputEvent extends ListsEvent {
+  final String point;
+  final String id;
+
+  ExistingDataPointChangedInputEvent({required this.point, required this.id});
 }
 
 class DeleteDataPointSubmitted extends ListsEvent {
   final double point;
+  final String id;
 
-  DeleteDataPointSubmitted({required this.point});
+  DeleteDataPointSubmitted({required this.point, required this.id});
 }
 
-class DataPointSubmitted extends ListsEvent {
+class NewDataPointSubmitted extends ListsEvent {
   final String listId;
 
-  DataPointSubmitted({required this.listId});
+  NewDataPointSubmitted({required this.listId});
+}
+
+class UpdateDataPointSubmitted extends ListsEvent {
+  final String listId;
+
+  UpdateDataPointSubmitted({required this.listId});
 }
 
 class StatListCreatedEvent extends ListsEvent {}

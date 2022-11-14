@@ -80,7 +80,7 @@ class _DataPointList extends StatelessWidget {
                   alignment: WrapAlignment.start,
                   runAlignment: WrapAlignment.start,
                   children: list.reversed
-                      .map((item) => _DataPoint(item: item.value))
+                      .map((item) => _DataPoint(item: item))
                       .toList()),
             ),
           ),
@@ -96,13 +96,15 @@ class _DataPoint extends StatelessWidget {
     required this.item,
   }) : super(key: key);
 
-  final double item;
+  final DataPoint item;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<ListsBloc>().add(DeleteDataPointSubmitted(point: item));
+        context
+            .read<ListsBloc>()
+            .add(DeleteDataPointSubmitted(point: item.value, id: item.id));
       },
       child: Padding(
         padding: const EdgeInsets.all(3.0),
@@ -113,7 +115,7 @@ class _DataPoint extends StatelessWidget {
               padding: const EdgeInsets.all(3.0),
               child: Text.rich(
                 TextSpan(
-                  text: item.toString(),
+                  text: item.value.toString(),
                   style: const TextStyle(fontSize: 16),
                 ),
               ),

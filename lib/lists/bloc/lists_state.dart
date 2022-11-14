@@ -1,14 +1,35 @@
 part of 'lists_bloc.dart';
 
+class SubmissionData {
+  final String newDataPoint;
+  final String uid;
+
+  const SubmissionData({this.newDataPoint = '', this.uid = ''});
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'newDataPoint': newDataPoint,
+      'uid': uid,
+    };
+  }
+
+  factory SubmissionData.fromMap(Map<String, dynamic> map) {
+    return SubmissionData(
+      newDataPoint: map['newDataPoint'] as String,
+      uid: map['uid'] as String,
+    );
+  }
+}
+
 class ListsState extends Equatable {
   final List<ListModel> listStore;
-  final String newDataPoint;
+  final SubmissionData submissionData;
   final FormSubmissionStatus formStatus;
   final String selectedTaskid;
 
   bool isValidDatapointInput() {
     try {
-      double.parse(newDataPoint);
+      double.parse(submissionData.newDataPoint);
       return true;
     } catch (e) {
       return false;
@@ -17,33 +38,20 @@ class ListsState extends Equatable {
 
   const ListsState(
       {this.listStore = const [],
-      this.newDataPoint = '',
+      this.submissionData = const SubmissionData(),
       this.formStatus = const InitialFormStatus(),
       this.selectedTaskid = ''});
 
   @override
   List<Object?> get props =>
-      [listStore, newDataPoint, formStatus, selectedTaskid];
+      [listStore, submissionData, formStatus, selectedTaskid];
 
-  ListsState copyWith({
-    List<ListModel>? listStore,
-    String? newDataPoint,
-    FormSubmissionStatus? formStatus,
-    String? selectedTaskid,
-  }) {
-    return ListsState(
-      listStore: this.listStore,
-      newDataPoint: this.newDataPoint,
-      formStatus: this.formStatus,
-      selectedTaskid: this.selectedTaskid,
-    );
-  }
+
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'listStore': listStore.map((x) => x.toMap()).toList(),
-      'newDataPoint': newDataPoint,
-      'formStatus': null,
+      'submissionData': submissionData.toMap(),
       'selectedTaskid': selectedTaskid,
     };
   }
@@ -55,8 +63,8 @@ class ListsState extends Equatable {
           (x) => ListModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      newDataPoint: map['newDataPoint'] as String,
-      formStatus: map['formStatus'],
+      submissionData:
+          SubmissionData.fromMap(map['submissionData'] as Map<String, dynamic>),
       selectedTaskid: map['selectedTaskid'] as String,
     );
   }
