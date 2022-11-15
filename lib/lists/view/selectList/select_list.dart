@@ -26,7 +26,7 @@ class SelectList extends StatelessWidget {
                 builder: (context, state) {
                   return state.listStore.isEmpty
                       ? const Text(
-                          'You must make a list for 1-var-stat selection.',
+                          'You must make a list to select one.',
                           maxLines: 4)
                       : _ListContent(
                           listStore: state.listStore,
