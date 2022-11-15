@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:staty/lists/view/selectList/select_list.dart';
+import '../../../services/app_router.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
 
@@ -18,7 +20,9 @@ class OneVarStats extends StatelessWidget {
         });
         return Scaffold(
           appBar: AppBar(
-            title: filter.isEmpty ? const Text('') : Text(filter[0].name),
+            title: filter.isEmpty
+                ? const Text('1-var-stats')
+                : Text(filter[0].name),
           ),
           body: Container(
             padding: const EdgeInsets.all(20),
@@ -26,7 +30,29 @@ class OneVarStats extends StatelessWidget {
             child: BlocBuilder<ListsBloc, ListsState>(
               builder: (context, state) {
                 return filter.isEmpty
-                    ? const Text('This list is empty.')
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                              'Please select a list with items in it for calculating the 1-var-stats.'),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    SelectList.id,
+                                    arguments: SelectionListParam(() {
+                                      Navigator.of(context)
+                                          .pushNamed(OneVarStats.id);
+                                    }),
+                                  );
+                                },
+                                child: const Text('Select List')),
+                          )
+                        ],
+                      )
                     : Column(
                         children: [
                           Expanded(
