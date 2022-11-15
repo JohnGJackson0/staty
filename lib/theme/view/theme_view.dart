@@ -18,10 +18,6 @@ class _ThemeViewState extends State<ThemeView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Theme', style: TextStyle(fontWeight: FontWeight.bold)),
-        ),
         BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, state) {
             return Padding(

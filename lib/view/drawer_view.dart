@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../lists/view/listPreview/lists_preview_view.dart';
 import '../theme/view/theme_view.dart';
 
 class DrawerView extends StatelessWidget {
@@ -15,6 +16,13 @@ class DrawerView extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                 child: const Text('Task Drawer')),
+            GestureDetector(
+                onTap: () =>
+                    Navigator.of(context).pushReplacementNamed(ListsPreview.id),
+                child: const ListTile(
+                  leading: Icon(Icons.list),
+                  title: Text('View Lists'),
+                )),
             const ThemeView()
           ],
         ),
