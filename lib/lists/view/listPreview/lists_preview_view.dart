@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:staty/lists/view/editList/edit_list_view.dart';
+import 'package:staty/lists/view/one_var_stats.dart/one_var_stats.dart';
 import 'package:staty/view/drawer_view.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
@@ -97,8 +98,10 @@ class _ListBodyTile extends StatelessWidget {
                         .add(SelectedTaskIdEvent(id: listStore.uid));
                     Navigator.of(context).pushNamed(CreateList.id);
                   },
-                  child: const ThemedChip(
-                      avatar: Icon(Icons.add), label: 'Add To List'),
+                  child: ThemedChip(
+                      avatar: const Icon(Icons.add),
+                      color: (Theme.of(context).primaryColor),
+                      label: 'Add To List'),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -107,8 +110,22 @@ class _ListBodyTile extends StatelessWidget {
                         .add(SelectedTaskIdEvent(id: listStore.uid));
                     Navigator.of(context).pushNamed(EditList.id);
                   },
-                  child: const ThemedChip(
-                      avatar: Icon(Icons.edit), label: 'Edit List'),
+                  child: ThemedChip(
+                      avatar: const Icon(Icons.edit),
+                      color: (Theme.of(context).primaryColor),
+                      label: 'Edit List'),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    context
+                        .read<ListsBloc>()
+                        .add(SelectedTaskIdEvent(id: listStore.uid));
+                    Navigator.of(context).pushNamed(OneVarStats.id);
+                  },
+                  child: ThemedChip(
+                      avatar: const Icon(Icons.calculate),
+                      color: (Theme.of(context).colorScheme.secondary),
+                      label: '1-var stats'),
                 )
               ],
             ),
