@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:statistics/statistics.dart';
 import 'package:staty/lists/view/selectList/select_list.dart';
 import '../../../services/app_router.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
+import '../../model/one_var_stats_model.dart';
 import '../../services/variable_stats.dart';
 
 class OneVarStats extends StatelessWidget {
@@ -94,19 +94,20 @@ class _OneVarStatsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var result =
-        OneVarStatsService(list: list).getStats() as Statistics<double>;
+        OneVarStatsService(list: list).getStats() as OneVarStatsModel;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       verticalDirection: VerticalDirection.down,
       children: <Widget>[
         const Text('1 Var Stats: \n'),
-        Calculation(result: result.mean.toString(), label: 'Mean x̄'),
+        Calculation(result: result.sampleMean.toString(), label: 'Mean x̄'),
         Calculation(result: result.sum.toString(), label: 'Sum Σx'),
         Calculation(
-            result: result.squaresSum.toString(), label: 'Sum Squared Σx²'),
-        const Calculation(
-            result: 'TODO', label: 'Sample Standard Deviation Sx'),
+            result: result.sumSquared.toString(), label: 'Sum Squared Σx²'),
+        Calculation(
+            result: result.sampleStandardDeviation.toString(),
+            label: 'Sample Standard Deviation Sx'),
         Calculation(
             result: result.standardDeviation.toString(),
             label: 'Population Standard Deviation σx'),
@@ -137,7 +138,7 @@ class Calculation extends StatelessWidget {
         children: [
           Text('$label:',
               style: TextStyle(color: Theme.of(context).primaryColor)),
-          Text('$result\n')
+          Text('$result \n')
         ]);
   }
 }
