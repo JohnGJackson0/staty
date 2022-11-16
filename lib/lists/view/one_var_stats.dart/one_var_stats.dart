@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:statistics/statistics.dart';
 import 'package:staty/lists/view/selectList/select_list.dart';
 import '../../../services/app_router.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
+import '../../services/variable_stats.dart';
 
 class OneVarStats extends StatelessWidget {
   const OneVarStats({super.key});
@@ -91,11 +93,51 @@ class _OneVarStatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var result =
+        OneVarStatsService(list: list).getStats() as Statistics<double>;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       verticalDirection: VerticalDirection.down,
-      children: const <Widget>[Text('display one var stats ')],
+      children: <Widget>[
+        const Text('1 Var Stats: \n'),
+        Calculation(result: result.mean.toString(), label: 'Mean x̄'),
+        Calculation(result: result.sum.toString(), label: 'Sum Σx'),
+        Calculation(
+            result: result.squaresSum.toString(), label: 'Sum Squared Σx²'),
+        const Calculation(
+            result: 'TODO', label: 'Sample Standard Deviation Sx'),
+        Calculation(
+            result: result.standardDeviation.toString(),
+            label: 'Population Standard Deviation σx'),
+        Calculation(
+            result: result.length.toString(), label: 'Number of elements n'),
+        Calculation(result: result.min.toString(), label: 'Min minX'),
+        const Calculation(result: 'TODO', label: 'Quarter 1 Q1'),
+        Calculation(result: result.median.toString(), label: 'Median Med'),
+        const Calculation(result: 'TODO', label: 'Quarter 3 Q3'),
+        Calculation(result: result.max.toString(), label: 'Max maxX'),
+      ],
     );
+  }
+}
+
+class Calculation extends StatelessWidget {
+  const Calculation({Key? key, required this.result, required this.label})
+      : super(key: key);
+
+  final String result;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text('$label:',
+              style: TextStyle(color: Theme.of(context).primaryColor)),
+          Text('$result\n')
+        ]);
   }
 }
