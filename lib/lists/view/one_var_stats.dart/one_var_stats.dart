@@ -30,29 +30,7 @@ class OneVarStats extends StatelessWidget {
             child: BlocBuilder<ListsBloc, ListsState>(
               builder: (context, state) {
                 return filter.isEmpty
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                              'Please select a list with items in it for calculating the 1-var-stats.'),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    SelectList.id,
-                                    arguments: SelectionListParam(() {
-                                      Navigator.of(context)
-                                          .pushNamed(OneVarStats.id);
-                                    }),
-                                  );
-                                },
-                                child: const Text('Select List')),
-                          )
-                        ],
-                      )
+                    ? const _GetList(id: id)
                     : Column(
                         children: [
                           Expanded(
@@ -64,6 +42,41 @@ class OneVarStats extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _GetList extends StatelessWidget {
+  const _GetList({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
+
+  final String id;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+            'Please select a list with items in it for calculating the 1-var-stats.'),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  SelectList.id,
+                  arguments: SelectionListParam(() {
+                    Navigator.of(context).pushNamed(OneVarStats.id);
+                  }),
+                );
+              },
+              child: const Text('Select List')),
+        )
+      ],
     );
   }
 }
