@@ -12,6 +12,9 @@ class OneVarStatsService extends Equatable {
   late final Statistics _statistics;
 
   OneVarStatsService({required this.list}) {
+    if (list.isEmpty) {
+      throw 'No Data';
+    }
     for (var i = 0; i < list.length; i++) {
       _normalizedSorted.add(list[i].value);
     }

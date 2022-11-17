@@ -36,7 +36,9 @@ class OneVarStats extends StatelessWidget {
                     : Column(
                         children: [
                           Expanded(
-                              child: _OneVarStatsView(list: filter[0].data)),
+                              child: filter[0].data.isEmpty
+                                  ? const Text('There is no data in the list')
+                                  : _OneVarStatsView(list: filter[0].data)),
                         ],
                       );
               },
