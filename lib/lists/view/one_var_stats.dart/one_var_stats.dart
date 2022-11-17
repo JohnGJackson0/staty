@@ -114,7 +114,8 @@ class _OneVarStatsView extends StatelessWidget {
         Calculation(
             result: result.length.toString(), label: 'Number of elements n'),
         Calculation(result: result.min.toString(), label: 'Min minX'),
-        const Calculation(result: 'TODO', label: 'Quarter 1 Q1'),
+        Calculation(
+            result: result.quarterOne.toString(), label: 'Quarter 1 Q1'),
         Calculation(result: result.median.toString(), label: 'Median Med'),
         const Calculation(result: 'TODO', label: 'Quarter 3 Q3'),
         Calculation(result: result.max.toString(), label: 'Max maxX'),

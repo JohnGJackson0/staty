@@ -6,19 +6,19 @@ import 'package:statistics/statistics.dart';
 import '../model/data_point.dart';
 import '../model/one_var_stats_model.dart';
 
-
 class OneVarStatsService extends Equatable {
   final List<DataPoint> list;
 
-  final List<double> _normalized = [];
+  final List<double> _normalizedSorted = [];
 
   late final Statistics _statistics;
 
   OneVarStatsService({required this.list}) {
     for (var i = 0; i < list.length; i++) {
-      _normalized.add(list[i].value);
+      _normalizedSorted.add(list[i].value);
     }
-    _statistics = _normalized.statistics;
+    _normalizedSorted.sort();
+    _statistics = _normalizedSorted.statistics;
   }
 
   @override
@@ -33,6 +33,25 @@ class OneVarStatsService extends Equatable {
     return pow(result / (list.length - 1), .5);
   }
 
+  _getLowerQuartileIndex(List<double> list) {
+    return (list.length + 1) * (.25);
+  }
+
+  _isEven(double l) {
+    return l % 1 == 0;
+  }
+
+  _getLowerQuartile(List<double> list) {
+    var index = _getLowerQuartileIndex(list);
+
+    if (_isEven(index)) {
+      return list[_getLowerQuartileIndex(list) as int];
+    } else {
+      // TI standard
+      return (list[index.floor() - 1] + list[index.ceil() - 1]) / 2;
+    }
+  }
+
   getStats() {
     return OneVarStatsModel(
         length: _statistics.length,
@@ -40,10 +59,10 @@ class OneVarStatsService extends Equatable {
         sum: _statistics.sum,
         sumSquared: _statistics.squaresSum,
         sampleStandardDeviation:
-            _getSampleStandardDeviation(_normalized, _statistics.mean),
+            _getSampleStandardDeviation(_normalizedSorted, _statistics.mean),
         standardDeviation: _statistics.standardDeviation,
         min: _statistics.min,
-        quarterOne: 0,
+        quarterOne: _getLowerQuartile(_normalizedSorted),
         median: _statistics.median,
         quarterThree: 0,
         max: _statistics.max);
