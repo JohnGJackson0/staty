@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
+import '../editList/edit_list_view.dart';
+import '../one_var_stats.dart/one_var_stats.dart';
+import '../widgets/themed_chip.dart';
 import '../widgets/widget_exports.dart';
 
 class CreateList extends StatelessWidget {
@@ -33,8 +36,15 @@ class CreateList extends StatelessWidget {
                           const SizedBox(
                               height: 85,
                               child: EditableDataPoint()),
-                          Flexible(
+                          SizedBox(
+                              height: 175,
                               child: RecentlyEnteredData(list: filter[0].data)),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: filter[0].data.isEmpty
+                                ? const SizedBox(width: 20)
+                                : _Actions(filter: filter),
+                          )
                         ],
                       );
               },
@@ -42,6 +52,52 @@ class CreateList extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _Actions extends StatelessWidget {
+  const _Actions({
+    Key? key,
+    required this.filter,
+  }) : super(key: key);
+
+  final List<ListModel> filter;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
+            onTap: () {
+              context
+                  .read<ListsBloc>()
+                  .add(SelectedTaskIdEvent(id: filter[0].uid));
+              Navigator.of(context).pushNamed(EditList.id);
+            },
+            child: ThemedChip(
+                avatar: const Icon(Icons.edit),
+                color: (Theme.of(context).primaryColor),
+                label: 'Edit List'),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
+              onTap: () {
+                context
+                    .read<ListsBloc>()
+                    .add(SelectedTaskIdEvent(id: filter[0].uid));
+                Navigator.of(context).pushNamed(OneVarStats.id);
+              },
+              child: ThemedChip(
+                  avatar: const Icon(Icons.calculate),
+                  color: (Theme.of(context).colorScheme.secondary),
+                  label: '1-var stats')),
+        )
+      ],
     );
   }
 }
