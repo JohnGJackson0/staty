@@ -1,8 +1,6 @@
 import 'dart:math';
-
 import 'package:equatable/equatable.dart';
 import 'package:statistics/statistics.dart';
-
 import '../model/data_point.dart';
 import '../model/one_var_stats_model.dart';
 
@@ -33,19 +31,19 @@ class OneVarStatsService extends Equatable {
     return pow(result / (list.length - 1), .5);
   }
 
-  _getLowerQuartileIndex(List<double> list) {
-    return (list.length + 1) * (.25);
-  }
-
   _isEven(double l) {
     return l % 1 == 0;
   }
 
-  _getLowerQuartile(List<double> list) {
-    var index = _getLowerQuartileIndex(list);
+  _getQuartileIndex(List<double> list, percent) {
+    return (list.length + 1) * (percent);
+  }
+
+  _getQuartile(List<double> list, double percent) {
+    var index = _getQuartileIndex(list, percent);
 
     if (_isEven(index)) {
-      return list[_getLowerQuartileIndex(list) as int];
+      return list[index as int];
     } else {
       // TI standard
       return (list[index.floor() - 1] + list[index.ceil() - 1]) / 2;
@@ -62,9 +60,9 @@ class OneVarStatsService extends Equatable {
             _getSampleStandardDeviation(_normalizedSorted, _statistics.mean),
         standardDeviation: _statistics.standardDeviation,
         min: _statistics.min,
-        quarterOne: _getLowerQuartile(_normalizedSorted),
+        quarterOne: _getQuartile(_normalizedSorted, .25),
         median: _statistics.median,
-        quarterThree: 0,
+        quarterThree: _getQuartile(_normalizedSorted, .75),
         max: _statistics.max);
   }
 }
