@@ -5,6 +5,7 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
 import '../widgets/form_submit.dart';
+import '../widgets/list_header_title.dart';
 
 class EditList extends StatelessWidget {
   const EditList({super.key});
@@ -22,7 +23,9 @@ class EditList extends StatelessWidget {
         });
         return Scaffold(
           appBar: AppBar(
-            title: filter.isEmpty ? const Text('') : Text(filter[0].name),
+            title: filter.isEmpty
+                ? const Text('')
+                : ListHeaderTitle(filter: filter),
           ),
           body: Container(
             padding: const EdgeInsets.all(20),
@@ -44,6 +47,8 @@ class EditList extends StatelessWidget {
     );
   }
 }
+
+
 
 class _EditableData extends StatelessWidget {
   const _EditableData({

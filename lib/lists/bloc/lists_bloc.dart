@@ -17,6 +17,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
     on<OnErrorEvent>(_onErrorEvent);
     on<ExistingDataPointChangedInputEvent>(_onExistingDataPointChangedEvent);
     on<UpdateDataPointSubmitted>(_onUpdateDataPointSubmitted);
+    on<SubmitNewListNameEvent>(_onSubmitNewListNameEvent);
   }
 
   void _onErrorEvent(OnErrorEvent event, Emitter<ListsState> emit) {
@@ -56,7 +57,6 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
 
   void _onExistingDataPointChangedEvent(
       ExistingDataPointChangedInputEvent event, Emitter<ListsState> emit) {
-    // todo
     return emit(ListsState(
         listStore: state.listStore,
         selectedTaskid: state.selectedTaskid,
@@ -70,6 +70,44 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
         listStore: state.listStore,
         selectedTaskid: state.selectedTaskid,
         submissionData: SubmissionData(newDataPoint: event.point, uid: '')));
+  }
+
+  void _onSubmitNewListNameEvent(
+      SubmitNewListNameEvent event, Emitter<ListsState> emit) {
+    try {
+      emit(ListsState(
+          listStore: state.listStore,
+          selectedTaskid: state.selectedTaskid,
+          submissionData: state.submissionData,
+          formStatus: FormSubmitting()));
+
+      // get list refactor
+      List<ListModel> filter = [];
+      filter.addAll(state.listStore);
+
+      filter.retainWhere((e) {
+        return e.uid == state.selectedTaskid;
+      });
+
+      var newList = filter[0].copyWith(name: event.newName);
+
+      List<ListModel> removedList = List.from(state.listStore)
+        ..remove(filter[0]);
+
+      List<ListModel> newListStore = List.from(removedList)..add(newList);
+
+      emit(ListsState(
+          listStore: newListStore,
+          selectedTaskid: state.selectedTaskid,
+          submissionData: state.submissionData,
+          formStatus: SubmissionSuccess()));
+    } catch (e) {
+      emit(ListsState(
+          listStore: state.listStore,
+          selectedTaskid: state.selectedTaskid,
+          submissionData: state.submissionData,
+          formStatus: SubmissionFailed(e)));
+    }
   }
 
   void _onDeleteDataPointSubmitted(

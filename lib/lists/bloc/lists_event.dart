@@ -2,6 +2,11 @@ part of 'lists_bloc.dart';
 
 abstract class ListsEvent {}
 
+class SubmitNewListNameEvent extends ListsEvent {
+  final String newName;
+  SubmitNewListNameEvent({required this.newName});
+}
+
 class NewDataPointInputChangedEvent extends ListsEvent {
   final String point;
 
