@@ -17,7 +17,7 @@ class DrawerView extends StatelessWidget {
             Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-                child: const Text('Task Drawer')),
+                child: const Text('Staty Main Directory')),
             GestureDetector(
                 onTap: () =>
                     Navigator.of(context).pushReplacementNamed(ListsPreview.id),

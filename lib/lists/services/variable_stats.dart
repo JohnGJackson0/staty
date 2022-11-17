@@ -46,9 +46,21 @@ class OneVarStatsService extends Equatable {
     var index = _getQuartileIndex(list, percent);
 
     if (_isEven(index)) {
-      return list[index as int];
+      return list[index.round() - 1];
     } else {
       // TI standard
+      if (list.length == 2 && percent <= .5) {
+        return list[0];
+      }
+
+      if (list.length == 2 && percent >= .5) {
+        return list[1];
+      }
+
+      if (list.length == 1) {
+        return list[0];
+      }
+
       return (list[index.floor() - 1] + list[index.ceil() - 1]) / 2;
     }
   }

@@ -86,6 +86,12 @@ class _ListBodyTile extends StatelessWidget {
       child: Column(
         children: [
           Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Text(listStore.name),
+              )),
+          Align(
             alignment: Alignment.topLeft,
             child: Wrap(
               spacing: 8.0,
@@ -153,7 +159,7 @@ class _ListHeaderTile extends StatelessWidget {
             title: Text(
               listStore.name,
               style: const TextStyle(fontSize: 20),
-            ))
+            )),
       ],
     );
   }

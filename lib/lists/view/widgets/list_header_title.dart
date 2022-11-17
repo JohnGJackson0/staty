@@ -23,13 +23,9 @@ class _ListHeaderTitleState extends State<ListHeaderTitle> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _isEditable
-            ? SizedBox(
-                height: 75,
-                width: 250,
+            ? Flexible(
                 child: TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Enter new List Name',
-                  ),
+                  initialValue: widget.filter[0].name,
                   onFieldSubmitted: (input) {
                     setState(() {
                       _isEditable = false;
@@ -40,7 +36,14 @@ class _ListHeaderTitleState extends State<ListHeaderTitle> {
                   },
                 ),
               )
-            : Text(widget.filter[0].name),
+            : Expanded(
+                child: Text(
+                  widget.filter[0].name,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
         GestureDetector(
             onTap: () {
               setState(() {
