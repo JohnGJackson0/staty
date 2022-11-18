@@ -4,8 +4,8 @@ import '../../model/model_exports.dart';
 import '../widgets/themed_chip.dart';
 
 class SelectList extends StatelessWidget {
-  final Function onSelected;
-  const SelectList({super.key, required this.onSelected});
+  final String idToGoOnFinished;
+  const SelectList({super.key, required this.idToGoOnFinished});
 
   static const id = 'select_list_screen';
 
@@ -29,7 +29,7 @@ class SelectList extends StatelessWidget {
                           maxLines: 4)
                       : _ListContent(
                           listStore: state.listStore,
-                          onSelected: onSelected,
+                          navOnFinished: idToGoOnFinished,
                         );
                 },
               ),
@@ -43,10 +43,10 @@ class SelectList extends StatelessWidget {
 
 class _ListContent extends StatelessWidget {
   final List<ListModel> listStore;
-  final Function onSelected;
+  final String navOnFinished;
   const _ListContent({
     required this.listStore,
-    required this.onSelected,
+    required this.navOnFinished,
     Key? key,
   }) : super(key: key);
 
@@ -61,7 +61,7 @@ class _ListContent extends StatelessWidget {
                       _ListHeaderTile(listStore: listStore),
                   body: _ListBodyTile(
                     listStore: listStore,
-                    onSelected: onSelected,
+                    navOnFinished: navOnFinished,
                   )))
               .toList()
               .toList()),
@@ -70,10 +70,10 @@ class _ListContent extends StatelessWidget {
 }
 
 class _ListBodyTile extends StatelessWidget {
-  final Function onSelected;
+  final String navOnFinished;
   final ListModel listStore;
   const _ListBodyTile({
-    required this.onSelected,
+    required this.navOnFinished,
     required this.listStore,
     Key? key,
   }) : super(key: key);
@@ -95,7 +95,7 @@ class _ListBodyTile extends StatelessWidget {
                     context
                         .read<ListsBloc>()
                         .add(SelectedTaskIdEvent(id: listStore.uid));
-                    onSelected();
+                    Navigator.of(context).pushReplacementNamed(navOnFinished);
                   },
                   child: ThemedChip(
                       avatar: const Icon(Icons.add),

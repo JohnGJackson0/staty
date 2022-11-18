@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:staty/lists/view/selectList/select_list.dart';
-import '../../../services/app_router.dart';
+
 import '../../bloc/bloc_exports.dart';
 import '../../model/model_exports.dart';
 import '../../model/one_var_stats_model.dart';
 import '../../services/variable_stats.dart';
+import '../widgets/selection_promt.dart';
 
 class OneVarStats extends StatelessWidget {
   const OneVarStats({super.key});
@@ -32,7 +32,7 @@ class OneVarStats extends StatelessWidget {
             child: BlocBuilder<ListsBloc, ListsState>(
               builder: (context, state) {
                 return filter.isEmpty
-                    ? const _GetList(id: id)
+                    ? const SelectionPrompt(idToGoOnFinished: OneVarStats.id)
                     : Column(
                         children: [
                           Expanded(
@@ -49,42 +49,6 @@ class OneVarStats extends StatelessWidget {
     );
   }
 }
-
-class _GetList extends StatelessWidget {
-  const _GetList({
-    Key? key,
-    required this.id,
-  }) : super(key: key);
-
-  final String id;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-            'Please select a list with items in it for calculating the 1-var-stats.'),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  SelectList.id,
-                  arguments: SelectionListParam(() {
-                    Navigator.of(context).pushNamed(OneVarStats.id);
-                  }),
-                );
-              },
-              child: const Text('Select List')),
-        )
-      ],
-    );
-  }
-}
-
 class _OneVarStatsView extends StatelessWidget {
   const _OneVarStatsView({
     Key? key,
@@ -95,8 +59,7 @@ class _OneVarStatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var result =
-        OneVarStatsService(list: list).getStats() as OneVarStatsModel;
+    var result = OneVarStatsService(list: list).getStats() as OneVarStatsModel;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

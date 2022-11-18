@@ -7,8 +7,8 @@ import '../lists/view/listPreview/lists_preview_view.dart';
 import '../lists/view/selectList/select_list.dart';
 
 class SelectionListParam {
-  final Function onSelected;
-  SelectionListParam(this.onSelected);
+  final String idToGoOnFinished;
+  SelectionListParam(this.idToGoOnFinished);
 }
 
 class AppRouter {
@@ -23,7 +23,7 @@ class AppRouter {
           final SelectionListParam args =
               settings.arguments as SelectionListParam;
 
-          return SelectList(onSelected: args.onSelected);
+          return SelectList(idToGoOnFinished: args.idToGoOnFinished);
         });
     
       case EditList.id:
