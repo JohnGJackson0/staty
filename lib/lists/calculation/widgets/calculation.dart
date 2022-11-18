@@ -9,13 +9,12 @@ class Calculation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text('$label:',
-              style: TextStyle(color: Theme.of(context).primaryColor)),
-          Text('$result \n')
-        ]);
+    return Column(children: [
+      Align(
+          alignment: Alignment.topLeft,
+          child: Text('$label:',
+              style: TextStyle(color: Theme.of(context).primaryColor))),
+      Align(alignment: Alignment.topLeft, child: Text('$result \n'))
+    ]);
   }
 }
