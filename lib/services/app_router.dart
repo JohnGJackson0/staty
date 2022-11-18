@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:staty/lists/view/createList/create_list_view.dart';
-import 'package:staty/lists/view/one_var_stats.dart/one_var_stats.dart';
 
-import '../lists/view/editList/edit_list_view.dart';
-import '../lists/view/listPreview/lists_preview_view.dart';
-import '../lists/view/selectList/select_list.dart';
+import '../lists/calculation/one_var_stats.dart';
+
+import '../lists/management/view/edit_list_view.dart';
+import '../lists/management/view/lists_preview_view.dart';
+import '../lists/management/view/select_list.dart';
+import '../lists/management/view/create_list_view.dart';
 
 class SelectionListParam {
   final String idToGoOnFinished;

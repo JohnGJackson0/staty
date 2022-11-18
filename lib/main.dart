@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:staty/lists/view/listPreview/lists_preview_view.dart';
+import 'package:staty/lists/management/view/lists_preview_view.dart';
 import 'package:staty/services/app_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:staty/theme/color.dart';

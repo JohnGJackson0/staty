@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
-import 'package:staty/lists/model/data_point.dart';
+import 'package:staty/lists/management/model/data_point.dart';
 
 class ListModel extends Equatable {
   final List<DataPoint> data;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../bloc/bloc_exports.dart';
-import '../../model/model_exports.dart';
-import '../editList/edit_list_view.dart';
-import '../one_var_stats.dart/one_var_stats.dart';
-import '../widgets/themed_chip.dart';
+import '../model/model_exports.dart';
+import 'edit_list_view.dart';
+import '../../calculation/one_var_stats.dart';
+import '../../../widgets/themed_chip.dart';
 import '../widgets/widget_exports.dart';
 
 class CreateList extends StatelessWidget {

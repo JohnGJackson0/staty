@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import '../../bloc/bloc_exports.dart';
-import '../../model/model_exports.dart';
+import '../model/model_exports.dart';
 import '../widgets/form_submit.dart';
-import '../widgets/list_header_title.dart';
 
 class EditList extends StatelessWidget {
   const EditList({super.key});
@@ -25,7 +24,7 @@ class EditList extends StatelessWidget {
           appBar: AppBar(
             title: filter.isEmpty
                 ? const Text('')
-                : ListHeaderTitle(filter: filter),
+                : _ListHeaderTitle(filter: filter),
           ),
           body: Container(
             padding: const EdgeInsets.all(20),
@@ -48,7 +47,58 @@ class EditList extends StatelessWidget {
   }
 }
 
+class _ListHeaderTitle extends StatefulWidget {
+  const _ListHeaderTitle({
+    Key? key,
+    required this.filter,
+  }) : super(key: key);
 
+  final List<ListModel> filter;
+
+  @override
+  State<_ListHeaderTitle> createState() => _ListHeaderTitleState();
+}
+
+class _ListHeaderTitleState extends State<_ListHeaderTitle> {
+  bool _isEditable = false;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _isEditable
+            ? Flexible(
+                child: TextFormField(
+                  initialValue: widget.filter[0].name,
+                  onFieldSubmitted: (input) {
+                    setState(() {
+                      _isEditable = false;
+                    });
+                    context
+                        .read<ListsBloc>()
+                        .add(SubmitNewListNameEvent(newName: input));
+                  },
+                ),
+              )
+            : Expanded(
+                child: Text(
+                  widget.filter[0].name,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
+        GestureDetector(
+            onTap: () {
+              setState(() {
+                _isEditable = !_isEditable;
+              });
+            },
+            child: Icon(Icons.edit, color: Theme.of(context).primaryColor))
+      ],
+    );
+  }
+}
 
 class _EditableData extends StatelessWidget {
   const _EditableData({
@@ -237,12 +287,10 @@ class _SubmitDataPoint extends StatelessWidget {
             formKey: formKey,
             label: 'UPDATE',
             onSubmitEvent: () => {
-                  context.read<ListsBloc>()
-            .add(
+                  context.read<ListsBloc>().add(
                       UpdateDataPointSubmitted(listId: state.selectedTaskid))
                 });
       },
     );
-          
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:staty/lists/view/editList/edit_list_view.dart';
-import 'package:staty/lists/view/one_var_stats.dart/one_var_stats.dart';
+import 'package:staty/lists/management/view/edit_list_view.dart';
+import 'package:staty/lists/calculation/one_var_stats.dart';
 import 'package:staty/view/drawer_view.dart';
 import '../../bloc/bloc_exports.dart';
-import '../../model/model_exports.dart';
-import '../createList/create_list_view.dart';
-import '../widgets/themed_chip.dart';
+import '../model/model_exports.dart';
+import 'create_list_view.dart';
+import '../../../widgets/themed_chip.dart';
 
 class ListsPreview extends StatelessWidget {
   const ListsPreview({super.key});

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../../../services/app_router.dart';
-import '../selectList/select_list.dart';
+import '../../management/view/select_list.dart';
 
 class SelectionPrompt extends StatelessWidget {
   const SelectionPrompt({Key? key, required this.idToGoOnFinished})

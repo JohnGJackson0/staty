@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:statistics/statistics.dart';
-import '../model/data_point.dart';
+import '../../management/model/data_point.dart';
 import '../model/one_var_stats_model.dart';
 
 class OneVarStatsService extends Equatable {

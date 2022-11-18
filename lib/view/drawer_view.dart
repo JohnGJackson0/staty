@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../lists/bloc/bloc_exports.dart';
-import '../lists/view/listPreview/lists_preview_view.dart';
-import '../lists/view/one_var_stats.dart/one_var_stats.dart';
+import '../lists/management/view/lists_preview_view.dart';
+import '../lists/calculation/one_var_stats.dart';
 import '../theme/view/theme_view.dart';
 
 class DrawerView extends StatelessWidget {

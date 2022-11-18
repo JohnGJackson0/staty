@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../bloc/bloc_exports.dart';
-import '../../model/model_exports.dart';
-import '../widgets/themed_chip.dart';
+import '../model/model_exports.dart';
+import '../../../widgets/themed_chip.dart';
 
 class SelectList extends StatelessWidget {
   final String idToGoOnFinished;
