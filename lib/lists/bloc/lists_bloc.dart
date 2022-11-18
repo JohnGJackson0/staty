@@ -234,10 +234,11 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
       if (state.submissionData.newDataPoint.isEmpty) {
         throw 'Empty Datapoint';
       }
+
       emit(ListsState(
           // lists: List.from(state.lists)..add(double.parse(state.newDataPoint)),
           listStore: newListStore,
-          submissionData: state.submissionData,
+          submissionData: const SubmissionData(uid: '', newDataPoint: ''),
           selectedTaskid: state.selectedTaskid,
           formStatus: SubmissionSuccess()));
     } catch (e) {
