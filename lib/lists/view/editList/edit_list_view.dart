@@ -166,6 +166,7 @@ class _DataPointItemState extends State<_DataPointItem> {
             return KeyboardActions(
               config: _buildConfig(context),
               child: TextFormField(
+                key: UniqueKey(),
                 focusNode: _editableDataPointNode,
                 initialValue: widget.item.value.toString(),
                 keyboardType:

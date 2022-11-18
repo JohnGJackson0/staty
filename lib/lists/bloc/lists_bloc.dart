@@ -125,15 +125,19 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
         return e.uid == state.selectedTaskid;
       });
 
-      List<DataPoint> newList = List.from(filter[0].data)
-        ..remove(event.deletedDataPoint);
+      filter[0].data.removeWhere((e) {
+        return e.id == event.deletedDataPoint.id;
+      });
 
-      List<ListModel> removedList = List.from(state.listStore)
-        ..remove(filter[0]);
+      List<ListModel> removedList = List.from(state.listStore);
 
+      removedList.removeWhere((element) => element.uid == state.selectedTaskid);
+      
       List<ListModel> newListStore = List.from(removedList)
         ..add(ListModel(
-            data: newList, uid: state.selectedTaskid, name: filter[0].name));
+            data: filter[0].data,
+            uid: state.selectedTaskid,
+            name: filter[0].name));
 
       emit(ListsState(
           listStore: newListStore,
