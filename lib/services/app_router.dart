@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:staty/lists/calculation/view/one_var_t_test.dart';
 
-import '../lists/calculation/one_var_stats.dart';
+import '../lists/calculation/view/one_var_stats.dart';
 
 import '../lists/management/view/edit_list_view.dart';
 import '../lists/management/view/lists_preview_view.dart';
@@ -26,9 +27,11 @@ class AppRouter {
 
           return SelectList(idToGoOnFinished: args.idToGoOnFinished);
         });
-    
+
       case EditList.id:
         return MaterialPageRoute(builder: (_) => const EditList());
+      case OneVarTTest.id:
+        return MaterialPageRoute(builder: (_) => const OneVarTTest());
       case OneVarStats.id:
         return MaterialPageRoute(builder: (_) => const OneVarStats());
       default:

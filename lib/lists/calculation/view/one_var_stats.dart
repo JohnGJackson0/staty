@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../bloc/bloc_exports.dart';
-import '../management/model/model_exports.dart';
-import 'model/one_var_stats_model.dart';
-import 'services/variable_stats.dart';
-import 'widgets/selection_promt.dart';
+import '../../bloc/bloc_exports.dart';
+import '../../management/model/model_exports.dart';
+import '../model/one_var_stats_model.dart';
+import '../services/variable_stats.dart';
+import '../widgets/calculation.dart';
+import '../widgets/selection_promt.dart';
 
 class OneVarStats extends StatelessWidget {
   const OneVarStats({super.key});
@@ -49,6 +50,7 @@ class OneVarStats extends StatelessWidget {
     );
   }
 }
+
 class _OneVarStatsView extends StatelessWidget {
   const _OneVarStatsView({
     Key? key,
@@ -87,25 +89,5 @@ class _OneVarStatsView extends StatelessWidget {
         Calculation(result: result.max.toString(), label: 'Max maxX'),
       ],
     );
-  }
-}
-
-class Calculation extends StatelessWidget {
-  const Calculation({Key? key, required this.result, required this.label})
-      : super(key: key);
-
-  final String result;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text('$label:',
-              style: TextStyle(color: Theme.of(context).primaryColor)),
-          Text('$result \n')
-        ]);
   }
 }

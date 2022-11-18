@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:staty/lists/calculation/view/one_var_t_test.dart';
 import 'package:staty/lists/management/view/edit_list_view.dart';
-import 'package:staty/lists/calculation/one_var_stats.dart';
+import 'package:staty/lists/calculation/view/one_var_stats.dart';
 import 'package:staty/view/drawer_view.dart';
 import '../../bloc/bloc_exports.dart';
 import '../model/model_exports.dart';
@@ -132,6 +133,18 @@ class _ListBodyTile extends StatelessWidget {
                       avatar: const Icon(Icons.calculate),
                       color: (Theme.of(context).colorScheme.secondary),
                       label: '1-var stats'),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    context
+                        .read<ListsBloc>()
+                        .add(SelectedTaskIdEvent(id: listStore.uid));
+                    Navigator.of(context).pushNamed(OneVarTTest.id);
+                  },
+                  child: ThemedChip(
+                      avatar: const Icon(Icons.calculate),
+                      color: (Theme.of(context).colorScheme.secondary),
+                      label: '1-Var T-Test'),
                 )
               ],
             ),
