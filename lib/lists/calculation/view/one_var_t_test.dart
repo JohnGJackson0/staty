@@ -41,8 +41,9 @@ class OneVarTTest extends StatelessWidget {
                     : Column(
                         children: [
                           Expanded(
-                              child: filter[0].data.isEmpty
-                                  ? const Text('There is no data in the list')
+                              child: filter[0].data.length < 2
+                                  ? const Text(
+                                      'There is no data in the list or not enough data')
                                   : _OneVarTTestView(list: filter[0])),
                         ],
                       );
@@ -208,7 +209,7 @@ class _TTestInputState extends State<_TTestInput> {
                         hypothesisController.text,
                       ),
                       equalityChoice: _equalityChoice)
-                  : const SizedBox(width: 20)
+                  : const SizedBox(width: 20, height: 20)
             ],
           ),
         );

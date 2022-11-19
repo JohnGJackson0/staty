@@ -22,10 +22,13 @@ class OneSampleTTestService extends Equatable {
   }
 
   calculatePValue() {
-    var nml = StudentDistribution(oneVarStats.df);
+    var tdis = StudentDistribution(oneVarStats.length - 1);
+    var cdfT = tdis.cumulativeProbability(calculateTValue());
     if (equalityChoice == '<') {
-      return nml.cumulativeProbability(calculateTValue());
+      return cdfT;
+    } else if (equalityChoice == '>') {
+      return 1 - cdfT;
     }
-    return 0;
+    return 2 * min(cdfT, 1 - cdfT);
   }
 }

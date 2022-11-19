@@ -78,7 +78,6 @@ class OneVarStatsService extends Equatable {
         quarterOne: _getQuartile(_normalizedSorted, .25),
         median: _statistics.median,
         quarterThree: _getQuartile(_normalizedSorted, .75),
-        max: _statistics.max,
-        df: _statistics.length - 1);
+        max: _statistics.max);
   }
 }
