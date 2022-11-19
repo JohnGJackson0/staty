@@ -64,6 +64,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  data:
+    dependency: "direct main"
+    description:
+      name: data
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.0"
   data_serializer:
     dependency: transitive
     description:
@@ -179,6 +186,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  more:
+    dependency: transitive
+    description:
+      name: more
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.8.5"
   nested:
     dependency: transitive
     description:

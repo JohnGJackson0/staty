@@ -10,6 +10,7 @@ class OneVarStatsModel {
   final num median;
   final num quarterThree;
   final num max;
+  final double df;
 
   OneVarStatsModel(
       {required this.sampleMean,
@@ -22,5 +23,6 @@ class OneVarStatsModel {
       required this.quarterOne,
       required this.median,
       required this.quarterThree,
-      required this.max});
+      required this.max,
+      required this.df});
 }

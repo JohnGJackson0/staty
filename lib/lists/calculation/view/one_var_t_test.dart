@@ -28,7 +28,7 @@ class OneVarTTest extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: filter.isEmpty
-                ? const Text('1-var-t-test')
+                ? const Text('1-Sample-T-Test')
                 : Text(filter[0].name),
           ),
           body: Container(
@@ -252,7 +252,9 @@ class _Result extends StatelessWidget {
             as OneVarStatsModel;
 
         var result = OneSampleTTestService(
-            oneVarStats: stats, hypothesisValue: hypothesisValue);
+            oneVarStats: stats,
+            hypothesisValue: hypothesisValue,
+            equalityChoice: getEqualityValue());
 
         return Column(
           children: [
@@ -263,7 +265,9 @@ class _Result extends StatelessWidget {
             Calculation(
                 label: 'T-Statistic T',
                 result: result.calculateTValue().toString()),
-            const Calculation(label: 'P-Statistic P', result: 'TODO'),
+            Calculation(
+                label: 'P-Statistic P',
+                result: result.calculatePValue().toString()),
             Calculation(
                 label: 'Sample Mean x̄', result: stats.sampleMean.toString()),
             Calculation(
