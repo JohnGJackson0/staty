@@ -15,6 +15,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
+  fluttertoast: ^8.0.8
   hydrated_bloc: ^8.1.0
   keyboard_actions: ^4.1.0
   path_provider: ^2.0.11

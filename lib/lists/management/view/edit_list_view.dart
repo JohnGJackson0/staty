@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import '../../bloc/bloc_exports.dart';
 import '../model/model_exports.dart';
@@ -285,10 +286,16 @@ class _SubmitDataPoint extends StatelessWidget {
         return FormSubmit(
             formKey: formKey,
             label: 'UPDATE',
-            onSubmitEvent: () => {
-                  context.read<ListsBloc>().add(
-                      UpdateDataPointSubmitted(listId: state.selectedTaskid))
-                });
+            onSubmitEvent: () {
+              // add no data submit
+              context
+                  .read<ListsBloc>()
+                  .add(UpdateDataPointSubmitted(listId: state.selectedTaskid));
+              Fluttertoast.showToast(
+                  msg: "Submitted",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.TOP);
+            });
       },
     );
   }
