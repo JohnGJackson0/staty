@@ -14,7 +14,7 @@ class OneSampleTTestService extends Equatable {
       required this.hypothesisValue});
 
   @override
-  List<Object?> get props => [oneVarStats];
+  List<Object?> get props => [oneVarStats, equalityChoice, hypothesisValue];
 
   calculateTValue() {
     return (oneVarStats.sampleMean - hypothesisValue) /
