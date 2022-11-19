@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:staty/lists/calculation/services/one_sample_t_test.dart';
 import 'package:staty/lists/calculation/widgets/calculation.dart';
 
 import '../../../services/number.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../management/model/model_exports.dart';
 import '../../management/widgets/form_submit.dart';
+import '../model/one_var_stats_model.dart';
+import '../services/variable_stats.dart';
 import '../widgets/selection_promt.dart';
 
 class OneVarTTest extends StatelessWidget {
@@ -236,18 +239,41 @@ class _Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Calculation(
-            label: 'Hypothesis μ',
-            result: 'μ ${getEqualityValue()} ${hypothesisValue.toString()}'),
-        const Calculation(label: 'T-Statistic T', result: 'TODO'),
-        const Calculation(label: 'P-Statistic P', result: 'TODO'),
-        const Calculation(label: 'Sample Mean x̄', result: 'TODO'),
-        const Calculation(
-            label: 'Sample Standard Deviation Sx', result: 'TODO'),
-        const Calculation(label: 'Number of Elements n', result: 'TODO')
-      ],
+    return BlocBuilder<ListsBloc, ListsState>(
+      builder: (context, state) {
+        List<ListModel> filter = [];
+        filter.addAll(state.listStore);
+
+        filter.retainWhere((e) {
+          return e.uid == state.selectedTaskid;
+        });
+
+        var stats = OneVarStatsService(list: filter[0].data).getStats()
+            as OneVarStatsModel;
+
+        var result = OneSampleTTestService(
+            oneVarStats: stats, hypothesisValue: hypothesisValue);
+
+        return Column(
+          children: [
+            Calculation(
+                label: 'Hypothesis μ',
+                result:
+                    'μ ${getEqualityValue()} ${hypothesisValue.toString()}'),
+            Calculation(
+                label: 'T-Statistic T',
+                result: result.calculateTValue().toString()),
+            const Calculation(label: 'P-Statistic P', result: 'TODO'),
+            Calculation(
+                label: 'Sample Mean x̄', result: stats.sampleMean.toString()),
+            Calculation(
+                label: 'Sample Standard Deviation Sx',
+                result: stats.sampleStandardDeviation.toString()),
+            Calculation(
+                label: 'Number of Elements n', result: stats.length.toString())
+          ],
+        );
+      },
     );
   }
 }
