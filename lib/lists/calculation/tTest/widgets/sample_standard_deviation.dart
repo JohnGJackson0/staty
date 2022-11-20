@@ -2,19 +2,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:staty/lists/calculation/tTest/bloc/t_test_bloc_bloc.dart';
-import 'package:staty/services/number.dart';
 
+import '../../../../services/number.dart';
 import '../../../management/model/form_submission_status.dart';
+import '../bloc/t_test_bloc_bloc.dart';
 
-class HypothesisValue extends StatefulWidget {
-  const HypothesisValue({Key? key}) : super(key: key);
+class SampleStandardDeviation extends StatefulWidget {
+  const SampleStandardDeviation({Key? key}) : super(key: key);
 
   @override
-  State<HypothesisValue> createState() => _HypothesisValueState();
+  State<SampleStandardDeviation> createState() =>
+      _SampleStandardDeviationState();
 }
 
-class _HypothesisValueState extends State<HypothesisValue> {
+class _SampleStandardDeviationState extends State<SampleStandardDeviation> {
   final _controller = TextEditingController();
 
   @override
@@ -39,9 +40,9 @@ class _HypothesisValueState extends State<HypothesisValue> {
             ],
             onChanged: (value) {
               try {
-                context
-                    .read<TTestBlocBloc>()
-                    .add(OnChangedHypothesisValue(hypothesisValue: value));
+                context.read<TTestBlocBloc>().add(
+                    OnChangedSampleStandardDeviation(
+                        sampleStandardDeviation: value));
               } catch (e) {
                 if (kDebugMode) {
                   print('error');

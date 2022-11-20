@@ -4,6 +4,9 @@ class TTestBlocState extends Equatable {
   final double hypothesisValue;
   final TTestSubmissionData submissionData;
   final FormSubmissionStatus formStatus;
+  final double length;
+  final double sampleStandardDeviation;
+  final double sampleMean;
 
   bool isValidDoubleInput() {
     try {
@@ -17,7 +20,10 @@ class TTestBlocState extends Equatable {
   const TTestBlocState(
       {this.submissionData = const TTestSubmissionData(),
       this.hypothesisValue = -1,
-      this.formStatus = const InitialFormStatus()});
+      this.formStatus = const InitialFormStatus(),
+      this.length = -1,
+      this.sampleStandardDeviation = -1,
+      this.sampleMean = -1});
 
   @override
   List<Object> get props => [submissionData, hypothesisValue];

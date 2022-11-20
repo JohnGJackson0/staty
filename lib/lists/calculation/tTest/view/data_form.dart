@@ -70,7 +70,7 @@ class _DataFormInputState extends State<_DataFormInput> {
                             FocusScope.of(context).requestFocus(FocusNode());
                             context
                                 .read<TTestBlocBloc>()
-                                .add(HypothesisValueSubmitted());
+                                .add(DataFormSubmitted());
                           },
                           label: 'Calculate')),
                   state.formStatus is SubmissionSuccess

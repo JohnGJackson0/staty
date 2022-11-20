@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staty/lists/calculation/tTest/bloc/t_test_bloc_bloc.dart';
-import 'package:staty/services/number.dart';
 
+import '../../../../services/number.dart';
 import '../../../management/model/form_submission_status.dart';
 
-class HypothesisValue extends StatefulWidget {
-  const HypothesisValue({Key? key}) : super(key: key);
+class Length extends StatefulWidget {
+  const Length({Key? key}) : super(key: key);
 
   @override
-  State<HypothesisValue> createState() => _HypothesisValueState();
+  State<Length> createState() => _LengthState();
 }
 
-class _HypothesisValueState extends State<HypothesisValue> {
+class _LengthState extends State<Length> {
   final _controller = TextEditingController();
 
   @override
@@ -41,7 +41,7 @@ class _HypothesisValueState extends State<HypothesisValue> {
               try {
                 context
                     .read<TTestBlocBloc>()
-                    .add(OnChangedHypothesisValue(hypothesisValue: value));
+                    .add(OnChangedLength(length: value));
               } catch (e) {
                 if (kDebugMode) {
                   print('error');

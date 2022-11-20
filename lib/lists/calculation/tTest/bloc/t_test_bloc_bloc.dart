@@ -12,11 +12,78 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
   TTestBlocBloc() : super(TTestBlocInitial()) {
     on<OnChangedHypothesisValue>(_onHypothesisValueChanged);
     on<OnChangedEqualityValue>(_onChangedEqualityValue);
-    on<HypothesisValueSubmitted>(_onHypothesisValueSubmitted);
+    on<DataFormSubmitted>(_onDataFormSubmitted);
+    on<OnChangedMeanInput>(_onChangedMeanInput);
+    on<OnChangedSampleStandardDeviation>(_onChangedSampleStandardDeviation);
+    on<OnChangedLength>(_onChangedLength);
+    on<StatFormSubmitted>(_onStatFormSubmited);
   }
 
-  void _onHypothesisValueSubmitted(
-      HypothesisValueSubmitted event, Emitter<TTestBlocState> emit) {
+  void _onStatFormSubmited(
+      StatFormSubmitted event, Emitter<TTestBlocState> emit) {
+    /*emit(TTestBlocState(
+        hypothesisValue: state.hypothesisValue,
+        submissionData: state.submissionData,
+        formStatus: FormSubmitting()));*/
+
+    try {
+      emit(TTestBlocState(
+          hypothesisValue: double.parse(state.submissionData.hypothesisValue),
+          length: double.parse(state.submissionData.length),
+          sampleMean: double.parse(state.submissionData.meanValue),
+          sampleStandardDeviation:
+              double.parse(state.submissionData.sampleStandardDeviation),
+          submissionData: TTestSubmissionData(
+              hypothesisEquality: state.submissionData.hypothesisEquality),
+          formStatus: SubmissionSuccess()));
+    } catch (e) {
+      emit(TTestBlocState(
+          hypothesisValue: state.hypothesisValue,
+          submissionData: TTestSubmissionData(
+              hypothesisEquality: state.submissionData.hypothesisEquality),
+          formStatus: SubmissionFailed(e)));
+    }
+  }
+
+  void _onChangedLength(OnChangedLength event, Emitter<TTestBlocState> emit) {
+    emit(TTestBlocState(
+        hypothesisValue: -1,
+        submissionData: TTestSubmissionData(
+            length: event.length,
+            sampleStandardDeviation:
+                state.submissionData.sampleStandardDeviation,
+            hypothesisEquality: state.submissionData.hypothesisEquality,
+            hypothesisValue: state.submissionData.hypothesisValue,
+            meanValue: state.submissionData.meanValue)));
+  }
+
+  void _onChangedSampleStandardDeviation(
+      OnChangedSampleStandardDeviation event, Emitter<TTestBlocState> emit) {
+    emit(TTestBlocState(
+        hypothesisValue: -1,
+        submissionData: TTestSubmissionData(
+            sampleStandardDeviation: event.sampleStandardDeviation,
+            length: state.submissionData.length,
+            hypothesisEquality: state.submissionData.hypothesisEquality,
+            hypothesisValue: state.submissionData.hypothesisValue,
+            meanValue: state.submissionData.meanValue)));
+  }
+
+  void _onChangedMeanInput(
+      OnChangedMeanInput event, Emitter<TTestBlocState> emit) {
+    emit(TTestBlocState(
+        hypothesisValue: -1,
+        submissionData: TTestSubmissionData(
+            length: state.submissionData.length,
+            sampleStandardDeviation:
+                state.submissionData.sampleStandardDeviation,
+            hypothesisEquality: state.submissionData.hypothesisEquality,
+            hypothesisValue: state.submissionData.hypothesisValue,
+            meanValue: event.meanValue)));
+  }
+
+  void _onDataFormSubmitted(
+      DataFormSubmitted event, Emitter<TTestBlocState> emit) {
     emit(TTestBlocState(
         hypothesisValue: state.hypothesisValue,
         submissionData: state.submissionData,
@@ -41,8 +108,12 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
       OnChangedHypothesisValue event, Emitter<TTestBlocState> emit) {
     emit(TTestBlocState(
         submissionData: TTestSubmissionData(
+            length: state.submissionData.length,
+            sampleStandardDeviation:
+                state.submissionData.sampleStandardDeviation,
+            hypothesisEquality: state.submissionData.hypothesisEquality,
             hypothesisValue: event.hypothesisValue,
-            hypothesisEquality: state.submissionData.hypothesisEquality)));
+            meanValue: state.submissionData.meanValue)));
   }
 
   void _onChangedEqualityValue(
@@ -50,8 +121,12 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
     emit(TTestBlocState(
         hypothesisValue: -1,
         submissionData: TTestSubmissionData(
+            length: state.submissionData.length,
+            sampleStandardDeviation:
+                state.submissionData.sampleStandardDeviation,
             hypothesisEquality: event.equalityValue,
-            hypothesisValue: state.submissionData.hypothesisValue)));
+            hypothesisValue: state.submissionData.hypothesisValue,
+            meanValue: state.submissionData.meanValue)));
   }
 
   @override
