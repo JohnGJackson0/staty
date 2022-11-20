@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../../bloc/bloc_exports.dart';
 import '../../model/hypothesis_equality.dart';
-import '../../model/one_var_stats_model.dart';
 import '../../services/one_sample_t_test.dart';
 import '../../widgets/calculation.dart';
+import '../model/t_test_stats_model.dart';
 
 // shared between data and stats results
 
 class Result extends StatelessWidget {
   final double hypothesisValue;
   final HypothesisEquality? equalityChoice;
-  final OneVarStatsModel stats;
+  final TTestStatsModel stats;
 
   const Result({
     required this.hypothesisValue,

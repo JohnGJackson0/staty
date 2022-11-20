@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:statistics/statistics.dart';
 import '../../management/model/data_point.dart';
 import '../model/one_var_stats_model.dart';
+import '../tTest/model/t_test_stats_model.dart';
 
 class OneVarStatsService extends Equatable {
   final List<DataPoint> list;
@@ -79,5 +80,14 @@ class OneVarStatsService extends Equatable {
         median: _statistics.median,
         quarterThree: _getQuartile(_normalizedSorted, .75),
         max: _statistics.max);
+  }
+
+  getTTestStatsModel() {
+    return TTestStatsModel(
+      sampleMean: _statistics.mean,
+      sampleStandardDeviation:
+          _getSampleStandardDeviation(_normalizedSorted, _statistics.mean),
+      length: _statistics.length,
+    );
   }
 }

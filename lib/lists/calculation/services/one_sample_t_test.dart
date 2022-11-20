@@ -1,10 +1,11 @@
 import 'dart:math';
 import 'package:equatable/equatable.dart';
-import '../model/one_var_stats_model.dart';
 import 'package:data/data.dart';
 
+import '../tTest/model/t_test_stats_model.dart';
+
 class OneSampleTTestService extends Equatable {
-  final OneVarStatsModel oneVarStats;
+  final TTestStatsModel oneVarStats;
   final num hypothesisValue;
   final String equalityChoice;
 

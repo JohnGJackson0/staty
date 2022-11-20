@@ -3,9 +3,9 @@ import '../../../bloc/bloc_exports.dart';
 import '../../../management/model/form_submission_status.dart';
 import '../../../management/model/list_model.dart';
 import '../../../management/widgets/form_submit.dart';
-import '../../model/one_var_stats_model.dart';
 import '../../services/variable_stats.dart';
 import '../bloc/t_test_bloc_bloc.dart';
+import '../model/t_test_stats_model.dart';
 import '../widgets/hypothesis_equality_selection.dart';
 import '../widgets/hypothesis_value.dart';
 import '../widgets/result.dart';
@@ -17,12 +17,7 @@ class DataForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      verticalDirection: VerticalDirection.down,
-      children: const <Widget>[_DataFormInput()],
-    );
+    return const _DataFormInput();
   }
 }
 
@@ -48,6 +43,9 @@ class _DataFormInputState extends State<_DataFormInput> {
         filter.retainWhere((e) {
           return e.uid == state.selectedTaskid;
         });
+        var stats = OneVarStatsService(list: filter[0].data)
+            .getTTestStatsModel() as TTestStatsModel;
+
         return BlocBuilder<TTestBlocBloc, TTestBlocState>(
           builder: (context, state) {
             return Form(
@@ -76,25 +74,11 @@ class _DataFormInputState extends State<_DataFormInput> {
                           },
                           label: 'Calculate')),
                   state.formStatus is SubmissionSuccess
-                      ? BlocBuilder<ListsBloc, ListsState>(
-                          builder: (context, listState) {
-                            List<ListModel> filter = [];
-                            filter.addAll(listState.listStore);
-
-                            filter.retainWhere((e) {
-                              return e.uid == listState.selectedTaskid;
-                            });
-
-                            var stats = OneVarStatsService(list: filter[0].data)
-                                .getStats() as OneVarStatsModel;
-                            return Result(
-                                    hypothesisValue: state.hypothesisValue,
-                                    equalityChoice:
-                                        state.submissionData.hypothesisEquality,
-                                    stats: stats);
-                             
-                          },
-                        )
+                      ? Result(
+                          hypothesisValue: state.hypothesisValue,
+                          equalityChoice:
+                              state.submissionData.hypothesisEquality,
+                          stats: stats)
                       : const SizedBox(width: 20, height: 20)
                 ],
               ),
