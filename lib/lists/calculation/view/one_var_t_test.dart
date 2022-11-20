@@ -28,7 +28,7 @@ class OneVarTTest extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: filter.isEmpty
-                ? const Text('1-Sample-T-Test')
+                ? const Text('1 var T-Test')
                 : Text(filter[0].name),
           ),
           body: Container(
