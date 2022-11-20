@@ -6,14 +6,12 @@ class FormSubmit extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final String label;
   final Function onSubmitEvent;
-  final Function? onFailEvent;
 
   const FormSubmit(
       {Key? key,
       required this.formKey,
       required this.label,
-      required this.onSubmitEvent,
-      this.onFailEvent})
+      required this.onSubmitEvent})
       : super(key: key);
 
   @override
@@ -26,8 +24,6 @@ class FormSubmit extends StatelessWidget {
                 onTap: () {
                   if (formKey.currentState!.validate()) {
                     onSubmitEvent();
-                  } else {
-                    onFailEvent!();
                   }
                 },
                 child: Container(

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:staty/lists/calculation/services/one_sample_t_test.dart';
-import 'package:staty/lists/calculation/widgets/calculation.dart';
 
-import '../../../services/number.dart';
 import '../../bloc/bloc_exports.dart';
 import '../../management/model/model_exports.dart';
-import '../../management/widgets/form_submit.dart';
-import '../model/one_var_stats_model.dart';
-import '../services/variable_stats.dart';
+import '../tTest/view/data_form.dart';
+import '../tTest/view/stat_form.dart';
 import '../widgets/selection_promt.dart';
 
 class OneVarTTest extends StatelessWidget {
@@ -34,21 +29,7 @@ class OneVarTTest extends StatelessWidget {
           body: Container(
             padding: const EdgeInsets.all(20),
             alignment: Alignment.topLeft,
-            child: BlocBuilder<ListsBloc, ListsState>(
-              builder: (context, state) {
-                return filter.isEmpty
-                    ? const SelectionPrompt(idToGoOnFinished: OneVarTTest.id)
-                    : Column(
-                        children: [
-                          Expanded(
-                              child: filter[0].data.length < 2
-                                  ? const Text(
-                                      'There is no data in the list or not enough data')
-                                  : _OneVarTTestView(list: filter[0])),
-                        ],
-                      );
-              },
-            ),
+            child: _ListDataSelection(filter: filter, id: id),
           ),
         );
       },
@@ -56,229 +37,59 @@ class OneVarTTest extends StatelessWidget {
   }
 }
 
-class _OneVarTTestView extends StatelessWidget {
-  const _OneVarTTestView({
+class _ListDataSelection extends StatefulWidget {
+  const _ListDataSelection({
     Key? key,
-    required this.list,
+    required this.filter,
+    required this.id,
   }) : super(key: key);
 
-  final ListModel list;
+  final List<ListModel> filter;
+  final String id;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      verticalDirection: VerticalDirection.down,
-      children: <Widget>[_TTestInput(list: list)],
-    );
-  }
+  State<_ListDataSelection> createState() => _ListDataSelectionState();
 }
 
-class _TTestInput extends StatefulWidget {
-  final ListModel list;
-  const _TTestInput({
-    Key? key,
-    required this.list,
-  }) : super(key: key);
-
-  @override
-  State<_TTestInput> createState() => _TTestInputState();
-}
-
-enum HypothesisEquality { notEqual, less, more }
-
-class _TTestInputState extends State<_TTestInput> {
-  HypothesisEquality? _equalityChoice = HypothesisEquality.notEqual;
-  final formKey = GlobalKey<FormState>();
-  bool _showResult = false;
-  TextEditingController hypothesisController = TextEditingController();
-
+class _ListDataSelectionState extends State<_ListDataSelection> {
+  bool statsSelected = false;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ListsBloc, ListsState>(
       builder: (context, state) {
-        List<ListModel> filter = [];
-        filter.addAll(state.listStore);
-
-        filter.retainWhere((e) {
-          return e.uid == state.selectedTaskid;
-        });
-        return Form(
-          key: formKey,
-          child: Column(
-            children: [
-              const Text('What was the hypthosis?\n'),
-              const Text('Hypothesis Value or μ0:'),
-              TextFormField(
-                  onTap: () {
-                    setState(() {
-                      _showResult = false;
-                    });
-                  },
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(
-                        r'^[0-9]*[.]?[0-9]*',
-                      ),
-                    ),
-                  ],
-                  controller: hypothesisController,
-                  validator: (value) => value != null &&
-                          value.isNotEmpty &&
-                          isValidDecimalInput(value)
-                      ? null
-                      : 'Invalid input'),
-              const Text('\nThe hypothesis statement'),
-              Row(
+        return widget.filter.isEmpty
+            ? statsSelected
+                ? const StatForm()
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SelectionPrompt(
+                          idToGoOnFinished: OneVarTTest.id,
+                          label:
+                              'If you want to calculate T-Test with data then select a list.'),
+                      const Text(
+                          'If you want to calculate it without a list then select this option below.'),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            statsSelected = true;
+                          });
+                        },
+                        child: const Text('T-Test Stats'),
+                      )
+                    ],
+                  )
+            : Column(
                 children: [
-                  Flexible(
-                    child: ListTile(
-                      title: const Text('≠'),
-                      leading: Radio(
-                        value: HypothesisEquality.notEqual,
-                        groupValue: _equalityChoice,
-                        onChanged: (HypothesisEquality? value) {
-                          setState(() {
-                            _equalityChoice = value;
-                            _showResult = false;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    child: ListTile(
-                      title: const Text('<'),
-                      leading: Radio<HypothesisEquality>(
-                        value: HypothesisEquality.less,
-                        groupValue: _equalityChoice,
-                        onChanged: (HypothesisEquality? value) {
-                          setState(() {
-                            _equalityChoice = value;
-                            _showResult = false;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    child: ListTile(
-                      title: const Text('>'),
-                      leading: Radio<HypothesisEquality>(
-                        value: HypothesisEquality.more,
-                        groupValue: _equalityChoice,
-                        onChanged: (HypothesisEquality? value) {
-                          setState(() {
-                            _equalityChoice = value;
-                            _showResult = false;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
+                  Expanded(
+                      child: widget.filter[0].data.length < 2
+                          ? const Text('There is not enough Data in the list')
+                          : const DataForm()),
                 ],
-              ),
-              const Text('Selected List:'),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(filter[0].name),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: FormSubmit(
-                    formKey: formKey,
-                    onSubmitEvent: () {
-                      setState(() {
-                        _showResult = true;
-                      });
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    },
-                    onFailEvent: () {
-                      setState(() {
-                        _showResult = false;
-                      });
-                    },
-                    label: 'Calculate'),
-              ),
-              _showResult
-                  ? _Result(
-                      hypothesisValue: double.parse(
-                        hypothesisController.text,
-                      ),
-                      equalityChoice: _equalityChoice)
-                  : const SizedBox(width: 20, height: 20)
-            ],
-          ),
-        );
+              );
       },
     );
   }
 }
 
-class _Result extends StatelessWidget {
-  final double hypothesisValue;
-  final HypothesisEquality? equalityChoice;
-
-  const _Result({
-    required this.hypothesisValue,
-    required this.equalityChoice,
-    Key? key,
-  }) : super(key: key);
-
-  getEqualityValue() {
-    if (equalityChoice?.index == 0) {
-      return '≠';
-    } else if (equalityChoice?.index == 1) {
-      return '<';
-    } else {
-      return '>';
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ListsBloc, ListsState>(
-      builder: (context, state) {
-        List<ListModel> filter = [];
-        filter.addAll(state.listStore);
-
-        filter.retainWhere((e) {
-          return e.uid == state.selectedTaskid;
-        });
-
-        var stats = OneVarStatsService(list: filter[0].data).getStats()
-            as OneVarStatsModel;
-
-        var result = OneSampleTTestService(
-            oneVarStats: stats,
-            hypothesisValue: hypothesisValue,
-            equalityChoice: getEqualityValue());
-
-        return Column(
-          children: [
-            Calculation(
-                label: 'Hypothesis μ',
-                result:
-                    'μ ${getEqualityValue()} ${hypothesisValue.toString()}'),
-            Calculation(
-                label: 'T-Statistic T',
-                result: result.calculateTValue().toString()),
-            Calculation(
-                label: 'P-Statistic P',
-                result: result.calculatePValue().toString()),
-            Calculation(
-                label: 'Sample Mean x̄', result: stats.sampleMean.toString()),
-            Calculation(
-                label: 'Sample Standard Deviation Sx',
-                result: stats.sampleStandardDeviation.toString()),
-            Calculation(
-                label: 'Number of Elements n', result: stats.length.toString())
-          ],
-        );
-      },
-    );
-  }
-}

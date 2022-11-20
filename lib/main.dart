@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:staty/theme/color.dart';
 
 import 'lists/bloc/lists_bloc.dart';
+import 'lists/calculation/tTest/bloc/t_test_bloc_bloc.dart';
 import 'theme/bloc/bloc_exports.dart';
 
 Future<void> main() async {
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => ListsBloc()),
-          BlocProvider(create: (context) => ThemeBloc())
+          BlocProvider(create: (context) => ThemeBloc()),
+          BlocProvider(create: (context) => TTestBlocBloc())
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, state) {

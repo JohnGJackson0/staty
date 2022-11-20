@@ -3,9 +3,13 @@ import '../../../services/app_router.dart';
 import '../../management/view/select_list.dart';
 
 class SelectionPrompt extends StatelessWidget {
-  const SelectionPrompt({Key? key, required this.idToGoOnFinished})
+  const SelectionPrompt(
+      {Key? key,
+      required this.idToGoOnFinished,
+      this.label = 'Please select a list with items in it.'})
       : super(key: key);
   final String idToGoOnFinished;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +17,7 @@ class SelectionPrompt extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Please select a list with items in it.'),
+        Text(label),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
