@@ -34,16 +34,15 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
           hypothesisValue: double.parse(state.submissionData.hypothesisValue),
           length: double.parse(state.submissionData.length),
           sampleMean: double.parse(state.submissionData.meanValue),
+          hypothesisEquality: state.submissionData.hypothesisEquality,
           sampleStandardDeviation:
               double.parse(state.submissionData.sampleStandardDeviation),
-          submissionData: TTestSubmissionData(
-              hypothesisEquality: state.submissionData.hypothesisEquality),
+          submissionData: const TTestSubmissionData(),
           formStatus: SubmissionSuccess()));
     } catch (e) {
       emit(TTestBlocState(
           hypothesisValue: state.hypothesisValue,
-          submissionData: TTestSubmissionData(
-              hypothesisEquality: state.submissionData.hypothesisEquality),
+          submissionData: const TTestSubmissionData(),
           formStatus: SubmissionFailed(e)));
     }
   }
@@ -95,14 +94,13 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
     try {
       emit(TTestBlocState(
           hypothesisValue: double.parse(state.submissionData.hypothesisValue),
-          submissionData: TTestSubmissionData(
-              hypothesisEquality: state.submissionData.hypothesisEquality),
+          hypothesisEquality: state.submissionData.hypothesisEquality,
+          submissionData: const TTestSubmissionData(),
           formStatus: SubmissionSuccess()));
     } catch (e) {
       emit(TTestBlocState(
           hypothesisValue: state.hypothesisValue,
-          submissionData: TTestSubmissionData(
-              hypothesisEquality: state.submissionData.hypothesisEquality),
+          submissionData: state.submissionData,
           formStatus: SubmissionFailed(e)));
     }
   }
@@ -122,7 +120,6 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
   void _onChangedEqualityValue(
       OnChangedEqualityValue event, Emitter<TTestBlocState> emit) {
     emit(TTestBlocState(
-        hypothesisValue: -1,
         submissionData: TTestSubmissionData(
             length: state.submissionData.length,
             sampleStandardDeviation:

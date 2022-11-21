@@ -43,7 +43,7 @@ class _StatFormInputState extends State<_StatFormInput> {
         if (state.formStatus is SubmissionSuccess) {
           Navigator.pushNamed(context, TTestResult.id,
               arguments: ResultScreenParam(
-                  equalityChoice: state.submissionData.hypothesisEquality,
+                  equalityChoice: state.hypothesisEquality,
                   hypothesisValue: state.hypothesisValue,
                   stats: TTestStatsModel(
                       length: state.length,

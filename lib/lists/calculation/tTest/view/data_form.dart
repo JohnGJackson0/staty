@@ -53,7 +53,7 @@ class _DataFormInputState extends State<_DataFormInput> {
               Navigator.pushNamed(context, TTestResult.id,
                   arguments: ResultScreenParam(
                       hypothesisValue: state.hypothesisValue,
-                      equalityChoice: state.submissionData.hypothesisEquality,
+                      equalityChoice: state.hypothesisEquality,
                       stats: stats));
             }
           },

@@ -7,6 +7,7 @@ class TTestBlocState extends Equatable {
   final double length;
   final double sampleStandardDeviation;
   final double sampleMean;
+  final HypothesisEquality? hypothesisEquality;
 
   const TTestBlocState(
       {this.submissionData = const TTestSubmissionData(),
@@ -14,7 +15,8 @@ class TTestBlocState extends Equatable {
       this.formStatus = const InitialFormStatus(),
       this.length = -1,
       this.sampleStandardDeviation = -1,
-      this.sampleMean = -1});
+      this.sampleMean = -1,
+      this.hypothesisEquality = HypothesisEquality.notEqual});
 
   @override
   List<Object> get props => [submissionData, hypothesisValue];
