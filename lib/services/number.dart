@@ -6,3 +6,11 @@ Function isValidDecimalInput = (String val) {
     return false;
   }
 };
+
+Function isValidLengthInputWithDOF = (String val) {
+  try {
+    return int.parse(val) > 1;
+  } catch (e) {
+    return false;
+  }
+};

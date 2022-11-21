@@ -8,15 +8,6 @@ class TTestBlocState extends Equatable {
   final double sampleStandardDeviation;
   final double sampleMean;
 
-  bool isValidDoubleInput() {
-    try {
-      double.parse(submissionData.hypothesisValue);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
   const TTestBlocState(
       {this.submissionData = const TTestSubmissionData(),
       this.hypothesisValue = -1,

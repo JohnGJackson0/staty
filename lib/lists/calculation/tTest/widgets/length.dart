@@ -29,7 +29,7 @@ class _LengthState extends State<Length> {
           },
           child: TextFormField(
             controller: _controller,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            keyboardType: const TextInputType.numberWithOptions(),
             inputFormatters: [
               FilteringTextInputFormatter.allow(
                 RegExp(
@@ -52,8 +52,9 @@ class _LengthState extends State<Length> {
               label: Text('Enter the length of the data set'),
             ),
             onFieldSubmitted: (value) => {_controller.clear()},
-            validator: (value) =>
-                isValidDecimalInput(value) ? null : 'Invalid input',
+            validator: (value) => isValidLengthInputWithDOF(value)
+                ? null
+                : 'Invalid input (whole number over 1)',
           ),
         );
       },
