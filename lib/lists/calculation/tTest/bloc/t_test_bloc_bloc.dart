@@ -21,10 +21,13 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
 
   void _onStatFormSubmited(
       StatFormSubmitted event, Emitter<TTestBlocState> emit) {
-    /*emit(TTestBlocState(
+    emit(TTestBlocState(
         hypothesisValue: state.hypothesisValue,
+        length: state.length,
+        sampleMean: state.sampleMean,
+        sampleStandardDeviation: state.sampleStandardDeviation,
         submissionData: state.submissionData,
-        formStatus: FormSubmitting()));*/
+        formStatus: FormSubmitting()));
 
     try {
       emit(TTestBlocState(

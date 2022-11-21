@@ -49,6 +49,9 @@ class _SampleStandardDeviationState extends State<SampleStandardDeviation> {
                 }
               }
             },
+            decoration: const InputDecoration(
+              label: Text('Enter the sample standard deviation Sx'),
+            ),
             onFieldSubmitted: (value) => {_controller.clear()},
             validator: (value) =>
                 isValidDecimalInput(value) ? null : 'Invalid input',

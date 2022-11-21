@@ -48,6 +48,9 @@ class _LengthState extends State<Length> {
                 }
               }
             },
+            decoration: const InputDecoration(
+              label: Text('Enter the length of the data set'),
+            ),
             onFieldSubmitted: (value) => {_controller.clear()},
             validator: (value) =>
                 isValidDecimalInput(value) ? null : 'Invalid input',

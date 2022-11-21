@@ -37,6 +37,9 @@ class _MeanState extends State<Mean> {
                 ),
               ),
             ],
+            decoration: const InputDecoration(
+              label: Text('Enter the sample mean x̄'),
+            ),
             onChanged: (value) {
               try {
                 context

@@ -70,13 +70,16 @@ class _ListDataSelectionState extends State<_ListDataSelection> {
                               'If you want to calculate T-Test with data then select a list.'),
                       const Text(
                           'If you want to calculate it without a list then select this option below.'),
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            statsSelected = true;
-                          });
-                        },
-                        child: const Text('T-Test Stats'),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              statsSelected = true;
+                            });
+                          },
+                          child: const Text('T-Test Stats'),
+                        ),
                       )
                     ],
                   )

@@ -48,6 +48,9 @@ class _HypothesisValueState extends State<HypothesisValue> {
                 }
               }
             },
+            decoration: const InputDecoration(
+              label: Text('Enter the hypothesis value μ0'),
+            ),
             onFieldSubmitted: (value) => {_controller.clear()},
             validator: (value) =>
                 isValidDecimalInput(value) ? null : 'Invalid input',
