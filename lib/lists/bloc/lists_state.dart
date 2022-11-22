@@ -46,8 +46,6 @@ class ListsState extends Equatable {
   List<Object?> get props =>
       [listStore, submissionData, formStatus, selectedTaskid];
 
-
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'listStore': listStore.map((x) => x.toMap()).toList(),
@@ -57,12 +55,21 @@ class ListsState extends Equatable {
   }
 
   factory ListsState.fromMap(Map<String, dynamic> map) {
+    List<dynamic> listStore = map['listStore'];
+    List<ListModel> listModel = [];
+
+    for (var element in listStore) {
+      List<dynamic> datas = element['data'];
+
+      List<DataPoint> dataPoints = [];
+      for (var element in datas) {
+        dataPoints.add(DataPoint(value: element['value'], id: element['id']));
+      }
+      ListModel model = ListModel(data: dataPoints, uid: element['uid'], name: element['name']);
+      listModel.add(model);
+    }
     return ListsState(
-      listStore: List<ListModel>.from(
-        (map['listStore'] as List<int>).map<ListModel>(
-          (x) => ListModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      listStore: listModel,
       submissionData:
           SubmissionData.fromMap(map['submissionData'] as Map<String, dynamic>),
       selectedTaskid: map['selectedTaskid'] as String,
