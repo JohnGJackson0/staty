@@ -1,9 +1,64 @@
 // ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart';
 import 'package:staty/lists/calculation/services/one_sample_t_test.dart';
+import 'package:staty/lists/calculation/services/variable_stats.dart';
 import 'package:staty/lists/calculation/tTest/model/t_test_stats_model.dart';
+import 'package:staty/lists/management/model/model_exports.dart';
 
 void main() {
+  group('common case p&t values on list', () {
+    List<DataPoint> list = [
+      const DataPoint(value: 128, id: 'id'),
+      const DataPoint(value: 118, id: 'id'),
+      const DataPoint(value: 144, id: 'id'),
+      const DataPoint(value: 133, id: 'id'),
+      const DataPoint(value: 132, id: 'id'),
+      const DataPoint(value: 111, id: 'id'),
+      const DataPoint(value: 149, id: 'id'),
+      const DataPoint(value: 139, id: 'id'),
+      const DataPoint(value: 136, id: 'id'),
+      const DataPoint(value: 126, id: 'id'),
+      const DataPoint(value: 127, id: 'id'),
+      const DataPoint(value: 114, id: 'id'),
+      const DataPoint(value: 142, id: 'id'),
+      const DataPoint(value: 140, id: 'id')
+    ];
+    var tTestStats =
+        OneVarStatsService(list: list).getTTestStatsModel() as TTestStatsModel;
+
+    test('p&t on list less than', () {
+      var result = OneSampleTTestService(
+          oneVarStats: tTestStats, equalityChoice: '<', hypothesisValue: 120);
+
+      var tValue = result.calculateTValue();
+      var pValue = result.calculatePValue();
+
+      expect(3.72, closeTo(tValue, .1));
+      expect(.99, closeTo(pValue, .01));
+    });
+    test('p&t on list two tailed', () {
+      var result = OneSampleTTestService(
+          oneVarStats: tTestStats, equalityChoice: '≠', hypothesisValue: 120);
+
+      var tValue = result.calculateTValue();
+      var pValue = result.calculatePValue();
+
+      expect(3.72, closeTo(tValue, .1));
+      expect(.002, closeTo(pValue, .001));
+    });
+
+    test('p&t on list more than', () {
+      var result = OneSampleTTestService(
+          oneVarStats: tTestStats, equalityChoice: '>', hypothesisValue: 120);
+
+      var tValue = result.calculateTValue();
+      var pValue = result.calculatePValue();
+
+      expect(3.72, closeTo(tValue, .1));
+      expect(.001, closeTo(pValue, .001));
+    });
+  });
+
   group('p & t values on stats', () {
     test('less than', () {
       var result = OneSampleTTestService(
