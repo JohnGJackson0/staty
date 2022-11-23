@@ -65,6 +65,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
             ..add(ListModel(
                 data: const [],
                 uid: uid,
+                lastEditedDate: DateTime.now().toString(),
                 name: 'Untitled ${state.listStore.length + 1}')),
           selectedTaskid: uid,
           submissionData: const SubmissionData()));
@@ -156,6 +157,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
       List<ListModel> newListStore = List.from(removedList)
         ..add(ListModel(
             data: filter[0].data,
+            lastEditedDate: DateTime.now().toString(),
             uid: state.selectedTaskid,
             name: filter[0].name));
 
@@ -204,7 +206,10 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
 
       List<ListModel> newListStore = List.from(removedList)
         ..add(ListModel(
-            data: newList, uid: state.selectedTaskid, name: filter[0].name));
+            data: newList,
+            lastEditedDate: DateTime.now().toString(),
+            uid: state.selectedTaskid,
+            name: filter[0].name));
 
       if (state.submissionData.newDataPoint.isEmpty) {
         throw 'Empty Datapoint';
@@ -249,7 +254,10 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
 
       List<ListModel> newListStore = List.from(removedList)
         ..add(ListModel(
-            data: newList, uid: state.selectedTaskid, name: filter[0].name));
+            data: newList,
+            lastEditedDate: DateTime.now().toString(),
+            uid: state.selectedTaskid,
+            name: filter[0].name));
 
       if (state.submissionData.newDataPoint.isEmpty) {
         throw 'Empty Datapoint';

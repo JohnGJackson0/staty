@@ -43,7 +43,11 @@ class ListsState extends Equatable {
       for (var element in datas) {
         dataPoints.add(DataPoint(value: element['value'], id: element['id']));
       }
-      ListModel model = ListModel(data: dataPoints, uid: element['uid'], name: element['name']);
+      ListModel model = ListModel(
+          data: dataPoints,
+          uid: element['uid'],
+          name: element['name'],
+          lastEditedDate: element['lastEditedDate']);
       listModel.add(model);
     }
     return ListsState(

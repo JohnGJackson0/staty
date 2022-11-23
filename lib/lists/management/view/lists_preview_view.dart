@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:staty/lists/calculation/view/one_var_t_test.dart';
 import 'package:staty/lists/management/view/edit_list_view.dart';
 import 'package:staty/lists/calculation/view/one_var_stats.dart';
@@ -20,23 +21,23 @@ class ListsPreview extends StatelessWidget {
         title: const Text('My Lists'),
       ),
       drawer: const DrawerView(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Flexible(
-              child: BlocBuilder<ListsBloc, ListsState>(
-                builder: (context, state) {
-                  return state.listStore.isEmpty
-                      ? const Text(
-                          'Inferential statistics (like T-test, Z-test, ect.) can have functions that take a list of data or descriptions of the list of data. We only have the latter currently. Please add a list with + icon.',
-                          maxLines: 4)
-                      : _ListContent(listStore: state.listStore);
-                },
-              ),
+      body: Row(
+        children: [
+          Flexible(
+            child: BlocBuilder<ListsBloc, ListsState>(
+              builder: (context, state) {
+                return state.listStore.isEmpty
+                    ? const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text(
+                            'You have no lists currently. Either make a list by pressing the + icon or go right to statistics calculations without lists by pressing on the top left icon.',
+                            maxLines: 4),
+                      )
+                    : _ListContent(listStore: state.listStore);
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -59,16 +60,15 @@ class _ListContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: ExpansionPanelList.radio(
-            children: listStore
-                .map((listStore) => ExpansionPanelRadio(
-                    value: listStore.uid,
-                    headerBuilder: (context, isOpen) =>
-                        _ListHeaderTile(listStore: listStore),
-                    body: _ListBodyTile(listStore: listStore)))
-                .toList()
-                .toList()),
-      
+      child: ExpansionPanelList.radio(
+          children: listStore
+              .map((listStore) => ExpansionPanelRadio(
+                  value: listStore.uid,
+                  headerBuilder: (context, isOpen) =>
+                      _ListHeaderTile(listStore: listStore),
+                  body: _ListBodyTile(listStore: listStore)))
+              .toList()
+              .toList()),
     );
   }
 }
@@ -86,72 +86,96 @@ class _ListBodyTile extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(listStore.name),
-              )),
+          Row(
+            children: [
+              const Align(alignment: Alignment.topLeft, child: Text('Name: ')),
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    listStore.name,
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  )),
+            ],
+          ),
           Align(
             alignment: Alignment.topLeft,
-            child: Wrap(
-              spacing: 8.0,
-              runSpacing: 4.0,
+            child: Row(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    context
-                        .read<ListsBloc>()
-                        .add(SelectedTaskIdEvent(id: listStore.uid));
-                    Navigator.of(context).pushNamed(CreateList.id);
-                  },
-                  child: ThemedChip(
-                      avatar: const Icon(Icons.add),
-                      color: (Theme.of(context).primaryColor),
-                      label: 'Add To List'),
+                const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text('Last Edited on: ')),
+                Text(
+                  DateFormat()
+                      .add_yMMMd()
+                      .add_Hms()
+                      .format(DateTime.parse(listStore.lastEditedDate)),
+                  style: TextStyle(color: Theme.of(context).primaryColor),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    context
-                        .read<ListsBloc>()
-                        .add(SelectedTaskIdEvent(id: listStore.uid));
-                    Navigator.of(context).pushNamed(EditList.id);
-                  },
-                  child: ThemedChip(
-                      avatar: const Icon(Icons.edit),
-                      color: (Theme.of(context).primaryColor),
-                      label: 'Edit List'),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    context
-                        .read<ListsBloc>()
-                        .add(SelectedTaskIdEvent(id: listStore.uid));
-                    Navigator.of(context).pushNamed(OneVarStats.id);
-                  },
-                  child: ThemedChip(
-                      avatar: const Icon(Icons.calculate),
-                      color: (Theme.of(context).colorScheme.secondary),
-                      label: '1-var stats'),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    context
-                        .read<ListsBloc>()
-                        .add(SelectedTaskIdEvent(id: listStore.uid));
-                    Navigator.of(context).pushNamed(OneVarTTest.id);
-                  },
-                  child: ThemedChip(
-                      avatar: const Icon(Icons.calculate),
-                      color: (Theme.of(context).colorScheme.secondary),
-                      label: '1-Var T-Test'),
-                )
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Wrap(
+                spacing: 8.0,
+                runSpacing: 4.0,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      context
+                          .read<ListsBloc>()
+                          .add(SelectedTaskIdEvent(id: listStore.uid));
+                      Navigator.of(context).pushNamed(CreateList.id);
+                    },
+                    child: ThemedChip(
+                        avatar: const Icon(Icons.add),
+                        color: (Theme.of(context).primaryColor),
+                        label: 'Add To List'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      context
+                          .read<ListsBloc>()
+                          .add(SelectedTaskIdEvent(id: listStore.uid));
+                      Navigator.of(context).pushNamed(EditList.id);
+                    },
+                    child: ThemedChip(
+                        avatar: const Icon(Icons.edit),
+                        color: (Theme.of(context).primaryColor),
+                        label: 'Edit List'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      context
+                          .read<ListsBloc>()
+                          .add(SelectedTaskIdEvent(id: listStore.uid));
+                      Navigator.of(context).pushNamed(OneVarStats.id);
+                    },
+                    child: ThemedChip(
+                        avatar: const Icon(Icons.calculate),
+                        color: (Theme.of(context).colorScheme.secondary),
+                        label: '1-var stats'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      context
+                          .read<ListsBloc>()
+                          .add(SelectedTaskIdEvent(id: listStore.uid));
+                      Navigator.of(context).pushNamed(OneVarTTest.id);
+                    },
+                    child: ThemedChip(
+                        avatar: const Icon(Icons.calculate),
+                        color: (Theme.of(context).colorScheme.secondary),
+                        label: '1-Var T-Test'),
+                  )
+                ],
+              ),
             ),
           ),
         ],
       ),
-      
     );
   }
 }
