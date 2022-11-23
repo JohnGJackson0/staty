@@ -18,6 +18,25 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
     on<ExistingDataPointChangedInputEvent>(_onExistingDataPointChangedEvent);
     on<UpdateDataPointSubmitted>(_onUpdateDataPointSubmitted);
     on<SubmitNewListNameEvent>(_onSubmitNewListNameEvent);
+    on<DeleteListSubmittedEvent>(_onDeleteListSubmittedEvent);
+  }
+
+  void _onDeleteListSubmittedEvent(
+      DeleteListSubmittedEvent event, Emitter<ListsState> emit) {
+    List<ListModel> filter = [];
+    filter.addAll(state.listStore);
+
+    filter.retainWhere((e) {
+      return e.uid == state.selectedTaskid;
+    });
+
+    List<ListModel> removedList = List.from(state.listStore)..remove(filter[0]);
+
+    emit(ListsState(
+        listStore: removedList,
+        submissionData: state.submissionData,
+        selectedTaskid: state.selectedTaskid,
+        formStatus: SubmissionFailed('Something went wrong')));
   }
 
   void _onErrorEvent(OnErrorEvent event, Emitter<ListsState> emit) {
@@ -132,7 +151,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
       List<ListModel> removedList = List.from(state.listStore);
 
       removedList.removeWhere((element) => element.uid == state.selectedTaskid);
-      
+
       List<ListModel> newListStore = List.from(removedList)
         ..add(ListModel(
             data: filter[0].data,

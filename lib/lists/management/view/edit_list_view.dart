@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:staty/lists/management/view/lists_preview_view.dart';
+import '../../../widgets/themed_chip.dart';
 import '../../bloc/bloc_exports.dart';
 import '../model/model_exports.dart';
 import '../widgets/form_submit.dart';
@@ -36,11 +38,72 @@ class EditList extends StatelessWidget {
                     ? const Text('Something went wrong.')
                     : Column(
                         children: [
+                          const _DeleteList(),
                           Expanded(child: _EditableData(list: filter[0].data)),
                         ],
                       );
               },
             ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _DeleteList extends StatelessWidget {
+  const _DeleteList({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ListsBloc, ListsState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                        title: const Text('Delete List?'),
+                        content: const Text('This change cannot be undone.'),
+                        actions: <Widget>[
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                            ),
+                            child: Text(
+                              'Delete Forever',
+                              style: TextStyle(
+                                  color: Theme.of(context).errorColor),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              context
+                                  .read<ListsBloc>()
+                                  .add(DeleteListSubmittedEvent());
+                              Navigator.of(context)
+                                  .popAndPushNamed(ListsPreview.id);
+                            },
+                          ),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                            ),
+                            child: const Text('Nevermind'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          )
+                        ],
+                      ));
+            },
+            child: ThemedChip(
+                avatar: const Icon(Icons.delete_outline),
+                color: (Theme.of(context).errorColor),
+                label: 'Delete List'),
           ),
         );
       },
