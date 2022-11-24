@@ -2,7 +2,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:staty/lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
 import 'package:staty/lists/calculation/tTestOneVar/services/one_sample_t_test.dart';
-import 'package:staty/lists/calculation/oneVarStats/services/variable_stats.dart';
+import 'package:staty/lists/calculation/tTestOneVar/services/one_var_t_test.dart';
 import 'package:staty/lists/management/model/model_exports.dart';
 
 void main() {
@@ -25,7 +25,7 @@ void main() {
     ];
     // todo use modular service
     var tTestStats =
-        OneVarStatsService(list: list).getTTestStatsModel() as TTestStatsModel;
+        OneVarTTest(list: list).getTTestStatsModel() as TTestStatsModel;
 
     test('p&t on list less than', () {
       var result = OneSampleTTestService(
