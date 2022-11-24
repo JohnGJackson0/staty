@@ -11,7 +11,6 @@ import '../../../widgets/length_degree_of_freedom.dart';
 import '../../model/t_test_stats_model.dart';
 import '../../view/t_test_result.dart';
 import '../bloc/t_test_stats_bloc.dart';
-import '../widgets/sample_standard_deviation.dart';
 
 class StatForm extends StatelessWidget {
   const StatForm({
