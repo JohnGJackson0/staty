@@ -1,8 +1,8 @@
 // ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart';
-import 'package:staty/lists/calculation/services/one_sample_t_test.dart';
+import 'package:staty/lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
+import 'package:staty/lists/calculation/tTestOneVar/services/one_sample_t_test.dart';
 import 'package:staty/lists/calculation/services/variable_stats.dart';
-import 'package:staty/lists/calculation/tTest/model/t_test_stats_model.dart';
 import 'package:staty/lists/management/model/model_exports.dart';
 
 void main() {

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
-import '../../../../services/app_router.dart';
-import '../../../bloc/bloc_exports.dart';
-import '../../../management/model/form_submission_status.dart';
-import '../../../management/widgets/form_submit.dart';
-import '../bloc/t_test_bloc_bloc.dart';
-import '../model/t_test_stats_model.dart';
+import 'package:staty/lists/bloc/bloc_exports.dart';
+import '../../../../../services/app_router.dart';
+import '../../../../management/model/form_submission_status.dart';
+import '../../../../management/widgets/form_submit.dart';
+import '../../model/t_test_stats_model.dart';
+import '../../view/t_test_result.dart';
+import '../bloc/t_test_stats_bloc.dart';
 import '../widgets/hypothesis_equality_selection.dart';
 import '../widgets/hypothesis_value.dart';
 import '../widgets/length.dart';
 import '../widgets/mean.dart';
-import 't_test_result.dart';
 import '../widgets/sample_standard_deviation.dart';
 
 class StatForm extends StatelessWidget {
@@ -38,7 +37,7 @@ class _StatFormInputState extends State<_StatFormInput> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TTestBlocBloc, TTestBlocState>(
+    return BlocListener<TTestStatsBloc, TTestStatsState>(
       listener: (context, state) {
         if (state.formStatus is SubmissionSuccess) {
           Navigator.pushNamed(context, TTestResult.id,
@@ -51,7 +50,7 @@ class _StatFormInputState extends State<_StatFormInput> {
                       sampleStandardDeviation: state.sampleStandardDeviation)));
         }
       },
-      child: BlocBuilder<TTestBlocBloc, TTestBlocState>(
+      child: BlocBuilder<TTestStatsBloc, TTestStatsState>(
         builder: (context, state) {
           return Form(
             key: formKey,
@@ -70,7 +69,7 @@ class _StatFormInputState extends State<_StatFormInput> {
                         onSubmitEvent: () {
                           FocusScope.of(context).requestFocus(FocusNode());
                           context
-                              .read<TTestBlocBloc>()
+                              .read<TTestStatsBloc>()
                               .add(StatFormSubmitted());
                         },
                         label: 'Calculate')),

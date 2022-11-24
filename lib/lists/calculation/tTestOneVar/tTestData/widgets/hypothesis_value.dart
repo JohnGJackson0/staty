@@ -2,26 +2,26 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:staty/lists/calculation/tTest/bloc/t_test_bloc_bloc.dart';
+import 'package:staty/services/number.dart';
 
-import '../../../../services/number.dart';
-import '../../../management/model/form_submission_status.dart';
+import '../../../../management/model/form_submission_status.dart';
+import '../bloc/t_test_data_bloc.dart';
 
-class Mean extends StatefulWidget {
-  const Mean({Key? key}) : super(key: key);
+class HypothesisValue extends StatefulWidget {
+  const HypothesisValue({Key? key}) : super(key: key);
 
   @override
-  State<Mean> createState() => _MeanState();
+  State<HypothesisValue> createState() => _HypothesisValueState();
 }
 
-class _MeanState extends State<Mean> {
+class _HypothesisValueState extends State<HypothesisValue> {
   final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TTestBlocBloc, TTestBlocState>(
+    return BlocBuilder<TTestDataBloc, TTestDataBlocState>(
       builder: (context, state) {
-        return BlocListener<TTestBlocBloc, TTestBlocState>(
+        return BlocListener<TTestDataBloc, TTestDataBlocState>(
           listener: (context, state) {
             if (state.formStatus is SubmissionSuccess) {
               _controller.clear();
@@ -37,20 +37,20 @@ class _MeanState extends State<Mean> {
                 ),
               ),
             ],
-            decoration: const InputDecoration(
-              label: Text('Enter the sample mean x̄'),
-            ),
             onChanged: (value) {
               try {
                 context
-                    .read<TTestBlocBloc>()
-                    .add(OnChangedMeanInput(meanValue: value));
+                    .read<TTestDataBloc>()
+                    .add(OnChangedHypothesisValue(hypothesisValue: value));
               } catch (e) {
                 if (kDebugMode) {
                   print('error');
                 }
               }
             },
+            decoration: const InputDecoration(
+              label: Text('Enter the hypothesis value μ0'),
+            ),
             onFieldSubmitted: (value) => {_controller.clear()},
             validator: (value) =>
                 isValidDecimalInput(value) ? null : 'Invalid input',

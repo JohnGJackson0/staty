@@ -1,6 +1,6 @@
-part of 't_test_bloc_bloc.dart';
+part of 't_test_data_bloc.dart';
 
-class TTestBlocState extends Equatable {
+class TTestDataBlocState extends Equatable {
   final double hypothesisValue;
   final TTestSubmissionData submissionData;
   final FormSubmissionStatus formStatus;
@@ -9,7 +9,7 @@ class TTestBlocState extends Equatable {
   final double sampleMean;
   final HypothesisEquality? hypothesisEquality;
 
-  const TTestBlocState(
+  const TTestDataBlocState(
       {this.submissionData = const TTestSubmissionData(),
       this.hypothesisValue = -1,
       this.formStatus = const InitialFormStatus(),
@@ -25,9 +25,10 @@ class TTestBlocState extends Equatable {
     return <String, dynamic>{'hypothesisValue': hypothesisValue};
   }
 
-  factory TTestBlocState.fromMap(Map<String, dynamic> map) {
-    return TTestBlocState(hypothesisValue: map['hypothesisValue'] as double);
+  factory TTestDataBlocState.fromMap(Map<String, dynamic> map) {
+    return TTestDataBlocState(
+        hypothesisValue: map['hypothesisValue'] as double);
   }
 }
 
-class TTestBlocInitial extends TTestBlocState {}
+class TTestBlocInitial extends TTestDataBlocState {}

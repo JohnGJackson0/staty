@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:data/data.dart';
 
-import '../tTest/model/t_test_stats_model.dart';
+import '../model/t_test_stats_model.dart';
 
 class OneSampleTTestService extends Equatable {
   final TTestStatsModel oneVarStats;

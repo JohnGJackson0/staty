@@ -3,9 +3,9 @@ import 'package:staty/lists/management/view/lists_preview_view.dart';
 import 'package:staty/services/app_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:staty/theme/color.dart';
-
 import 'lists/bloc/lists_bloc.dart';
-import 'lists/calculation/tTest/bloc/t_test_bloc_bloc.dart';
+import 'lists/calculation/tTestOneVar/tTestData/bloc/t_test_data_bloc.dart';
+import 'lists/calculation/tTestOneVar/tTestStats/bloc/t_test_stats_bloc.dart';
 import 'theme/bloc/bloc_exports.dart';
 
 Future<void> main() async {
@@ -33,7 +33,9 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => ListsBloc()),
           BlocProvider(create: (context) => ThemeBloc()),
-          BlocProvider(create: (context) => TTestBlocBloc())
+          // these ones are lowered soon
+          BlocProvider(create: (context) => TTestStatsBloc()),
+          BlocProvider(create: (context) => TTestDataBloc())
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, state) {

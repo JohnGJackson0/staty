@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import '../../../../services/app_router.dart';
-import '../../../bloc/bloc_exports.dart';
-import '../../../management/model/form_submission_status.dart';
-import '../../../management/model/list_model.dart';
-import '../../../management/widgets/form_submit.dart';
-import '../../services/variable_stats.dart';
-import '../bloc/t_test_bloc_bloc.dart';
-import '../model/t_test_stats_model.dart';
+import 'package:staty/lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
+
+import '../../../../../services/app_router.dart';
+import '../../../../bloc/bloc_exports.dart';
+import '../../../../management/model/model_exports.dart';
+import '../../../../management/widgets/form_submit.dart';
+import '../../../services/variable_stats.dart';
+import '../../view/t_test_result.dart';
+import '../bloc/t_test_data_bloc.dart';
 import '../widgets/hypothesis_equality_selection.dart';
 import '../widgets/hypothesis_value.dart';
-import 't_test_result.dart';
 
 class DataForm extends StatelessWidget {
   const DataForm({
@@ -47,7 +47,7 @@ class _DataFormInputState extends State<_DataFormInput> {
         var stats = OneVarStatsService(list: filter[0].data)
             .getTTestStatsModel() as TTestStatsModel;
 
-        return BlocListener<TTestBlocBloc, TTestBlocState>(
+        return BlocListener<TTestDataBloc, TTestDataBlocState>(
           listener: (context, state) {
             if (state.formStatus is SubmissionSuccess) {
               Navigator.pushNamed(context, TTestResult.id,
@@ -57,7 +57,7 @@ class _DataFormInputState extends State<_DataFormInput> {
                       stats: stats));
             }
           },
-          child: BlocBuilder<TTestBlocBloc, TTestBlocState>(
+          child: BlocBuilder<TTestDataBloc, TTestDataBlocState>(
             builder: (context, state) {
               return Form(
                 key: formKey,
@@ -78,7 +78,7 @@ class _DataFormInputState extends State<_DataFormInput> {
                             onSubmitEvent: () {
                               FocusScope.of(context).requestFocus(FocusNode());
                               context
-                                  .read<TTestBlocBloc>()
+                                  .read<TTestDataBloc>()
                                   .add(DataFormSubmitted());
                             },
                             label: 'Calculate')),

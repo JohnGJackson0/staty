@@ -1,18 +1,17 @@
 import 'package:equatable/equatable.dart';
 import 'package:staty/lists/bloc/bloc_exports.dart';
-
-import '../../../management/model/form_submission_status.dart';
-import '../../model/hypothesis_equality.dart';
+import '../../../../management/model/form_submission_status.dart';
+import '../../../model/hypothesis_equality.dart';
 import '../model/t_test_submission_data.dart';
 
-part 't_test_bloc_event.dart';
-part 't_test_bloc_state.dart';
+part 't_test_stats_event.dart';
+part 't_test_stats_state.dart';
 
-class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
-  TTestBlocBloc() : super(TTestBlocInitial()) {
+class TTestStatsBloc
+    extends HydratedBloc<TTestStatsBlocEvent, TTestStatsState> {
+  TTestStatsBloc() : super(TTestBlocInitial()) {
     on<OnChangedHypothesisValue>(_onHypothesisValueChanged);
     on<OnChangedEqualityValue>(_onChangedEqualityValue);
-    on<DataFormSubmitted>(_onDataFormSubmitted);
     on<OnChangedMeanInput>(_onChangedMeanInput);
     on<OnChangedSampleStandardDeviation>(_onChangedSampleStandardDeviation);
     on<OnChangedLength>(_onChangedLength);
@@ -20,8 +19,8 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
   }
 
   void _onStatFormSubmited(
-      StatFormSubmitted event, Emitter<TTestBlocState> emit) {
-    emit(TTestBlocState(
+      StatFormSubmitted event, Emitter<TTestStatsState> emit) {
+    emit(TTestStatsState(
         hypothesisValue: state.hypothesisValue,
         length: state.length,
         sampleMean: state.sampleMean,
@@ -30,7 +29,7 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
         formStatus: FormSubmitting()));
 
     try {
-      emit(TTestBlocState(
+      emit(TTestStatsState(
           hypothesisValue: double.parse(state.submissionData.hypothesisValue),
           length: double.parse(state.submissionData.length),
           sampleMean: double.parse(state.submissionData.meanValue),
@@ -40,15 +39,15 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
           submissionData: const TTestSubmissionData(),
           formStatus: SubmissionSuccess()));
     } catch (e) {
-      emit(TTestBlocState(
+      emit(TTestStatsState(
           hypothesisValue: state.hypothesisValue,
           submissionData: const TTestSubmissionData(),
           formStatus: SubmissionFailed(e)));
     }
   }
 
-  void _onChangedLength(OnChangedLength event, Emitter<TTestBlocState> emit) {
-    emit(TTestBlocState(
+  void _onChangedLength(OnChangedLength event, Emitter<TTestStatsState> emit) {
+    emit(TTestStatsState(
         hypothesisValue: -1,
         submissionData: TTestSubmissionData(
             length: event.length,
@@ -60,8 +59,8 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
   }
 
   void _onChangedSampleStandardDeviation(
-      OnChangedSampleStandardDeviation event, Emitter<TTestBlocState> emit) {
-    emit(TTestBlocState(
+      OnChangedSampleStandardDeviation event, Emitter<TTestStatsState> emit) {
+    emit(TTestStatsState(
         hypothesisValue: -1,
         submissionData: TTestSubmissionData(
             sampleStandardDeviation: event.sampleStandardDeviation,
@@ -72,8 +71,8 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
   }
 
   void _onChangedMeanInput(
-      OnChangedMeanInput event, Emitter<TTestBlocState> emit) {
-    emit(TTestBlocState(
+      OnChangedMeanInput event, Emitter<TTestStatsState> emit) {
+    emit(TTestStatsState(
         hypothesisValue: -1,
         submissionData: TTestSubmissionData(
             length: state.submissionData.length,
@@ -84,30 +83,9 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
             meanValue: event.meanValue)));
   }
 
-  void _onDataFormSubmitted(
-      DataFormSubmitted event, Emitter<TTestBlocState> emit) {
-    emit(TTestBlocState(
-        hypothesisValue: state.hypothesisValue,
-        submissionData: state.submissionData,
-        formStatus: FormSubmitting()));
-
-    try {
-      emit(TTestBlocState(
-          hypothesisValue: double.parse(state.submissionData.hypothesisValue),
-          hypothesisEquality: state.submissionData.hypothesisEquality,
-          submissionData: const TTestSubmissionData(),
-          formStatus: SubmissionSuccess()));
-    } catch (e) {
-      emit(TTestBlocState(
-          hypothesisValue: state.hypothesisValue,
-          submissionData: state.submissionData,
-          formStatus: SubmissionFailed(e)));
-    }
-  }
-
   void _onHypothesisValueChanged(
-      OnChangedHypothesisValue event, Emitter<TTestBlocState> emit) {
-    emit(TTestBlocState(
+      OnChangedHypothesisValue event, Emitter<TTestStatsState> emit) {
+    emit(TTestStatsState(
         submissionData: TTestSubmissionData(
             length: state.submissionData.length,
             sampleStandardDeviation:
@@ -118,8 +96,8 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
   }
 
   void _onChangedEqualityValue(
-      OnChangedEqualityValue event, Emitter<TTestBlocState> emit) {
-    emit(TTestBlocState(
+      OnChangedEqualityValue event, Emitter<TTestStatsState> emit) {
+    emit(TTestStatsState(
         submissionData: TTestSubmissionData(
             length: state.submissionData.length,
             sampleStandardDeviation:
@@ -130,12 +108,12 @@ class TTestBlocBloc extends HydratedBloc<TTestBlocEvent, TTestBlocState> {
   }
 
   @override
-  TTestBlocState? fromJson(Map<String, dynamic> json) {
-    return TTestBlocState.fromMap(json);
+  TTestStatsState? fromJson(Map<String, dynamic> json) {
+    return TTestStatsState.fromMap(json);
   }
 
   @override
-  Map<String, dynamic>? toJson(TTestBlocState state) {
+  Map<String, dynamic>? toJson(TTestStatsState state) {
     return state.toMap();
   }
 }

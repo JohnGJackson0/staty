@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../bloc/bloc_exports.dart';
 import '../../management/model/model_exports.dart';
-import '../tTest/view/data_form.dart';
-import '../tTest/view/stat_form.dart';
+import '../tTestOneVar/tTestData/view/data_form.dart';
+import '../tTestOneVar/tTestStats/view/stat_form.dart';
 import '../widgets/selection_promt.dart';
 
 class OneVarTTest extends StatelessWidget {

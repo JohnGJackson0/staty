@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../bloc/bloc_exports.dart';
 import '../../model/hypothesis_equality.dart';
-import '../../services/one_sample_t_test.dart';
-import '../../widgets/calculation.dart';
 import '../model/t_test_stats_model.dart';
+import '../services/one_sample_t_test.dart';
+import '../../widgets/calculation.dart';
 
 // shared between data and stats results
 

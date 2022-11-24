@@ -2,27 +2,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../services/number.dart';
+import '../../../../management/model/form_submission_status.dart';
+import '../bloc/t_test_stats_bloc.dart';
 
-import '../../../../services/number.dart';
-import '../../../management/model/form_submission_status.dart';
-import '../bloc/t_test_bloc_bloc.dart';
-
-class SampleStandardDeviation extends StatefulWidget {
-  const SampleStandardDeviation({Key? key}) : super(key: key);
+class Length extends StatefulWidget {
+  const Length({Key? key}) : super(key: key);
 
   @override
-  State<SampleStandardDeviation> createState() =>
-      _SampleStandardDeviationState();
+  State<Length> createState() => _LengthState();
 }
 
-class _SampleStandardDeviationState extends State<SampleStandardDeviation> {
+class _LengthState extends State<Length> {
   final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TTestBlocBloc, TTestBlocState>(
+    return BlocBuilder<TTestStatsBloc, TTestStatsState>(
       builder: (context, state) {
-        return BlocListener<TTestBlocBloc, TTestBlocState>(
+        return BlocListener<TTestStatsBloc, TTestStatsState>(
           listener: (context, state) {
             if (state.formStatus is SubmissionSuccess) {
               _controller.clear();
@@ -30,7 +28,7 @@ class _SampleStandardDeviationState extends State<SampleStandardDeviation> {
           },
           child: TextFormField(
             controller: _controller,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            keyboardType: const TextInputType.numberWithOptions(),
             inputFormatters: [
               FilteringTextInputFormatter.allow(
                 RegExp(
@@ -40,9 +38,9 @@ class _SampleStandardDeviationState extends State<SampleStandardDeviation> {
             ],
             onChanged: (value) {
               try {
-                context.read<TTestBlocBloc>().add(
-                    OnChangedSampleStandardDeviation(
-                        sampleStandardDeviation: value));
+                context
+                    .read<TTestStatsBloc>()
+                    .add(OnChangedLength(length: value));
               } catch (e) {
                 if (kDebugMode) {
                   print('error');
@@ -50,11 +48,12 @@ class _SampleStandardDeviationState extends State<SampleStandardDeviation> {
               }
             },
             decoration: const InputDecoration(
-              label: Text('Enter the sample standard deviation Sx'),
+              label: Text('Enter the length of the data set'),
             ),
             onFieldSubmitted: (value) => {_controller.clear()},
-            validator: (value) =>
-                isValidDecimalInput(value) ? null : 'Invalid input',
+            validator: (value) => isValidLengthInputWithDOF(value)
+                ? null
+                : 'Invalid input (whole number over 1)',
           ),
         );
       },

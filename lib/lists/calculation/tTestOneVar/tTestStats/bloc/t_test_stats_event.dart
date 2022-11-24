@@ -1,37 +1,34 @@
-part of 't_test_bloc_bloc.dart';
+part of 't_test_stats_bloc.dart';
 
-abstract class TTestBlocEvent {
-  const TTestBlocEvent();
-}
-class DataFormSubmitted extends TTestBlocEvent {
-  DataFormSubmitted();
+abstract class TTestStatsBlocEvent {
+  const TTestStatsBlocEvent();
 }
 
-class StatFormSubmitted extends TTestBlocEvent {
+class StatFormSubmitted extends TTestStatsBlocEvent {
   StatFormSubmitted();
 }
 
-class OnChangedHypothesisValue extends TTestBlocEvent {
+class OnChangedHypothesisValue extends TTestStatsBlocEvent {
   final String hypothesisValue;
   const OnChangedHypothesisValue({this.hypothesisValue = ''});
 }
 
-class OnChangedMeanInput extends TTestBlocEvent {
+class OnChangedMeanInput extends TTestStatsBlocEvent {
   final String meanValue;
   const OnChangedMeanInput({this.meanValue = ''});
 }
 
-class OnChangedSampleStandardDeviation extends TTestBlocEvent {
+class OnChangedSampleStandardDeviation extends TTestStatsBlocEvent {
   final String sampleStandardDeviation;
   const OnChangedSampleStandardDeviation({this.sampleStandardDeviation = ''});
 }
 
-class OnChangedLength extends TTestBlocEvent {
+class OnChangedLength extends TTestStatsBlocEvent {
   final String length;
   const OnChangedLength({this.length = ''});
 }
 
-class OnChangedEqualityValue extends TTestBlocEvent {
+class OnChangedEqualityValue extends TTestStatsBlocEvent {
   final HypothesisEquality? equalityValue;
   const OnChangedEqualityValue({required this.equalityValue});
 }

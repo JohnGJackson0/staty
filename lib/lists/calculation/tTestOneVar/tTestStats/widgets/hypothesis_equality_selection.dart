@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../model/hypothesis_equality.dart';
-import '../bloc/t_test_bloc_bloc.dart';
+import '../../../model/hypothesis_equality.dart';
+import '../bloc/t_test_stats_bloc.dart';
 
 class HypothesisEqualitySelection extends StatefulWidget {
   const HypothesisEqualitySelection({
@@ -19,7 +18,7 @@ class _HypothesisEqualitySelectionState
   HypothesisEquality? _equalityChoice = HypothesisEquality.notEqual;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TTestBlocBloc, TTestBlocState>(
+    return BlocBuilder<TTestStatsBloc, TTestStatsState>(
       builder: (context, state) {
         return Row(
           children: [
@@ -31,7 +30,7 @@ class _HypothesisEqualitySelectionState
                   groupValue: _equalityChoice,
                   onChanged: (HypothesisEquality? value) {
                     context
-                        .read<TTestBlocBloc>()
+                        .read<TTestStatsBloc>()
                         .add(OnChangedEqualityValue(equalityValue: value));
                     setState(() {
                       _equalityChoice = value;
@@ -48,7 +47,7 @@ class _HypothesisEqualitySelectionState
                   groupValue: _equalityChoice,
                   onChanged: (HypothesisEquality? value) {
                     context
-                        .read<TTestBlocBloc>()
+                        .read<TTestStatsBloc>()
                         .add(OnChangedEqualityValue(equalityValue: value));
                     setState(() {
                       _equalityChoice = value;
@@ -65,7 +64,7 @@ class _HypothesisEqualitySelectionState
                   groupValue: _equalityChoice,
                   onChanged: (HypothesisEquality? value) {
                     context
-                        .read<TTestBlocBloc>()
+                        .read<TTestStatsBloc>()
                         .add(OnChangedEqualityValue(equalityValue: value));
                     setState(() {
                       _equalityChoice = value;
