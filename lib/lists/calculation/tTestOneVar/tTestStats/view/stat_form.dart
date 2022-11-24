@@ -6,10 +6,10 @@ import '../../../../../services/app_router.dart';
 import '../../../../management/model/form_submission_status.dart';
 import '../../../../management/widgets/form_submit.dart';
 import '../../../widgets/form_hypothesis_value.dart';
+import '../../../widgets/length_degree_of_freedom.dart';
 import '../../model/t_test_stats_model.dart';
 import '../../view/t_test_result.dart';
 import '../bloc/t_test_stats_bloc.dart';
-import '../widgets/length.dart';
 import '../widgets/sample_standard_deviation.dart';
 
 class StatForm extends StatelessWidget {
@@ -67,7 +67,11 @@ class _StatFormInputState extends State<_StatFormInput> {
                       .read<TTestStatsBloc>()
                       .add(OnChangedEqualityValue(equalityValue: value));
                 }),
-                const Length(),
+                LengthDOF(onChanged: (value) {
+                  context
+                      .read<TTestStatsBloc>()
+                      .add(OnChangedLength(length: value));
+                }),
                 FormSampleMean(onChanged: (value) {
                   context
                       .read<TTestStatsBloc>()
