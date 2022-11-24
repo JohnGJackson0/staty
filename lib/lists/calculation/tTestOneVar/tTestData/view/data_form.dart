@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:staty/lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
+import 'package:staty/lists/calculation/widgets/form_hypothesis_value.dart';
 
 import '../../../../../services/app_router.dart';
 import '../../../../bloc/bloc_exports.dart';
@@ -9,7 +10,6 @@ import '../../../services/variable_stats.dart';
 import '../../view/t_test_result.dart';
 import '../bloc/t_test_data_bloc.dart';
 import '../widgets/hypothesis_equality_selection.dart';
-import '../widgets/hypothesis_value.dart';
 
 class DataForm extends StatelessWidget {
   const DataForm({
@@ -63,7 +63,10 @@ class _DataFormInputState extends State<_DataFormInput> {
                 key: formKey,
                 child: Column(
                   children: [
-                    const HypothesisValue(),
+                    FormHypothesisValue(onChanged: (value) {
+                      context.read<TTestDataBloc>().add(
+                          OnChangedHypothesisValue(hypothesisValue: value));
+                    }),
                     const Text('\nThe hypothesis statement'),
                     const HypothesisEqualitySelection(),
                     const Text('Selected List:'),

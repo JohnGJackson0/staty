@@ -26,7 +26,7 @@ class TTestDataBloc
       emit(TTestDataBlocState(
           hypothesisValue: double.parse(state.submissionData.hypothesisValue),
           hypothesisEquality: state.submissionData.hypothesisEquality,
-          submissionData: const TTestSubmissionData(),
+          submissionData: state.submissionData,
           formStatus: SubmissionSuccess()));
     } catch (e) {
       emit(TTestDataBlocState(

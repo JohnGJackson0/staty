@@ -36,7 +36,7 @@ class TTestStatsBloc
           hypothesisEquality: state.submissionData.hypothesisEquality,
           sampleStandardDeviation:
               double.parse(state.submissionData.sampleStandardDeviation),
-          submissionData: const TTestSubmissionData(),
+          submissionData: state.submissionData,
           formStatus: SubmissionSuccess()));
     } catch (e) {
       emit(TTestStatsState(
