@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:staty/lists/bloc/bloc_exports.dart';
 import 'package:staty/lists/calculation/widgets/form_hypothesis_equality.dart';
+import 'package:staty/lists/calculation/widgets/form_sample_mean.dart';
 import '../../../../../services/app_router.dart';
 import '../../../../management/model/form_submission_status.dart';
 import '../../../../management/widgets/form_submit.dart';
@@ -9,7 +10,6 @@ import '../../model/t_test_stats_model.dart';
 import '../../view/t_test_result.dart';
 import '../bloc/t_test_stats_bloc.dart';
 import '../widgets/length.dart';
-import '../widgets/mean.dart';
 import '../widgets/sample_standard_deviation.dart';
 
 class StatForm extends StatelessWidget {
@@ -68,7 +68,11 @@ class _StatFormInputState extends State<_StatFormInput> {
                       .add(OnChangedEqualityValue(equalityValue: value));
                 }),
                 const Length(),
-                const Mean(),
+                FormSampleMean(onChanged: (value) {
+                  context
+                      .read<TTestStatsBloc>()
+                      .add(OnChangedMeanInput(meanValue: value));
+                }),
                 const SampleStandardDeviation(),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
