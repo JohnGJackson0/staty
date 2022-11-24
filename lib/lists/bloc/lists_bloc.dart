@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:uuid/uuid.dart';
+import '../../model/form_submission_status.dart';
 import '../management/model/model_exports.dart';
 import '../management/model/submission_data.dart';
 

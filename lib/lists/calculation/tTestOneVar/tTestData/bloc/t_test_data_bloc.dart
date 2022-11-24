@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:staty/lists/bloc/bloc_exports.dart';
-import '../../../../management/model/form_submission_status.dart';
+import '../../../../../model/form_submission_status.dart';
 import '../../../model/hypothesis_equality.dart';
 import '../model/t_test_data_form_submission.dart';
 
