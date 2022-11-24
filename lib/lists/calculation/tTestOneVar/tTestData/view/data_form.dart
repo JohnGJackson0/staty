@@ -6,7 +6,7 @@ import '../../../../../model/form_submission_status.dart';
 import '../../../../../services/app_router.dart';
 import '../../../../bloc/bloc_exports.dart';
 import '../../../../management/model/model_exports.dart';
-import '../../../../management/widgets/form_submit.dart';
+import '../../../../../widgets/form_submit.dart';
 import '../../../services/variable_stats.dart';
 import '../../../widgets/form_hypothesis_equality.dart';
 import '../../view/t_test_result.dart';

@@ -6,7 +6,7 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 import '../../../model/form_submission_status.dart';
 import '../../bloc/bloc_exports.dart';
 import '../model/model_exports.dart';
-import 'form_submit.dart';
+import '../../../widgets/form_submit.dart';
 
 class EditableDataPoint extends StatefulWidget {
   const EditableDataPoint({Key? key}) : super(key: key);

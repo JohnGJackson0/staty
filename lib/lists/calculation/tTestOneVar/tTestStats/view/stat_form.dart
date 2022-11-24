@@ -5,7 +5,7 @@ import 'package:staty/lists/calculation/widgets/form_sample_mean.dart';
 import 'package:staty/lists/calculation/widgets/form_sample_standard_deviation.dart';
 import '../../../../../services/app_router.dart';
 import '../../../../../model/form_submission_status.dart';
-import '../../../../management/widgets/form_submit.dart';
+import '../../../../../widgets/form_submit.dart';
 import '../../../widgets/form_hypothesis_value.dart';
 import '../../../widgets/length_degree_of_freedom.dart';
 import '../../model/t_test_stats_model.dart';

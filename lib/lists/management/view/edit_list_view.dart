@@ -8,7 +8,7 @@ import '../../../model/form_submission_status.dart';
 import '../../../widgets/themed_chip.dart';
 import '../../bloc/bloc_exports.dart';
 import '../model/model_exports.dart';
-import '../widgets/form_submit.dart';
+import '../../../widgets/form_submit.dart';
 
 class EditList extends StatelessWidget {
   const EditList({super.key});
