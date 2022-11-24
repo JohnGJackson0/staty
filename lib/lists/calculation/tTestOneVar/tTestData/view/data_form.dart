@@ -7,9 +7,9 @@ import '../../../../bloc/bloc_exports.dart';
 import '../../../../management/model/model_exports.dart';
 import '../../../../management/widgets/form_submit.dart';
 import '../../../services/variable_stats.dart';
+import '../../../widgets/form_hypothesis_equality.dart';
 import '../../view/t_test_result.dart';
 import '../bloc/t_test_data_bloc.dart';
-import '../widgets/hypothesis_equality_selection.dart';
 
 class DataForm extends StatelessWidget {
   const DataForm({
@@ -68,7 +68,11 @@ class _DataFormInputState extends State<_DataFormInput> {
                           OnChangedHypothesisValue(hypothesisValue: value));
                     }),
                     const Text('\nThe hypothesis statement'),
-                    const HypothesisEqualitySelection(),
+                    FormHypothesisEquality(onChanged: (value) {
+                      context
+                          .read<TTestDataBloc>()
+                          .add(OnChangedEqualityValue(equalityValue: value));
+                    }),
                     const Text('Selected List:'),
                     Padding(
                       padding: const EdgeInsets.all(8.0),

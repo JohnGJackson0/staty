@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:staty/lists/bloc/bloc_exports.dart';
+import 'package:staty/lists/calculation/widgets/form_hypothesis_equality.dart';
 import '../../../../../services/app_router.dart';
 import '../../../../management/model/form_submission_status.dart';
 import '../../../../management/widgets/form_submit.dart';
@@ -7,7 +8,6 @@ import '../../../widgets/form_hypothesis_value.dart';
 import '../../model/t_test_stats_model.dart';
 import '../../view/t_test_result.dart';
 import '../bloc/t_test_stats_bloc.dart';
-import '../widgets/hypothesis_equality_selection.dart';
 import '../widgets/length.dart';
 import '../widgets/mean.dart';
 import '../widgets/sample_standard_deviation.dart';
@@ -62,7 +62,11 @@ class _StatFormInputState extends State<_StatFormInput> {
                       .add(OnChangedHypothesisValue(hypothesisValue: value));
                 }),
                 const Text('\nThe hypothesis statement'),
-                const HypothesisEqualitySelection(),
+                FormHypothesisEquality(onChanged: (value) {
+                  context
+                      .read<TTestStatsBloc>()
+                      .add(OnChangedEqualityValue(equalityValue: value));
+                }),
                 const Length(),
                 const Mean(),
                 const SampleStandardDeviation(),
