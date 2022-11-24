@@ -3,7 +3,7 @@ import 'package:staty/lists/calculation/view/one_var_t_test.dart';
 import '../lists/calculation/model/hypothesis_equality.dart';
 import '../lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
 import '../lists/calculation/tTestOneVar/view/t_test_result.dart';
-import '../lists/calculation/view/one_var_stats.dart';
+import '../lists/calculation/oneVarStats/view/one_var_stats.dart';
 import '../lists/management/view/edit_list_view.dart';
 import '../lists/management/view/lists_preview_view.dart';
 import '../lists/management/view/select_list.dart';

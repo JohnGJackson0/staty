@@ -4,7 +4,7 @@ import '../../bloc/bloc_exports.dart';
 import '../../calculation/view/one_var_t_test.dart';
 import '../model/model_exports.dart';
 import 'edit_list_view.dart';
-import '../../calculation/view/one_var_stats.dart';
+import '../../calculation/oneVarStats/view/one_var_stats.dart';
 import '../../../widgets/themed_chip.dart';
 import '../widgets/widget_exports.dart';
 

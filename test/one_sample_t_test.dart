@@ -2,7 +2,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:staty/lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
 import 'package:staty/lists/calculation/tTestOneVar/services/one_sample_t_test.dart';
-import 'package:staty/lists/calculation/services/variable_stats.dart';
+import 'package:staty/lists/calculation/oneVarStats/services/variable_stats.dart';
 import 'package:staty/lists/management/model/model_exports.dart';
 
 void main() {
@@ -23,6 +23,7 @@ void main() {
       const DataPoint(value: 142, id: 'id'),
       const DataPoint(value: 140, id: 'id')
     ];
+    // todo use modular service
     var tTestStats =
         OneVarStatsService(list: list).getTTestStatsModel() as TTestStatsModel;
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:staty/lists/calculation/view/one_var_t_test.dart';
 import 'package:staty/lists/management/view/edit_list_view.dart';
-import 'package:staty/lists/calculation/view/one_var_stats.dart';
+import 'package:staty/lists/calculation/oneVarStats/view/one_var_stats.dart';
 import 'package:staty/view/drawer_view.dart';
 import '../../bloc/bloc_exports.dart';
 import '../model/model_exports.dart';

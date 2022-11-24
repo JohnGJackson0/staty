@@ -7,7 +7,7 @@ import '../../../../../services/app_router.dart';
 import '../../../../bloc/bloc_exports.dart';
 import '../../../../management/model/model_exports.dart';
 import '../../../../../widgets/form_submit.dart';
-import '../../../services/variable_stats.dart';
+import '../../../oneVarStats/services/variable_stats.dart';
 import '../../../widgets/form_hypothesis_equality.dart';
 import '../../view/t_test_result.dart';
 import '../bloc/t_test_data_bloc.dart';
@@ -45,6 +45,7 @@ class _DataFormInputState extends State<_DataFormInput> {
         filter.retainWhere((e) {
           return e.uid == state.selectedTaskid;
         });
+        // todo use modular service
         var stats = OneVarStatsService(list: filter[0].data)
             .getTTestStatsModel() as TTestStatsModel;
 

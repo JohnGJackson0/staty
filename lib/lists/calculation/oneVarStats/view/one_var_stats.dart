@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../bloc/bloc_exports.dart';
-import '../../management/model/model_exports.dart';
+import '../../../bloc/bloc_exports.dart';
+import '../../../management/model/model_exports.dart';
 import '../model/one_var_stats_model.dart';
 import '../services/variable_stats.dart';
-import '../widgets/calculation.dart';
-import '../widgets/selection_promt.dart';
+import '../../widgets/calculation.dart';
+import '../../widgets/selection_promt.dart';
 
 class OneVarStats extends StatelessWidget {
   const OneVarStats({super.key});

@@ -3,7 +3,7 @@ import 'package:staty/lists/calculation/view/one_var_t_test.dart';
 
 import '../lists/bloc/bloc_exports.dart';
 import '../lists/management/view/lists_preview_view.dart';
-import '../lists/calculation/view/one_var_stats.dart';
+import '../lists/calculation/oneVarStats/view/one_var_stats.dart';
 import '../theme/view/theme_view.dart';
 
 class DrawerView extends StatelessWidget {
