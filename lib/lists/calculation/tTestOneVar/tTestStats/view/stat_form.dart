@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:staty/lists/bloc/bloc_exports.dart';
 import 'package:staty/lists/calculation/widgets/form_hypothesis_equality.dart';
 import 'package:staty/lists/calculation/widgets/form_sample_mean.dart';
+import 'package:staty/lists/calculation/widgets/form_sample_standard_deviation.dart';
 import '../../../../../services/app_router.dart';
 import '../../../../management/model/form_submission_status.dart';
 import '../../../../management/widgets/form_submit.dart';
@@ -77,7 +78,11 @@ class _StatFormInputState extends State<_StatFormInput> {
                       .read<TTestStatsBloc>()
                       .add(OnChangedMeanInput(meanValue: value));
                 }),
-                const SampleStandardDeviation(),
+                FormSampleStandardDeviation(onChanged: (value) {
+                  context.read<TTestStatsBloc>().add(
+                      OnChangedSampleStandardDeviation(
+                          sampleStandardDeviation: value));
+                }),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FormSubmit(
