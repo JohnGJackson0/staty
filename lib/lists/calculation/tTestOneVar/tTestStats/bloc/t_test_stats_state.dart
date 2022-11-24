@@ -2,7 +2,7 @@ part of 't_test_stats_bloc.dart';
 
 class TTestStatsState extends Equatable {
   final double hypothesisValue;
-  final TTestSubmissionData submissionData;
+  final TTestStatsFormSubmission submissionData;
   final FormSubmissionStatus formStatus;
   final double length;
   final double sampleStandardDeviation;
@@ -10,7 +10,7 @@ class TTestStatsState extends Equatable {
   final HypothesisEquality? hypothesisEquality;
 
   const TTestStatsState(
-      {this.submissionData = const TTestSubmissionData(),
+      {this.submissionData = const TTestStatsFormSubmission(),
       this.hypothesisValue = -1,
       this.formStatus = const InitialFormStatus(),
       this.length = -1,

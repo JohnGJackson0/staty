@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:staty/lists/bloc/bloc_exports.dart';
 import '../../../../management/model/form_submission_status.dart';
 import '../../../model/hypothesis_equality.dart';
-import '../model/t_test_submission_data.dart';
+import '../model/t_test_stats_form_submission.dart';
 
 part 't_test_stats_event.dart';
 part 't_test_stats_state.dart';
@@ -41,7 +41,7 @@ class TTestStatsBloc
     } catch (e) {
       emit(TTestStatsState(
           hypothesisValue: state.hypothesisValue,
-          submissionData: const TTestSubmissionData(),
+          submissionData: const TTestStatsFormSubmission(),
           formStatus: SubmissionFailed(e)));
     }
   }
@@ -49,7 +49,7 @@ class TTestStatsBloc
   void _onChangedLength(OnChangedLength event, Emitter<TTestStatsState> emit) {
     emit(TTestStatsState(
         hypothesisValue: -1,
-        submissionData: TTestSubmissionData(
+        submissionData: TTestStatsFormSubmission(
             length: event.length,
             sampleStandardDeviation:
                 state.submissionData.sampleStandardDeviation,
@@ -62,7 +62,7 @@ class TTestStatsBloc
       OnChangedSampleStandardDeviation event, Emitter<TTestStatsState> emit) {
     emit(TTestStatsState(
         hypothesisValue: -1,
-        submissionData: TTestSubmissionData(
+        submissionData: TTestStatsFormSubmission(
             sampleStandardDeviation: event.sampleStandardDeviation,
             length: state.submissionData.length,
             hypothesisEquality: state.submissionData.hypothesisEquality,
@@ -74,7 +74,7 @@ class TTestStatsBloc
       OnChangedMeanInput event, Emitter<TTestStatsState> emit) {
     emit(TTestStatsState(
         hypothesisValue: -1,
-        submissionData: TTestSubmissionData(
+        submissionData: TTestStatsFormSubmission(
             length: state.submissionData.length,
             sampleStandardDeviation:
                 state.submissionData.sampleStandardDeviation,
@@ -86,7 +86,7 @@ class TTestStatsBloc
   void _onHypothesisValueChanged(
       OnChangedHypothesisValue event, Emitter<TTestStatsState> emit) {
     emit(TTestStatsState(
-        submissionData: TTestSubmissionData(
+        submissionData: TTestStatsFormSubmission(
             length: state.submissionData.length,
             sampleStandardDeviation:
                 state.submissionData.sampleStandardDeviation,
@@ -98,7 +98,7 @@ class TTestStatsBloc
   void _onChangedEqualityValue(
       OnChangedEqualityValue event, Emitter<TTestStatsState> emit) {
     emit(TTestStatsState(
-        submissionData: TTestSubmissionData(
+        submissionData: TTestStatsFormSubmission(
             length: state.submissionData.length,
             sampleStandardDeviation:
                 state.submissionData.sampleStandardDeviation,

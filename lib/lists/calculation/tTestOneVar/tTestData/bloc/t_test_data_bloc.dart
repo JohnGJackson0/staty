@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:staty/lists/bloc/bloc_exports.dart';
 import '../../../../management/model/form_submission_status.dart';
 import '../../../model/hypothesis_equality.dart';
-import '../model/t_test_submission_data.dart';
+import '../model/t_test_data_form_submission.dart';
 
 part 't_test_data_event.dart';
 part 't_test_data_state.dart';
@@ -39,25 +39,17 @@ class TTestDataBloc
   void _onHypothesisValueChanged(
       OnChangedHypothesisValue event, Emitter<TTestDataBlocState> emit) {
     emit(TTestDataBlocState(
-        submissionData: TTestSubmissionData(
-            length: state.submissionData.length,
-            sampleStandardDeviation:
-                state.submissionData.sampleStandardDeviation,
+        submissionData: TTestDataFormSubmission(
             hypothesisEquality: state.submissionData.hypothesisEquality,
-            hypothesisValue: event.hypothesisValue,
-            meanValue: state.submissionData.meanValue)));
+            hypothesisValue: event.hypothesisValue)));
   }
 
   void _onChangedEqualityValue(
       OnChangedEqualityValue event, Emitter<TTestDataBlocState> emit) {
     emit(TTestDataBlocState(
-        submissionData: TTestSubmissionData(
-            length: state.submissionData.length,
-            sampleStandardDeviation:
-                state.submissionData.sampleStandardDeviation,
+        submissionData: TTestDataFormSubmission(
             hypothesisEquality: event.equalityValue,
-            hypothesisValue: state.submissionData.hypothesisValue,
-            meanValue: state.submissionData.meanValue)));
+            hypothesisValue: state.submissionData.hypothesisValue)));
   }
 
   @override
