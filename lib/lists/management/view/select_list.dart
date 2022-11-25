@@ -3,6 +3,11 @@ import '../../bloc/bloc_exports.dart';
 import '../model/model_exports.dart';
 import '../../../widgets/themed_chip.dart';
 
+class ListModelParam {
+  final ListModel listModel;
+  ListModelParam({required this.listModel});
+}
+
 class SelectList extends StatelessWidget {
   final String idToGoOnFinished;
   const SelectList({super.key, required this.idToGoOnFinished});
@@ -11,7 +16,6 @@ class SelectList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select a List'),
@@ -24,8 +28,7 @@ class SelectList extends StatelessWidget {
               child: BlocBuilder<ListsBloc, ListsState>(
                 builder: (context, state) {
                   return state.listStore.isEmpty
-                      ? const Text(
-                          'You must make a list to select one.',
+                      ? const Text('You must make a list to select one.',
                           maxLines: 4)
                       : _ListContent(
                           listStore: state.listStore,
@@ -95,7 +98,9 @@ class _ListBodyTile extends StatelessWidget {
                     context
                         .read<ListsBloc>()
                         .add(SelectedTaskIdEvent(id: listStore.uid));
-                    Navigator.of(context).pushReplacementNamed(navOnFinished);
+
+                    Navigator.pushReplacementNamed(context, navOnFinished,
+                        arguments: ListModelParam(listModel: listStore));
                   },
                   child: ThemedChip(
                       avatar: const Icon(Icons.add),

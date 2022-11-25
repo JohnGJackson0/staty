@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:staty/lists/calculation/view/one_var_t_test.dart';
 import '../lists/calculation/model/hypothesis_equality.dart';
 import '../lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
+import '../lists/calculation/tTestOneVar/tTestData/view/t_test_one_var_data_form.dart';
 import '../lists/calculation/tTestOneVar/view/t_test_result.dart';
 import '../lists/calculation/oneVarStats/view/one_var_stats.dart';
 import '../lists/management/view/edit_list_view.dart';
@@ -39,6 +40,12 @@ class AppRouter {
 
           return SelectList(idToGoOnFinished: args.idToGoOnFinished);
         });
+      case TTestOneVarDataForm.id:
+        return MaterialPageRoute(builder: (_) {
+          final ListModelParam args = settings.arguments as ListModelParam;
+
+          return TTestOneVarDataForm(list: args.listModel);
+        });
       case TTestResult.id:
         return MaterialPageRoute(builder: (_) {
           final ResultScreenParam args =
@@ -51,7 +58,6 @@ class AppRouter {
         });
       case EditList.id:
         return MaterialPageRoute(builder: (_) => const EditList());
-      
       case OneVarTTest.id:
         return MaterialPageRoute(builder: (_) => const OneVarTTest());
       case OneVarStats.id:

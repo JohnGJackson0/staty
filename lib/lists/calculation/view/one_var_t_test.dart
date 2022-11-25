@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../bloc/bloc_exports.dart';
 import '../../management/model/model_exports.dart';
-import '../tTestOneVar/tTestData/view/data_form.dart';
+import '../tTestOneVar/tTestData/view/t_test_one_var_data_form.dart';
 import '../tTestOneVar/tTestStats/view/stat_form.dart';
 import '../widgets/selection_promt.dart';
 
@@ -65,7 +65,7 @@ class _ListDataSelectionState extends State<_ListDataSelection> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SelectionPrompt(
-                          idToGoOnFinished: OneVarTTest.id,
+                          idToGoOnFinished: TTestOneVarDataForm.id,
                           label:
                               'If you want to calculate T-Test with data then select a list.'),
                       const Text(
@@ -83,16 +83,8 @@ class _ListDataSelectionState extends State<_ListDataSelection> {
                       )
                     ],
                   )
-            : Column(
-                children: [
-                  Expanded(
-                      child: widget.filter[0].data.length < 2
-                          ? const Text('There is not enough Data in the list')
-                          : const DataForm()),
-                ],
-              );
+            : const SizedBox(height: 0);
       },
     );
   }
 }
-
