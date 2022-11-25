@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../bloc/bloc_exports.dart';
 import '../../../management/model/model_exports.dart';
 import '../model/one_var_stats_model.dart';
 import '../services/variable_stats.dart';
@@ -8,45 +7,31 @@ import '../../widgets/calculation.dart';
 import '../../widgets/selection_promt.dart';
 
 class OneVarStats extends StatelessWidget {
-  const OneVarStats({super.key});
+  final ListModel list;
+  const OneVarStats({super.key, required this.list});
   static const id = 'one_var_stats_screen';
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ListsBloc, ListsState>(
-      builder: (context, state) {
-        List<ListModel> filter = [];
-        filter.addAll(state.listStore);
-
-        filter.retainWhere((e) {
-          return e.uid == state.selectedTaskid;
-        });
         return Scaffold(
           appBar: AppBar(
-            title: filter.isEmpty
-                ? const Text('1-var-stats')
-                : Text(filter[0].name),
+            title:
+              list.data.isEmpty ? const Text('1-var-stats') : Text(list.name),
           ),
           body: Container(
             padding: const EdgeInsets.all(20),
             alignment: Alignment.topLeft,
-            child: BlocBuilder<ListsBloc, ListsState>(
-              builder: (context, state) {
-                return filter.isEmpty
-                    ? const SelectionPrompt(idToGoOnFinished: OneVarStats.id)
-                    : Column(
-                        children: [
-                          Expanded(
-                              child: filter[0].data.isEmpty
-                                  ? const Text('There is no data in the list')
-                                  : _OneVarStatsView(list: filter[0].data)),
-                        ],
-                      );
-              },
+        child: list.data.isEmpty
+            ? const SelectionPrompt(idToGoOnFinished: OneVarStats.id)
+            : Column(
+                children: [
+                  Expanded(
+                      child: list.data.isEmpty
+                          ? const Text('There is no data in the list')
+                          : _OneVarStatsView(list: list.data)),
+                ],
             ),
-          ),
-        );
-      },
+      ),
     );
   }
 }

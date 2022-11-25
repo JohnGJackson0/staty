@@ -61,7 +61,12 @@ class AppRouter {
       case OneVarTTest.id:
         return MaterialPageRoute(builder: (_) => const OneVarTTest());
       case OneVarStats.id:
-        return MaterialPageRoute(builder: (_) => const OneVarStats());
+        return MaterialPageRoute(builder: (_) {
+          final ListModelParam args = settings.arguments as ListModelParam;
+
+          return OneVarStats(list: args.listModel);
+        });
+
       default:
         return null;
     }

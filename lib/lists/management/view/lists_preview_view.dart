@@ -153,7 +153,8 @@ class _ListBodyTile extends StatelessWidget {
                       context
                           .read<ListsBloc>()
                           .add(SelectedTaskIdEvent(id: listStore.uid));
-                      Navigator.of(context).pushNamed(OneVarStats.id);
+                      Navigator.pushNamed(context, OneVarStats.id,
+                          arguments: ListModelParam(listModel: listStore));
                     },
                     child: ThemedChip(
                         avatar: const Icon(Icons.calculate),

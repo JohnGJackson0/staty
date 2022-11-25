@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:staty/lists/management/view/select_list.dart';
 import '../../../model/form_submission_status.dart';
 import '../../bloc/bloc_exports.dart';
+import '../../calculation/tTestOneVar/tTestData/view/t_test_one_var_data_form.dart';
 import '../../calculation/view/one_var_t_test.dart';
 import '../model/model_exports.dart';
 import 'edit_list_view.dart';
@@ -92,7 +94,9 @@ class _Actions extends StatelessWidget {
                 context
                     .read<ListsBloc>()
                     .add(SelectedTaskIdEvent(id: filter[0].uid));
-                Navigator.of(context).pushNamed(OneVarStats.id);
+                Navigator.pushNamed(
+                    context, OneVarStats.id,
+                    arguments: ListModelParam(listModel: filter[0]));
               },
               child: ThemedChip(
                   avatar: const Icon(Icons.calculate),
@@ -106,7 +110,9 @@ class _Actions extends StatelessWidget {
               context
                   .read<ListsBloc>()
                   .add(SelectedTaskIdEvent(id: filter[0].uid));
-              Navigator.of(context).pushNamed(OneVarTTest.id);
+
+              Navigator.pushNamed(context, TTestOneVarDataForm.id,
+                  arguments: ListModelParam(listModel: filter[0]));
             },
             child: ThemedChip(
                 avatar: const Icon(Icons.calculate),

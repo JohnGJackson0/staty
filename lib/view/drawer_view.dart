@@ -4,6 +4,8 @@ import 'package:staty/lists/calculation/view/one_var_t_test.dart';
 import '../lists/bloc/bloc_exports.dart';
 import '../lists/management/view/lists_preview_view.dart';
 import '../lists/calculation/oneVarStats/view/one_var_stats.dart';
+import '../lists/management/view/select_list.dart';
+import '../services/app_router.dart';
 import '../theme/view/theme_view.dart';
 
 class DrawerView extends StatelessWidget {
@@ -28,14 +30,17 @@ class DrawerView extends StatelessWidget {
                 )),
             GestureDetector(
                 onTap: () {
-                  context.read<ListsBloc>().add(SelectedTaskIdEvent(id: ''));
-                  Navigator.of(context).pushNamed(OneVarStats.id);
+                  Navigator.pushNamed(
+                    context,
+                    SelectList.id,
+                    arguments: SelectionListParam(OneVarStats.id),
+                  );
                 },
                 child: const ListTile(
                   leading: Icon(Icons.calculate),
                   title: Text('1-Var Stats'),
                 )),
-              GestureDetector(
+            GestureDetector(
                 onTap: () {
                   context.read<ListsBloc>().add(SelectedTaskIdEvent(id: ''));
                   Navigator.of(context).pushNamed(OneVarTTest.id);
