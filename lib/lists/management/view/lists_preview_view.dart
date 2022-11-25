@@ -166,7 +166,7 @@ class _ListBodyTile extends StatelessWidget {
                           .read<ListsBloc>()
                           .add(SelectedTaskIdEvent(id: listStore.uid));
 
-                      Navigator.pushReplacementNamed(
+                      Navigator.pushNamed(
                           context, TTestOneVarDataForm.id,
                           arguments: ListModelParam(listModel: listStore));
                     },

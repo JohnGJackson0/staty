@@ -45,7 +45,9 @@ class _DataFormInputState extends State<TTestOneVarDataForm> {
                     stats: stats));
           }
         },
-        child: BlocBuilder<TTestDataBloc, TTestDataBlocState>(
+        child: widget.list.data.length < 2
+            ? const Text('Not enough data in the list.')
+            : BlocBuilder<TTestDataBloc, TTestDataBlocState>(
           builder: (context, state) {
             return Form(
               key: formKey,
