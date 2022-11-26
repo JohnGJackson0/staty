@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../tTestOneVar/tTestData/view/t_test_one_var_data_form.dart';
-import '../tTestOneVar/tTestStats/view/stat_form.dart';
-import '../widgets/selection_promt.dart';
+import '../tTestData/view/t_test_one_var_data_form.dart';
+import '../tTestStats/view/stat_form.dart';
+import '../../widgets/selection_promt.dart';
 
 class OneVarTTest extends StatelessWidget {
   const OneVarTTest({super.key});
