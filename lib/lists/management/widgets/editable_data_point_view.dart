@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 import '../../../model/form_submission_status.dart';
-import '../../bloc/bloc_exports.dart';
+import '../bloc/lists_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../widgets/form_submit.dart';
 
 class EditableDataPoint extends StatefulWidget {
@@ -153,6 +154,7 @@ class _AddDataPoint extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ListsBloc, ListsState>(builder: (context, state) {
       return FormSubmit(
+          formStatus: state.formStatus,
           formKey: formKey,
           label: 'ADD',
           onSubmitEvent: () => {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../bloc/bloc_exports.dart';
+import '../bloc/lists_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/model_exports.dart';
 import '../../../widgets/themed_chip.dart';
 

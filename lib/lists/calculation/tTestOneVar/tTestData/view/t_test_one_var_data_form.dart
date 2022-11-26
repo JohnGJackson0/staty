@@ -72,6 +72,7 @@ class _DataFormInputState extends State<TTestOneVarDataForm> {
                   Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: FormSubmit(
+                                formStatus: state.formStatus,
                           formKey: formKey,
                           onSubmitEvent: () {
                             FocusScope.of(context).requestFocus(FocusNode());

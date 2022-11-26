@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:staty/lists/bloc/bloc_exports.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staty/lists/calculation/widgets/form_hypothesis_equality.dart';
 import 'package:staty/lists/calculation/widgets/form_sample_mean.dart';
 import 'package:staty/lists/calculation/widgets/form_sample_standard_deviation.dart';
@@ -85,6 +85,7 @@ class _StatFormInputState extends State<_StatFormInput> {
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FormSubmit(
+                        formStatus: state.formStatus,
                         formKey: formKey,
                         onSubmitEvent: () {
                           FocusScope.of(context).requestFocus(FocusNode());
