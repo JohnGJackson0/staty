@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../tTestData/view/t_test_one_var_data_form.dart';
-import '../tTestStats/view/stat_form.dart';
+import '../tTestStats/view/t_test_one_var_stat_form.dart';
 import '../../widgets/selection_promt.dart';
 
 class OneVarTTest extends StatelessWidget {
@@ -37,7 +37,7 @@ class _ListDataSelectionState extends State<_ListDataSelection> {
   @override
   Widget build(BuildContext context) {
     return statsSelected
-        ? const StatForm()
+        ? const TTestOneVarStatForm()
         : Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

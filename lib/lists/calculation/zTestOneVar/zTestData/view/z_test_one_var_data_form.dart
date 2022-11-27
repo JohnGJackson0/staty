@@ -34,77 +34,80 @@ class _DataFormInputState extends State<ZTestOneVarDataForm> {
 
     if (widget.list.data.length > 2) {
       stats = DataZTestVariables(list: widget.list.data).getZTestStatsModel()
-        as ZTestStatsModel;
+          as ZTestStatsModel;
     } else {
       stats = ZTestStatsModel(length: -1, sampleMean: -1);
     }
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.list.name)),
-      body: BlocListener<ZTestDataBloc, ZTestDataState>(
-        listener: (context, state) {
-          if (state.formStatus is SubmissionSuccess) {
-            Navigator.pushNamed(context, ZTestResult.id,
-                arguments: ZTestResultScreenParam(
-                    populationStandardDeviation:
-                        state.populationStandardDeviation,
-                    hypothesisValue: state.hypothesisValue,
-                    equalityChoice: state.hypothesisEquality,
-                    stats: stats));
-          }
-        },
-        child: widget.list.data.length < 2
-            ? const NoDataMessage()
-            : BlocBuilder<ZTestDataBloc, ZTestDataState>(
-                builder: (context, state) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          FormHypothesisValue(onChanged: (value) {
-                            context.read<ZTestDataBloc>().add(
-                                OnChangedHypothesisZTestValue(
-                                    hypothesisValue: value));
-                          }),
-                          FormHypothesisEquality(onChanged: (value) {
-                            context.read<ZTestDataBloc>().add(
-                                OnChangedEqualityZTestValue(
-                                    equalityValue: value));
-                          }),
-                          FormPopulationStandardDeviation(onChanged: (value) {
-                            context.read<ZTestDataBloc>().add(
-                                OnChangedPopulationStandardDeviation(
-                                    populationStandardDeviation: value));
-                          }),
-                          const Text('Selected List:'),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(widget.list.name),
-                          ),
-                          Padding(
+    return BlocProvider(
+      create: (context) => ZTestDataBloc(),
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.list.name)),
+        body: BlocListener<ZTestDataBloc, ZTestDataState>(
+          listener: (context, state) {
+            if (state.formStatus is SubmissionSuccess) {
+              Navigator.pushNamed(context, ZTestResult.id,
+                  arguments: ZTestResultScreenParam(
+                      populationStandardDeviation:
+                          state.populationStandardDeviation,
+                      hypothesisValue: state.hypothesisValue,
+                      equalityChoice: state.hypothesisEquality,
+                      stats: stats));
+            }
+          },
+          child: widget.list.data.length < 2
+              ? const NoDataMessage()
+              : BlocBuilder<ZTestDataBloc, ZTestDataState>(
+                  builder: (context, state) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            FormHypothesisValue(onChanged: (value) {
+                              context.read<ZTestDataBloc>().add(
+                                  OnChangedHypothesisZTestValue(
+                                      hypothesisValue: value));
+                            }),
+                            FormHypothesisEquality(onChanged: (value) {
+                              context.read<ZTestDataBloc>().add(
+                                  OnChangedEqualityZTestValue(
+                                      equalityValue: value));
+                            }),
+                            FormPopulationStandardDeviation(onChanged: (value) {
+                              context.read<ZTestDataBloc>().add(
+                                  OnChangedPopulationStandardDeviation(
+                                      populationStandardDeviation: value));
+                            }),
+                            const Text('Selected List:'),
+                            Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: FormSubmit(
-                                  formStatus: state.formStatus,
-                                  formKey: formKey,
-                                  onSubmitEvent: () {
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
-                                    context
-                                        .read<ZTestDataBloc>()
-                                        .add(OnDataFormSubmitted());
-                                  },
-                                  label: 'Calculate')),
-                          state.formStatus is SubmissionFailed
-                              ? const Text('error occured')
-                              : const SizedBox(width: 20, height: 20)
-                        ],
+                              child: Text(widget.list.name),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: FormSubmit(
+                                    formStatus: state.formStatus,
+                                    formKey: formKey,
+                                    onSubmitEvent: () {
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                      context
+                                          .read<ZTestDataBloc>()
+                                          .add(OnDataFormSubmitted());
+                                    },
+                                    label: 'Calculate')),
+                            state.formStatus is SubmissionFailed
+                                ? const Text('error occured')
+                                : const SizedBox(width: 20, height: 20)
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                    );
+                  },
+                ),
+        ),
       ),
     );
   }

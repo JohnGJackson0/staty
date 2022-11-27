@@ -3,18 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staty/lists/calculation/widgets/form_hypothesis_equality.dart';
 import 'package:staty/lists/calculation/widgets/form_sample_mean.dart';
 import 'package:staty/lists/calculation/widgets/form_sample_standard_deviation.dart';
-import 'package:staty/lists/calculation/zTestOneVar/model/z_test_stats_model.dart';
 import '../../../../../services/app_router.dart';
 import '../../../../../model/form_submission_status.dart';
 import '../../../../../widgets/form_submit.dart';
 import '../../../widgets/form_hypothesis_value.dart';
-import '../../../widgets/form_population_standard_deviation.dart';
 import '../../../widgets/length_degree_of_freedom.dart';
-import '../../view/z_test_result.dart';
-import '../bloc/z_test_stats_bloc.dart';
+import '../../model/t_test_stats_model.dart';
+import '../../view/t_test_result.dart';
+import '../bloc/t_test_stats_bloc.dart';
 
-class ZTestOneVarStatsForm extends StatelessWidget {
-  const ZTestOneVarStatsForm({
+class TTestOneVarStatForm extends StatelessWidget {
+  const TTestOneVarStatForm({
     Key? key,
   }) : super(key: key);
 
@@ -39,21 +38,22 @@ class _StatFormInputState extends State<_StatFormInput> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ZTestStatsBloc(),
-      child: BlocListener<ZTestStatsBloc, ZTestStatsState>(
+      create: (context) => TTestStatsBloc(),
+      child: BlocListener<TTestStatsBloc, TTestStatsState>(
         listener: (context, state) {
           if (state.formStatus is SubmissionSuccess) {
-            Navigator.pushNamed(context, ZTestResult.id,
-                arguments: ZTestResultScreenParam(
+            Navigator.pushNamed(context, TTestResult.id,
+                arguments: ResultScreenParam(
                     equalityChoice: state.hypothesisEquality,
                     hypothesisValue: state.hypothesisValue,
-                    stats: ZTestStatsModel(
-                        length: state.length, sampleMean: state.sampleMean),
-                    populationStandardDeviation:
-                        state.populationStandardDeviation));
+                    stats: TTestStatsModel(
+                        length: state.length,
+                        sampleMean: state.sampleMean,
+                        sampleStandardDeviation:
+                            state.sampleStandardDeviation)));
           }
         },
-        child: BlocBuilder<ZTestStatsBloc, ZTestStatsState>(
+        child: BlocBuilder<TTestStatsBloc, TTestStatsState>(
           builder: (context, state) {
             return Form(
               key: formKey,
@@ -61,29 +61,29 @@ class _StatFormInputState extends State<_StatFormInput> {
                 children: [
                   FormHypothesisValue(onChanged: (value) {
                     context
-                        .read<ZTestStatsBloc>()
+                        .read<TTestStatsBloc>()
                         .add(OnChangedHypothesisValue(hypothesisValue: value));
                   }),
-                  // TODO make screen labels consistent
+                  const Text('\nThe hypothesis statement'),
                   FormHypothesisEquality(onChanged: (value) {
                     context
-                        .read<ZTestStatsBloc>()
+                        .read<TTestStatsBloc>()
                         .add(OnChangedEqualityValue(equalityValue: value));
                   }),
                   LengthDOF(onChanged: (value) {
                     context
-                        .read<ZTestStatsBloc>()
+                        .read<TTestStatsBloc>()
                         .add(OnChangedLength(length: value));
                   }),
                   FormSampleMean(onChanged: (value) {
                     context
-                        .read<ZTestStatsBloc>()
-                        .add(OnChangedSampleMean(sampleMean: value));
+                        .read<TTestStatsBloc>()
+                        .add(OnChangedMeanInput(meanValue: value));
                   }),
-                  FormPopulationStandardDeviation(onChanged: (value) {
-                    context.read<ZTestStatsBloc>().add(
-                        OnChangedPopulationStandardDeviation(
-                            populationStandardDeviation: value));
+                  FormSampleStandardDeviation(onChanged: (value) {
+                    context.read<TTestStatsBloc>().add(
+                        OnChangedSampleStandardDeviation(
+                            sampleStandardDeviation: value));
                   }),
                   Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -93,7 +93,7 @@ class _StatFormInputState extends State<_StatFormInput> {
                           onSubmitEvent: () {
                             FocusScope.of(context).requestFocus(FocusNode());
                             context
-                                .read<ZTestStatsBloc>()
+                                .read<TTestStatsBloc>()
                                 .add(StatFormSubmitted());
                           },
                           label: 'Calculate')),
