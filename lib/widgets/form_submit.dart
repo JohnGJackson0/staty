@@ -25,13 +25,10 @@ class FormSubmit extends StatelessWidget {
                 onSubmitEvent();
               }
             },
-            child: Container(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
+            child: Text(
                 label,
                 style: TextStyle(
                     color: Theme.of(context).primaryColor, fontSize: 20),
-              ),
             ),
 
     );

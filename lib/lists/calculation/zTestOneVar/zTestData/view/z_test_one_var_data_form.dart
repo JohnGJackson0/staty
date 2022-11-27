@@ -70,6 +70,7 @@ class _DataFormInputState extends State<ZTestOneVarDataForm> {
                                   OnChangedHypothesisZTestValue(
                                       hypothesisValue: value));
                             }),
+                            const Text('\nThe hypothesis statement'),
                             FormHypothesisEquality(onChanged: (value) {
                               context.read<ZTestDataBloc>().add(
                                   OnChangedEqualityZTestValue(

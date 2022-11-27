@@ -39,7 +39,13 @@ class _FormHypothesisValueState extends State<FormHypothesisValue> {
       decoration: const InputDecoration(
         label: Text('Enter the hypothesis value μ0'),
       ),
-      onFieldSubmitted: (value) => {_controller.clear()},
+      /* 
+        Since android and other OS allow submit on keyboard, 
+        IOS does not. So if we want to clear input on submit,
+        we should manage it through the bloc.
+      */
+      
+      // onFieldSubmitted: (value) => {_controller.clear()},
       validator: (value) => isValidDecimalInput(value) ? null : 'Invalid input',
     );
   }

@@ -153,15 +153,18 @@ class _AddDataPoint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ListsBloc, ListsState>(builder: (context, state) {
-      return FormSubmit(
-          formStatus: state.formStatus,
-          formKey: formKey,
-          label: 'ADD',
-          onSubmitEvent: () => {
-                context
-                    .read<ListsBloc>()
-                    .add(NewDataPointSubmitted(listId: state.selectedTaskid))
-              });
+      return Padding(
+        padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+        child: FormSubmit(
+            formStatus: state.formStatus,
+            formKey: formKey,
+            label: 'ADD',
+            onSubmitEvent: () => {
+                  context
+                      .read<ListsBloc>()
+                      .add(NewDataPointSubmitted(listId: state.selectedTaskid))
+                }),
+      );
     });
   }
 }

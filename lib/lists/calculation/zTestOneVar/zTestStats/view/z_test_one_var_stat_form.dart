@@ -64,7 +64,7 @@ class _StatFormInputState extends State<_StatFormInput> {
                         .read<ZTestStatsBloc>()
                         .add(OnChangedHypothesisValue(hypothesisValue: value));
                   }),
-                  // TODO make screen labels consistent
+                  const Text('\nThe hypothesis statement'),
                   FormHypothesisEquality(onChanged: (value) {
                     context
                         .read<ZTestStatsBloc>()

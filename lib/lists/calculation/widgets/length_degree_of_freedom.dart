@@ -38,7 +38,13 @@ class _LengthState extends State<LengthDOF> {
       decoration: const InputDecoration(
         label: Text('Enter the length of the data set'),
       ),
-      onFieldSubmitted: (value) => {_controller.clear()},
+      /* 
+        Since android and other OS allow submit on keyboard, 
+        IOS does not. So if we want to clear input on submit,
+        we should manage it through the bloc.
+      */
+
+      // onFieldSubmitted: (value) => {_controller.clear()},
       validator: (value) => isValidLengthInputWithDOF(value)
           ? null
           : 'Invalid input (whole number over 1)',
