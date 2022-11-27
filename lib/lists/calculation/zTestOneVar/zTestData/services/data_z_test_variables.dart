@@ -26,7 +26,6 @@ class DataZTestVariables extends Equatable {
   getZTestStatsModel() {
     return ZTestStatsModel(
       sampleMean: _statistics.mean,
-      sampleStandardDeviation: _statistics.standardDeviation,
       length: _statistics.length,
     );
   }

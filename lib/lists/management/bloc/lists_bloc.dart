@@ -67,7 +67,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
                 data: const [],
                 uid: uid,
                 lastEditedDate: DateTime.now().toString(),
-                name: 'Untitled ${state.listStore.length + 1}')),
+                name: 'New List ${state.listStore.length + 1}')),
           selectedTaskid: uid,
           submissionData: const SubmissionData()));
     } catch (e) {
@@ -111,7 +111,8 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
         return e.uid == state.selectedTaskid;
       });
 
-      var newList = filter[0].copyWith(name: event.newName);
+      var newList = filter[0].copyWith(
+          name: event.newName, lastEditedDate: DateTime.now().toString());
 
       List<ListModel> removedList = List.from(state.listStore)
         ..remove(filter[0]);

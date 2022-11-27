@@ -21,25 +21,22 @@ class SelectList extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Select a List'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Flexible(
-              child: BlocBuilder<ListsBloc, ListsState>(
-                builder: (context, state) {
-                  return state.listStore.isEmpty
-                      ? const Text('You must make a list to select one.',
-                          maxLines: 4)
-                      : _ListContent(
-                          listStore: state.listStore,
-                          navOnFinished: idToGoOnFinished,
-                        );
-                },
-              ),
+      body: Row(
+        children: [
+          Flexible(
+            child: BlocBuilder<ListsBloc, ListsState>(
+              builder: (context, state) {
+                return state.listStore.isEmpty
+                    ? const Text('You must make a list to select one.',
+                        maxLines: 4)
+                    : _ListContent(
+                        listStore: state.listStore,
+                        navOnFinished: idToGoOnFinished,
+                      );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

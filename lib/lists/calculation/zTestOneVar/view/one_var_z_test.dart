@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:staty/lists/calculation/zTestOneVar/zTestData/view/z_test_one_var_data_form.dart';
 import '../../widgets/selection_promt.dart';
+import '../zTestStats/view/z_test_one_var_stat_form.dart';
 
 class OneVarZTest extends StatelessWidget {
   const OneVarZTest({super.key});
@@ -36,7 +37,7 @@ class _ListDataSelectionState extends State<_ListDataSelection> {
   @override
   Widget build(BuildContext context) {
     return statsSelected
-        ? const Text('not implemented')
+        ? const ZTestOneVarStatsForm()
         : Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:staty/lists/calculation/zTestOneVar/zTestData/view/z_test_one_var_data_form.dart';
 import 'package:staty/lists/management/view/edit_list_view.dart';
 import 'package:staty/lists/calculation/oneVarStats/view/one_var_stats.dart';
 import 'package:staty/lists/management/view/select_list.dart';
@@ -167,14 +168,23 @@ class _ListBodyTile extends StatelessWidget {
                           .read<ListsBloc>()
                           .add(SelectedTaskIdEvent(id: listStore.uid));
 
-                      Navigator.pushNamed(
-                          context, TTestOneVarDataForm.id,
+                      Navigator.pushNamed(context, TTestOneVarDataForm.id,
                           arguments: ListModelParam(listModel: listStore));
                     },
                     child: ThemedChip(
                         avatar: const Icon(Icons.calculate),
                         color: (Theme.of(context).colorScheme.secondary),
                         label: '1-Var T-Test'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, ZTestOneVarDataForm.id,
+                          arguments: ListModelParam(listModel: listStore));
+                    },
+                    child: ThemedChip(
+                        avatar: const Icon(Icons.calculate),
+                        color: (Theme.of(context).colorScheme.secondary),
+                        label: '1-Var Z-Test'),
                   )
                 ],
               ),

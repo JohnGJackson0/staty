@@ -26,7 +26,7 @@ class FormSubmit extends StatelessWidget {
               }
             },
             child: Container(
-              padding: const EdgeInsets.only(right: 16.0, left: 16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Text(
                 label,
                 style: TextStyle(

@@ -5,6 +5,7 @@ import 'package:staty/lists/calculation/widgets/form_hypothesis_value.dart';
 
 import '../../../../../model/form_submission_status.dart';
 import '../../../../../services/app_router.dart';
+import '../../../../../widgets/no_data_message.dart';
 import '../../../../management/model/model_exports.dart';
 import '../../../../../widgets/form_submit.dart';
 import '../../../widgets/form_hypothesis_equality.dart';
@@ -31,8 +32,15 @@ class _DataFormInputState extends State<TTestOneVarDataForm> {
 
   @override
   Widget build(BuildContext context) {
-    var stats = OneVarTTest(list: widget.list.data).getTTestStatsModel()
-        as TTestStatsModel;
+    TTestStatsModel stats;
+
+    if (widget.list.data.length > 2) {
+      stats = OneVarTTest(list: widget.list.data).getTTestStatsModel()
+          as TTestStatsModel;
+    } else {
+      stats = TTestStatsModel(
+          length: -1, sampleMean: -1, sampleStandardDeviation: -1);
+    }
     return Scaffold(
       appBar: AppBar(title: Text(widget.list.name)),
       body: BlocListener<TTestDataBloc, TTestDataBlocState>(
@@ -46,49 +54,52 @@ class _DataFormInputState extends State<TTestOneVarDataForm> {
           }
         },
         child: widget.list.data.length < 2
-            ? const Text('Not enough data in the list.')
+            ? const NoDataMessage()
             : BlocBuilder<TTestDataBloc, TTestDataBlocState>(
-          builder: (context, state) {
-            return Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  FormHypothesisValue(onChanged: (value) {
-                    context
-                        .read<TTestDataBloc>()
-                        .add(OnChangedHypothesisValue(hypothesisValue: value));
-                  }),
-                  const Text('\nThe hypothesis statement'),
-                  FormHypothesisEquality(onChanged: (value) {
-                    context
-                        .read<TTestDataBloc>()
-                        .add(OnChangedEqualityValue(equalityValue: value));
-                  }),
-                  const Text('Selected List:'),
-                  Padding(
+                builder: (context, state) {
+                  return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(widget.list.name),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FormSubmit(
-                                formStatus: state.formStatus,
-                          formKey: formKey,
-                          onSubmitEvent: () {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            context
-                                .read<TTestDataBloc>()
-                                .add(DataFormSubmitted());
-                          },
-                          label: 'Calculate')),
-                  state.formStatus is SubmissionFailed
-                      ? const Text('error occured')
-                      : const SizedBox(width: 20, height: 20)
-                ],
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          FormHypothesisValue(onChanged: (value) {
+                            context.read<TTestDataBloc>().add(
+                                OnChangedHypothesisValue(
+                                    hypothesisValue: value));
+                          }),
+                          const Text('\nThe hypothesis statement'),
+                          FormHypothesisEquality(onChanged: (value) {
+                            context.read<TTestDataBloc>().add(
+                                OnChangedEqualityValue(equalityValue: value));
+                          }),
+                          const Text('Selected List:'),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(widget.list.name),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: FormSubmit(
+                                  formStatus: state.formStatus,
+                                  formKey: formKey,
+                                  onSubmitEvent: () {
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    context
+                                        .read<TTestDataBloc>()
+                                        .add(DataFormSubmitted());
+                                  },
+                                  label: 'Calculate')),
+                          state.formStatus is SubmissionFailed
+                              ? const Text('error occured')
+                              : const SizedBox(width: 20, height: 20)
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
       ),
     );
   }

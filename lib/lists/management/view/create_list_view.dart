@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../calculation/zTestOneVar/zTestData/view/z_test_one_var_data_form.dart';
 import '../bloc/lists_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staty/lists/management/view/select_list.dart';
@@ -102,6 +103,19 @@ class _Actions extends StatelessWidget {
                   avatar: const Icon(Icons.calculate),
                   color: (Theme.of(context).colorScheme.secondary),
                   label: '1-var stats')),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, ZTestOneVarDataForm.id,
+                  arguments: ListModelParam(listModel: filter[0]));
+            },
+            child: ThemedChip(
+                avatar: const Icon(Icons.calculate),
+                color: (Theme.of(context).colorScheme.secondary),
+                label: '1-Var Z-Test'),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

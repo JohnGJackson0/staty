@@ -4,6 +4,7 @@ import 'package:staty/lists/calculation/widgets/form_hypothesis_value.dart';
 import 'package:staty/lists/calculation/widgets/form_population_standard_deviation.dart';
 import 'package:staty/lists/calculation/zTestOneVar/model/z_test_stats_model.dart';
 import 'package:staty/lists/calculation/zTestOneVar/zTestData/services/data_z_test_variables.dart';
+import 'package:staty/widgets/no_data_message.dart';
 
 import '../../../../../../model/form_submission_status.dart';
 import '../../../../../../widgets/form_submit.dart';
@@ -29,8 +30,14 @@ class _DataFormInputState extends State<ZTestOneVarDataForm> {
 
   @override
   Widget build(BuildContext context) {
-    var stats = DataZTestVariables(list: widget.list.data).getZTestStatsModel()
+    ZTestStatsModel stats;
+
+    if (widget.list.data.length > 2) {
+      stats = DataZTestVariables(list: widget.list.data).getZTestStatsModel()
         as ZTestStatsModel;
+    } else {
+      stats = ZTestStatsModel(length: -1, sampleMean: -1);
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.list.name)),
@@ -47,50 +54,53 @@ class _DataFormInputState extends State<ZTestOneVarDataForm> {
           }
         },
         child: widget.list.data.length < 2
-            ? const Text('Not enough data in the list.')
+            ? const NoDataMessage()
             : BlocBuilder<ZTestDataBloc, ZTestDataState>(
                 builder: (context, state) {
-                  return Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        FormHypothesisValue(onChanged: (value) {
-                          context.read<ZTestDataBloc>().add(
-                              OnChangedHypothesisZTestValue(
-                                  hypothesisValue: value));
-                        }),
-                        FormHypothesisEquality(onChanged: (value) {
-                          context.read<ZTestDataBloc>().add(
-                              OnChangedEqualityZTestValue(
-                                  equalityValue: value));
-                        }),
-                        FormPopulationStandardDeviation(onChanged: (value) {
-                          context.read<ZTestDataBloc>().add(
-                              OnChangedPopulationStandardDeviation(
-                                  populationStandardDeviation: value));
-                        }),
-                        const Text('Selected List:'),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(widget.list.name),
-                        ),
-                        Padding(
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          FormHypothesisValue(onChanged: (value) {
+                            context.read<ZTestDataBloc>().add(
+                                OnChangedHypothesisZTestValue(
+                                    hypothesisValue: value));
+                          }),
+                          FormHypothesisEquality(onChanged: (value) {
+                            context.read<ZTestDataBloc>().add(
+                                OnChangedEqualityZTestValue(
+                                    equalityValue: value));
+                          }),
+                          FormPopulationStandardDeviation(onChanged: (value) {
+                            context.read<ZTestDataBloc>().add(
+                                OnChangedPopulationStandardDeviation(
+                                    populationStandardDeviation: value));
+                          }),
+                          const Text('Selected List:'),
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: FormSubmit(
-                                formStatus: state.formStatus,
-                                formKey: formKey,
-                                onSubmitEvent: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
-                                  context
-                                      .read<ZTestDataBloc>()
-                                      .add(OnDataFormSubmitted());
-                                },
-                                label: 'Calculate')),
-                        state.formStatus is SubmissionFailed
-                            ? const Text('error occured')
-                            : const SizedBox(width: 20, height: 20)
-                      ],
+                            child: Text(widget.list.name),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: FormSubmit(
+                                  formStatus: state.formStatus,
+                                  formKey: formKey,
+                                  onSubmitEvent: () {
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    context
+                                        .read<ZTestDataBloc>()
+                                        .add(OnDataFormSubmitted());
+                                  },
+                                  label: 'Calculate')),
+                          state.formStatus is SubmissionFailed
+                              ? const Text('error occured')
+                              : const SizedBox(width: 20, height: 20)
+                        ],
+                      ),
                     ),
                   );
                 },
