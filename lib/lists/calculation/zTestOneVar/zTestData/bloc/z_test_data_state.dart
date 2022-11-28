@@ -15,7 +15,12 @@ class ZTestDataState extends Equatable {
       this.submissionData = const ZTestDataFormSubmission()});
 
   @override
-  List<Object> get props => [hypothesisValue, submissionData, formStatus];
+  List<Object> get props => [
+        populationStandardDeviation,
+        hypothesisValue,
+        submissionData,
+        formStatus
+      ];
 }
 
 class ZTestDataInitial extends ZTestDataState {}

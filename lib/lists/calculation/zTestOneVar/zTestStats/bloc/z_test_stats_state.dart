@@ -18,9 +18,15 @@ class ZTestStatsState extends Equatable {
       this.sampleMean = -1,
       this.hypothesisEquality = HypothesisEquality.notEqual});
 
-  // TODO fix Equatable through app
   @override
-  List<Object> get props => [submissionData, hypothesisValue];
+  List<Object> get props => [
+        submissionData,
+        hypothesisValue,
+        formStatus,
+        length,
+        populationStandardDeviation,
+        sampleMean
+      ];
 }
 
 class ZTestStatsInitial extends ZTestStatsState {}

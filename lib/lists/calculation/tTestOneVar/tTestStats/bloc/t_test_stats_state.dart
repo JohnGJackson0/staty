@@ -19,15 +19,7 @@ class TTestStatsState extends Equatable {
       this.hypothesisEquality = HypothesisEquality.notEqual});
 
   @override
-  List<Object> get props => [submissionData, hypothesisValue];
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{'hypothesisValue': hypothesisValue};
-  }
-
-  factory TTestStatsState.fromMap(Map<String, dynamic> map) {
-    return TTestStatsState(hypothesisValue: map['hypothesisValue'] as double);
-  }
+  List<Object> get props => [submissionData, hypothesisValue, formStatus, length, sampleStandardDeviation, sampleMean];
 }
 
 class TTestBlocInitial extends TTestStatsState {}

@@ -8,7 +8,7 @@ part 't_test_data_event.dart';
 part 't_test_data_state.dart';
 
 class TTestDataBloc
-    extends HydratedBloc<TTestDataBlocEvent, TTestDataBlocState> {
+    extends Bloc<TTestDataBlocEvent, TTestDataBlocState> {
   TTestDataBloc() : super(TTestBlocInitial()) {
     on<OnChangedHypothesisValue>(_onHypothesisValueChanged);
     on<OnChangedEqualityValue>(_onChangedEqualityValue);
@@ -50,15 +50,5 @@ class TTestDataBloc
         submissionData: TTestDataFormSubmission(
             hypothesisEquality: event.equalityValue,
             hypothesisValue: state.submissionData.hypothesisValue)));
-  }
-
-  @override
-  TTestDataBlocState? fromJson(Map<String, dynamic> json) {
-    return TTestDataBlocState.fromMap(json);
-  }
-
-  @override
-  Map<String, dynamic>? toJson(TTestDataBlocState state) {
-    return state.toMap();
   }
 }

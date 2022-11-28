@@ -8,7 +8,7 @@ part 't_test_stats_event.dart';
 part 't_test_stats_state.dart';
 
 class TTestStatsBloc
-    extends HydratedBloc<TTestStatsBlocEvent, TTestStatsState> {
+    extends Bloc<TTestStatsBlocEvent, TTestStatsState> {
   TTestStatsBloc() : super(TTestBlocInitial()) {
     on<OnChangedHypothesisValue>(_onHypothesisValueChanged);
     on<OnChangedEqualityValue>(_onChangedEqualityValue);
@@ -105,15 +105,5 @@ class TTestStatsBloc
             hypothesisEquality: event.equalityValue,
             hypothesisValue: state.submissionData.hypothesisValue,
             meanValue: state.submissionData.meanValue)));
-  }
-
-  @override
-  TTestStatsState? fromJson(Map<String, dynamic> json) {
-    return TTestStatsState.fromMap(json);
-  }
-
-  @override
-  Map<String, dynamic>? toJson(TTestStatsState state) {
-    return state.toMap();
   }
 }
