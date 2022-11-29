@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.staty">
    <application
-        android:label="staty"
+        android:label="Statist
+ics Calculator Stat-y"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
