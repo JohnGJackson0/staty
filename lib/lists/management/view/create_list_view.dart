@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../calculation/zTestOneVar/zTestData/view/z_test_one_var_data_form.dart';
+import '../../calculation/oneVarZTest/zTestData/view/one_var_z_test_data_form.dart';
 import '../bloc/lists_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staty/lists/management/view/select_list.dart';
@@ -108,7 +108,7 @@ class _Actions extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, ZTestOneVarDataForm.id,
+              Navigator.pushNamed(context, OneVarZTestDataForm.id,
                   arguments: ListModelParam(listModel: filter[0]));
             },
             child: ThemedChip(

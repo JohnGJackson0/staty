@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staty/lists/calculation/widgets/form_hypothesis_equality.dart';
 import 'package:staty/lists/calculation/widgets/form_sample_mean.dart';
-import 'package:staty/lists/calculation/zTestOneVar/model/z_test_stats_model.dart';
+import 'package:staty/lists/calculation/oneVarZTest/model/one_var_z_test_descriptive_stats.dart';
 import '../../../../../model/form_submission_status.dart';
 import '../../../../../widgets/form_submit.dart';
 import '../../../widgets/form_hypothesis_value.dart';
@@ -11,8 +11,8 @@ import '../../../widgets/length_degree_of_freedom.dart';
 import '../../view/z_test_result.dart';
 import '../bloc/z_test_stats_bloc.dart';
 
-class ZTestOneVarStatsForm extends StatelessWidget {
-  const ZTestOneVarStatsForm({
+class OneVarZTestStatForm extends StatelessWidget {
+  const OneVarZTestStatForm({
     Key? key,
   }) : super(key: key);
 
@@ -45,7 +45,7 @@ class _StatFormInputState extends State<_StatFormInput> {
                 arguments: ZTestResultScreenParam(
                     equalityChoice: state.hypothesisEquality,
                     hypothesisValue: state.hypothesisValue,
-                    stats: ZTestStatsModel(
+                    stats: OneVarZTestDescriptiveStats(
                         length: state.length, sampleMean: state.sampleMean),
                     populationStandardDeviation:
                         state.populationStandardDeviation));

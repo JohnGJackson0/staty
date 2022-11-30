@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:staty/lists/calculation/oneVarTTest/view/list_or_stats_selection.dart';
+import 'package:staty/lists/calculation/oneVarTTest/view/one_var_t_test_selection.dart';
 import 'package:staty/lists/calculation/twoVarTTest/view/two_var_t_test_data.dart';
 import '../lists/calculation/model/hypothesis_equality.dart';
 import '../lists/calculation/oneVarTTest/model/one_var_t_test_descriptive_stats.dart';
 import '../lists/calculation/oneVarTTest/data/view/one_var_t_test_data_form.dart';
 import '../lists/calculation/oneVarTTest/view/t_test_result.dart';
 import '../lists/calculation/oneVarStats/view/one_var_stats.dart';
-import '../lists/calculation/zTestOneVar/view/one_var_z_test.dart';
-import '../lists/calculation/zTestOneVar/view/z_test_result.dart';
-import '../lists/calculation/zTestOneVar/zTestData/view/z_test_one_var_data_form.dart';
+import '../lists/calculation/oneVarZTest/view/one_var_z_test_selection.dart';
+import '../lists/calculation/oneVarZTest/view/z_test_result.dart';
+import '../lists/calculation/oneVarZTest/zTestData/view/one_var_z_test_data_form.dart';
 import '../lists/management/view/edit_list_view.dart';
 import '../lists/management/view/lists_preview_view.dart';
 import '../lists/management/view/select_list.dart';
@@ -57,11 +57,11 @@ class AppRouter {
 
           return TwoVarTTestData(list: args.listModel);
         });
-      case ZTestOneVarDataForm.id:
+      case OneVarZTestDataForm.id:
         return MaterialPageRoute(builder: (_) {
           final ListModelParam args = settings.arguments as ListModelParam;
 
-          return ZTestOneVarDataForm(list: args.listModel);
+          return OneVarZTestDataForm(list: args.listModel);
         });
       case ZTestResult.id:
         return MaterialPageRoute(builder: (_) {
@@ -85,10 +85,10 @@ class AppRouter {
         });
       case EditList.id:
         return MaterialPageRoute(builder: (_) => const EditList());
-      case ListOrStatsSelection.id:
-        return MaterialPageRoute(builder: (_) => const ListOrStatsSelection());
-      case OneVarZTest.id:
-        return MaterialPageRoute(builder: (_) => const OneVarZTest());
+      case OneVarTTestSelection.id:
+        return MaterialPageRoute(builder: (_) => const OneVarTTestSelection());
+      case OneVarZTestSelection.id:
+        return MaterialPageRoute(builder: (_) => const OneVarZTestSelection());
       case OneVarStats.id:
         return MaterialPageRoute(builder: (_) {
           final ListModelParam args = settings.arguments as ListModelParam;

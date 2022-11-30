@@ -3,8 +3,8 @@ import '../data/view/one_var_t_test_data_form.dart';
 import '../stats/view/one_var_t_test_stat_form.dart';
 import '../../widgets/selection_promt.dart';
 
-class ListOrStatsSelection extends StatelessWidget {
-  const ListOrStatsSelection({super.key});
+class OneVarTTestSelection extends StatelessWidget {
+  const OneVarTTestSelection({super.key});
   static const id = 'one_var_t_test_screen';
 
   @override

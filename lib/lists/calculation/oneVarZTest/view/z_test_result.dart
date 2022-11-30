@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:staty/lists/calculation/zTestOneVar/model/z_test_stats_model.dart';
-import 'package:staty/lists/calculation/zTestOneVar/services/one_var_z_test.dart';
+import 'package:staty/lists/calculation/oneVarZTest/model/one_var_z_test_descriptive_stats.dart';
+import 'package:staty/lists/calculation/oneVarZTest/services/one_var_z_test_calculator.dart';
 import '../../model/hypothesis_equality.dart';
 import '../../widgets/calculation.dart';
 
 class ZTestResultScreenParam {
   final double hypothesisValue;
   final HypothesisEquality? equalityChoice;
-  final ZTestStatsModel stats;
+  final OneVarZTestDescriptiveStats stats;
   final double populationStandardDeviation;
   ZTestResultScreenParam(
       {required this.hypothesisValue,
@@ -21,7 +21,7 @@ class ZTestResultScreenParam {
 class ZTestResult extends StatelessWidget {
   final double hypothesisValue;
   final HypothesisEquality? equalityChoice;
-  final ZTestStatsModel stats;
+  final OneVarZTestDescriptiveStats stats;
   final double populationStandardDeviation;
 
   static const id = 'z_test_result_screen';
@@ -46,7 +46,7 @@ class ZTestResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var result = OneVarZTest(
+    var result = OneVarZTestCalculator(
         oneVarStats: stats,
         hypothesisValue: hypothesisValue,
         equalityChoice: getEqualityValue(),

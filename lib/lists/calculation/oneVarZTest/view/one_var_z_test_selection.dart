@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:staty/lists/calculation/zTestOneVar/zTestData/view/z_test_one_var_data_form.dart';
+import 'package:staty/lists/calculation/oneVarZTest/zTestData/view/one_var_z_test_data_form.dart';
 import '../../widgets/selection_promt.dart';
-import '../zTestStats/view/z_test_one_var_stat_form.dart';
+import '../zTestStats/view/one_var_z_test_stat_form.dart';
 
-class OneVarZTest extends StatelessWidget {
-  const OneVarZTest({super.key});
+class OneVarZTestSelection extends StatelessWidget {
+  const OneVarZTestSelection({super.key});
   static const id = 'one_var_z_test_screen';
 
   @override
@@ -37,13 +37,13 @@ class _ListDataSelectionState extends State<_ListDataSelection> {
   @override
   Widget build(BuildContext context) {
     return statsSelected
-        ? const ZTestOneVarStatsForm()
+        ? const OneVarZTestStatForm()
         : Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SelectionPrompt(
-                  idToGoOnFinished: ZTestOneVarDataForm.id,
+                  idToGoOnFinished: OneVarZTestDataForm.id,
                   label:
                       'If you want to calculate Z-Test with data then select a list.'),
               const Text(

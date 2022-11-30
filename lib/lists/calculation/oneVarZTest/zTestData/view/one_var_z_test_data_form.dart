@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staty/lists/calculation/widgets/form_hypothesis_value.dart';
 import 'package:staty/lists/calculation/widgets/form_population_standard_deviation.dart';
-import 'package:staty/lists/calculation/zTestOneVar/model/z_test_stats_model.dart';
-import 'package:staty/lists/calculation/zTestOneVar/zTestData/services/data_z_test_variables.dart';
+import 'package:staty/lists/calculation/oneVarZTest/model/one_var_z_test_descriptive_stats.dart';
+import 'package:staty/lists/calculation/oneVarZTest/zTestData/services/one_var_z_test_calculator.dart';
 import 'package:staty/widgets/no_data_message.dart';
 
 import '../../../../../../model/form_submission_status.dart';
@@ -13,30 +13,30 @@ import '../../../widgets/form_hypothesis_equality.dart';
 import '../../view/z_test_result.dart';
 import '../bloc/z_test_data_bloc.dart';
 
-class ZTestOneVarDataForm extends StatefulWidget {
+class OneVarZTestDataForm extends StatefulWidget {
   static const id = 'z_test_one_var_data_form';
   final ListModel list;
-  const ZTestOneVarDataForm({
+  const OneVarZTestDataForm({
     required this.list,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ZTestOneVarDataForm> createState() => _DataFormInputState();
+  State<OneVarZTestDataForm> createState() => _DataFormInputState();
 }
 
-class _DataFormInputState extends State<ZTestOneVarDataForm> {
+class _DataFormInputState extends State<OneVarZTestDataForm> {
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    ZTestStatsModel stats;
+    OneVarZTestDescriptiveStats stats;
 
     if (widget.list.data.length > 2) {
-      stats = DataZTestVariables(list: widget.list.data).getZTestStatsModel()
-          as ZTestStatsModel;
+      stats = DataZTestCalculator(list: widget.list.data).getZTestStatsModel()
+          as OneVarZTestDescriptiveStats;
     } else {
-      stats = ZTestStatsModel(length: -1, sampleMean: -1);
+      stats = OneVarZTestDescriptiveStats(length: -1, sampleMean: -1);
     }
 
     return BlocProvider(

@@ -1,15 +1,15 @@
 import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:data/data.dart';
-import '../model/z_test_stats_model.dart';
+import '../model/one_var_z_test_descriptive_stats.dart';
 
-class OneVarZTest extends Equatable {
-  final ZTestStatsModel oneVarStats;
+class OneVarZTestCalculator extends Equatable {
+  final OneVarZTestDescriptiveStats oneVarStats;
   final num hypothesisValue;
   final double populationStandardDeviation;
   final String equalityChoice;
 
-  const OneVarZTest(
+  const OneVarZTestCalculator(
       {required this.oneVarStats,
       required this.equalityChoice,
       required this.populationStandardDeviation,
