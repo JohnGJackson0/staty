@@ -9,7 +9,7 @@ import 'package:staty/view/drawer_view.dart';
 import '../../../services/feature_flags.dart';
 import '../bloc/lists_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../calculation/tTestOneVar/tTestData/view/t_test_one_var_data_form.dart';
+import '../../calculation/oneVarTTest/data/view/one_var_t_test_data_form.dart';
 import '../model/model_exports.dart';
 import 'create_list_view.dart';
 import '../../../widgets/themed_chip.dart';
@@ -170,7 +170,7 @@ class _ListBodyTile extends StatelessWidget {
                           .read<ListsBloc>()
                           .add(SelectedTaskIdEvent(id: listStore.uid));
 
-                      Navigator.pushNamed(context, TTestOneVarDataForm.id,
+                      Navigator.pushNamed(context, OneVarTTestDataForm.id,
                           arguments: ListModelParam(listModel: listStore));
                     },
                     child: ThemedChip(

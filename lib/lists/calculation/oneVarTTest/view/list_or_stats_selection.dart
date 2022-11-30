@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import '../tTestData/view/t_test_one_var_data_form.dart';
-import '../tTestStats/view/t_test_one_var_stat_form.dart';
+import '../data/view/one_var_t_test_data_form.dart';
+import '../stats/view/one_var_t_test_stat_form.dart';
 import '../../widgets/selection_promt.dart';
 
-class OneVarTTest extends StatelessWidget {
-  const OneVarTTest({super.key});
+class ListOrStatsSelection extends StatelessWidget {
+  const ListOrStatsSelection({super.key});
   static const id = 'one_var_t_test_screen';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('1 var T-Test')),
-          body: Container(
-            padding: const EdgeInsets.all(20),
-            alignment: Alignment.topLeft,
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        alignment: Alignment.topLeft,
         child: const _ListDataSelection(id: id),
       ),
     );
@@ -37,13 +37,13 @@ class _ListDataSelectionState extends State<_ListDataSelection> {
   @override
   Widget build(BuildContext context) {
     return statsSelected
-        ? const TTestOneVarStatForm()
+        ? const OneVarTTestStatForm()
         : Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SelectionPrompt(
-                  idToGoOnFinished: TTestOneVarDataForm.id,
+                  idToGoOnFinished: OneVarTTestDataForm.id,
                   label:
                       'If you want to calculate T-Test with data then select a list.'),
               const Text(

@@ -2,16 +2,16 @@ import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:statistics/statistics.dart';
 import '../../../management/model/data_point.dart';
-import '../../tTestOneVar/model/t_test_stats_model.dart';
+import '../model/one_var_t_test_descriptive_stats.dart';
 
-class OneVarTTest extends Equatable {
+class TTestDescriptiveStatsCalculator extends Equatable {
   final List<DataPoint> list;
 
   final List<double> _normalizedSorted = [];
 
   late final Statistics _statistics;
 
-  OneVarTTest({required this.list}) {
+  TTestDescriptiveStatsCalculator({required this.list}) {
     if (list.isEmpty) {
       throw 'No Data';
     }
@@ -35,7 +35,7 @@ class OneVarTTest extends Equatable {
   }
 
   getTTestStatsModel() {
-    return TTestStatsModel(
+    return OneVarTTestDescriptiveStats(
       sampleMean: _statistics.mean,
       sampleStandardDeviation:
           _getSampleStandardDeviation(_normalizedSorted, _statistics.mean),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:staty/lists/calculation/tTestOneVar/view/one_var_t_test.dart';
+import 'package:staty/lists/calculation/oneVarTTest/view/list_or_stats_selection.dart';
 import '../lists/calculation/zTestOneVar/view/one_var_z_test.dart';
 import '../lists/management/bloc/lists_bloc.dart';
 import '../lists/management/view/lists_preview_view.dart';
@@ -44,7 +44,7 @@ class DrawerView extends StatelessWidget {
             GestureDetector(
                 onTap: () {
                   context.read<ListsBloc>().add(SelectedTaskIdEvent(id: ''));
-                  Navigator.of(context).pushNamed(OneVarTTest.id);
+                  Navigator.of(context).pushNamed(ListOrStatsSelection.id);
                 },
                 child: const ListTile(
                   leading: Icon(Icons.calculate),

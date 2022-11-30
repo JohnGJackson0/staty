@@ -4,7 +4,7 @@ import '../bloc/lists_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staty/lists/management/view/select_list.dart';
 import '../../../model/form_submission_status.dart';
-import '../../calculation/tTestOneVar/tTestData/view/t_test_one_var_data_form.dart';
+import '../../calculation/oneVarTTest/data/view/one_var_t_test_data_form.dart';
 import '../model/model_exports.dart';
 import 'edit_list_view.dart';
 import '../../calculation/oneVarStats/view/one_var_stats.dart';
@@ -125,7 +125,7 @@ class _Actions extends StatelessWidget {
                   .read<ListsBloc>()
                   .add(SelectedTaskIdEvent(id: filter[0].uid));
 
-              Navigator.pushNamed(context, TTestOneVarDataForm.id,
+              Navigator.pushNamed(context, OneVarTTestDataForm.id,
                   arguments: ListModelParam(listModel: filter[0]));
             },
             child: ThemedChip(

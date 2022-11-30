@@ -1,8 +1,8 @@
 // ignore: depend_on_referenced_packages
 import 'package:flutter_test/flutter_test.dart';
-import 'package:staty/lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
-import 'package:staty/lists/calculation/tTestOneVar/services/one_sample_t_test.dart';
-import 'package:staty/lists/calculation/tTestOneVar/services/one_var_t_test.dart';
+import 'package:staty/lists/calculation/oneVarTTest/model/one_var_t_test_descriptive_stats.dart';
+import 'package:staty/lists/calculation/oneVarTTest/services/one_var_t_test_calculator.dart';
+import 'package:staty/lists/calculation/oneVarTTest/services/one_var_t_test_descriptive_stats_calculator.dart';
 import 'package:staty/lists/management/model/model_exports.dart';
 
 void main() {
@@ -25,10 +25,12 @@ void main() {
     ];
     // todo use modular service
     var tTestStats =
-        OneVarTTest(list: list).getTTestStatsModel() as TTestStatsModel;
+        TTestDescriptiveStatsCalculator(list: list)
+        .getTTestStatsModel()
+        as OneVarTTestDescriptiveStats;
 
     test('p&t on list less than', () {
-      var result = OneSampleTTestService(
+      var result = OneVarTTestCalculator(
           oneVarStats: tTestStats, equalityChoice: '<', hypothesisValue: 120);
 
       var tValue = result.calculateTValue();
@@ -38,7 +40,7 @@ void main() {
       expect(.99, closeTo(pValue, .01));
     });
     test('p&t on list two tailed', () {
-      var result = OneSampleTTestService(
+      var result = OneVarTTestCalculator(
           oneVarStats: tTestStats, equalityChoice: '≠', hypothesisValue: 120);
 
       var tValue = result.calculateTValue();
@@ -49,7 +51,7 @@ void main() {
     });
 
     test('p&t on list more than', () {
-      var result = OneSampleTTestService(
+      var result = OneVarTTestCalculator(
           oneVarStats: tTestStats, equalityChoice: '>', hypothesisValue: 120);
 
       var tValue = result.calculateTValue();
@@ -62,8 +64,8 @@ void main() {
 
   group('p & t values on stats', () {
     test('less than', () {
-      var result = OneSampleTTestService(
-          oneVarStats: TTestStatsModel(
+      var result = OneVarTTestCalculator(
+          oneVarStats: OneVarTTestDescriptiveStats(
               length: 30, sampleMean: 140, sampleStandardDeviation: 20),
           hypothesisValue: 100,
           equalityChoice: '>');
@@ -76,8 +78,8 @@ void main() {
     });
 
     test('more than', () {
-      var result = OneSampleTTestService(
-          oneVarStats: TTestStatsModel(
+      var result = OneVarTTestCalculator(
+          oneVarStats: OneVarTTestDescriptiveStats(
               length: 30, sampleMean: 140, sampleStandardDeviation: 20),
           hypothesisValue: 100,
           equalityChoice: '<');
@@ -90,8 +92,8 @@ void main() {
     });
 
     test('two tailed', () {
-      var result = OneSampleTTestService(
-          oneVarStats: TTestStatsModel(
+      var result = OneVarTTestCalculator(
+          oneVarStats: OneVarTTestDescriptiveStats(
               length: 30, sampleMean: 140, sampleStandardDeviation: 20),
           hypothesisValue: 100,
           equalityChoice: '≠');

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:staty/lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
+import 'package:staty/lists/calculation/oneVarTTest/model/one_var_t_test_descriptive_stats.dart';
 import 'package:staty/lists/calculation/widgets/form_hypothesis_value.dart';
 
 import '../../../../../model/form_submission_status.dart';
@@ -9,36 +9,34 @@ import '../../../../../widgets/no_data_message.dart';
 import '../../../../management/model/model_exports.dart';
 import '../../../../../widgets/form_submit.dart';
 import '../../../widgets/form_hypothesis_equality.dart';
-import '../../services/one_var_t_test.dart';
+import '../../services/one_var_t_test_descriptive_stats_calculator.dart';
 import '../../view/t_test_result.dart';
 import '../bloc/t_test_data_bloc.dart';
 
-// should check widget.filter[0].data.length < 2
-
-class TTestOneVarDataForm extends StatefulWidget {
+class OneVarTTestDataForm extends StatefulWidget {
   static const id = 't_test_one_var_data_form';
   final ListModel list;
-  const TTestOneVarDataForm({
+  const OneVarTTestDataForm({
     required this.list,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<TTestOneVarDataForm> createState() => _DataFormInputState();
+  State<OneVarTTestDataForm> createState() => _DataFormInputState();
 }
 
-class _DataFormInputState extends State<TTestOneVarDataForm> {
+class _DataFormInputState extends State<OneVarTTestDataForm> {
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    TTestStatsModel stats;
+    OneVarTTestDescriptiveStats stats;
 
     if (widget.list.data.length > 2) {
-      stats = OneVarTTest(list: widget.list.data).getTTestStatsModel()
-          as TTestStatsModel;
+      stats = TTestDescriptiveStatsCalculator(list: widget.list.data)
+          .getTTestStatsModel() as OneVarTTestDescriptiveStats;
     } else {
-      stats = TTestStatsModel(
+      stats = OneVarTTestDescriptiveStats(
           length: -1, sampleMean: -1, sampleStandardDeviation: -1);
     }
     return BlocProvider(

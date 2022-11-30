@@ -8,12 +8,12 @@ import '../../../../../model/form_submission_status.dart';
 import '../../../../../widgets/form_submit.dart';
 import '../../../widgets/form_hypothesis_value.dart';
 import '../../../widgets/length_degree_of_freedom.dart';
-import '../../model/t_test_stats_model.dart';
+import '../../model/one_var_t_test_descriptive_stats.dart';
 import '../../view/t_test_result.dart';
 import '../bloc/t_test_stats_bloc.dart';
 
-class TTestOneVarStatForm extends StatelessWidget {
-  const TTestOneVarStatForm({
+class OneVarTTestStatForm extends StatelessWidget {
+  const OneVarTTestStatForm({
     Key? key,
   }) : super(key: key);
 
@@ -46,7 +46,7 @@ class _StatFormInputState extends State<_StatFormInput> {
                 arguments: ResultScreenParam(
                     equalityChoice: state.hypothesisEquality,
                     hypothesisValue: state.hypothesisValue,
-                    stats: TTestStatsModel(
+                    stats: OneVarTTestDescriptiveStats(
                         length: state.length,
                         sampleMean: state.sampleMean,
                         sampleStandardDeviation:

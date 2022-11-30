@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:staty/lists/calculation/oneVarTTest/services/one_var_t_test_calculator.dart';
 import '../../model/hypothesis_equality.dart';
-import '../model/t_test_stats_model.dart';
-import '../services/one_sample_t_test.dart';
+import '../../oneVarTTest/model/one_var_t_test_descriptive_stats.dart';
 import '../../widgets/calculation.dart';
 
 // shared between data and stats results
@@ -9,7 +9,7 @@ import '../../widgets/calculation.dart';
 class TTestResult extends StatelessWidget {
   final double hypothesisValue;
   final HypothesisEquality? equalityChoice;
-  final TTestStatsModel stats;
+  final OneVarTTestDescriptiveStats stats;
 
   static const id = 't_test_result_screen';
 
@@ -32,7 +32,7 @@ class TTestResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var result = OneSampleTTestService(
+    var result = OneVarTTestCalculator(
         oneVarStats: stats,
         hypothesisValue: hypothesisValue,
         equalityChoice: getEqualityValue());

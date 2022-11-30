@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:staty/lists/calculation/tTestOneVar/view/one_var_t_test.dart';
+import 'package:staty/lists/calculation/oneVarTTest/view/list_or_stats_selection.dart';
 import 'package:staty/lists/calculation/twoVarTTest/view/two_var_t_test_data.dart';
 import '../lists/calculation/model/hypothesis_equality.dart';
-import '../lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
-import '../lists/calculation/tTestOneVar/tTestData/view/t_test_one_var_data_form.dart';
-import '../lists/calculation/tTestOneVar/view/t_test_result.dart';
+import '../lists/calculation/oneVarTTest/model/one_var_t_test_descriptive_stats.dart';
+import '../lists/calculation/oneVarTTest/data/view/one_var_t_test_data_form.dart';
+import '../lists/calculation/oneVarTTest/view/t_test_result.dart';
 import '../lists/calculation/oneVarStats/view/one_var_stats.dart';
 import '../lists/calculation/zTestOneVar/view/one_var_z_test.dart';
 import '../lists/calculation/zTestOneVar/view/z_test_result.dart';
@@ -23,7 +23,7 @@ class SelectionListParam {
 class ResultScreenParam {
   final double hypothesisValue;
   final HypothesisEquality? equalityChoice;
-  final TTestStatsModel stats;
+  final OneVarTTestDescriptiveStats stats;
   ResultScreenParam({
     required this.hypothesisValue,
     required this.equalityChoice,
@@ -45,11 +45,11 @@ class AppRouter {
 
           return SelectList(idToGoOnFinished: args.idToGoOnFinished);
         });
-      case TTestOneVarDataForm.id:
+      case OneVarTTestDataForm.id:
         return MaterialPageRoute(builder: (_) {
           final ListModelParam args = settings.arguments as ListModelParam;
 
-          return TTestOneVarDataForm(list: args.listModel);
+          return OneVarTTestDataForm(list: args.listModel);
         });
       case TwoVarTTestData.id:
         return MaterialPageRoute(builder: (_) {
@@ -85,8 +85,8 @@ class AppRouter {
         });
       case EditList.id:
         return MaterialPageRoute(builder: (_) => const EditList());
-      case OneVarTTest.id:
-        return MaterialPageRoute(builder: (_) => const OneVarTTest());
+      case ListOrStatsSelection.id:
+        return MaterialPageRoute(builder: (_) => const ListOrStatsSelection());
       case OneVarZTest.id:
         return MaterialPageRoute(builder: (_) => const OneVarZTest());
       case OneVarStats.id:
