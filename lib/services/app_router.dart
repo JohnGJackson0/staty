@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:staty/lists/calculation/tTestOneVar/view/one_var_t_test.dart';
+import 'package:staty/lists/calculation/twoVarTTest/view/two_var_t_test_data.dart';
 import '../lists/calculation/model/hypothesis_equality.dart';
 import '../lists/calculation/tTestOneVar/model/t_test_stats_model.dart';
 import '../lists/calculation/tTestOneVar/tTestData/view/t_test_one_var_data_form.dart';
@@ -49,6 +50,12 @@ class AppRouter {
           final ListModelParam args = settings.arguments as ListModelParam;
 
           return TTestOneVarDataForm(list: args.listModel);
+        });
+      case TwoVarTTestData.id:
+        return MaterialPageRoute(builder: (_) {
+          final ListModelParam args = settings.arguments as ListModelParam;
+
+          return TwoVarTTestData(list: args.listModel);
         });
       case ZTestOneVarDataForm.id:
         return MaterialPageRoute(builder: (_) {

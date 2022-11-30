@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:staty/lists/calculation/twoVarTTest/view/two_var_t_test_data.dart';
 import 'package:staty/lists/calculation/zTestOneVar/zTestData/view/z_test_one_var_data_form.dart';
 import 'package:staty/lists/management/view/edit_list_view.dart';
 import 'package:staty/lists/calculation/oneVarStats/view/one_var_stats.dart';
 import 'package:staty/lists/management/view/select_list.dart';
 import 'package:staty/view/drawer_view.dart';
+import '../../../services/feature_flags.dart';
 import '../bloc/lists_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../calculation/tTestOneVar/tTestData/view/t_test_one_var_data_form.dart';
@@ -185,7 +187,21 @@ class _ListBodyTile extends StatelessWidget {
                         avatar: const Icon(Icons.calculate),
                         color: (Theme.of(context).colorScheme.secondary),
                         label: '1-Var Z-Test'),
-                  )
+                  ),
+                  twoVarTTest()
+                      ? GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, TwoVarTTestData.id,
+                                arguments:
+                                    ListModelParam(listModel: listStore));
+                          },
+                          child: ThemedChip(
+                              avatar: const Icon(Icons.calculate),
+                              color: (Theme.of(context).colorScheme.secondary),
+                              label: '2-Var T-Test'),
+                        )
+                      : const SizedBox(height: 0),
+                  
                 ],
               ),
             ),
