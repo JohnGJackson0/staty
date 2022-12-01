@@ -16,6 +16,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
     on<DeleteDataPointSubmitted>(_onDeleteDataPointSubmitted);
     on<StatListCreatedEvent>(_onStatListCreated);
     on<SelectedTaskIdEvent>(_onSelectedTaskId);
+    on<SelectedListIdTwoEvent>(_onSelectedListIdTwoEvent);
     on<OnErrorEvent>(_onErrorEvent);
     on<ExistingDataPointChangedInputEvent>(_onExistingDataPointChangedEvent);
     on<UpdateDataPointSubmitted>(_onUpdateDataPointSubmitted);
@@ -53,7 +54,17 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
     return emit(ListsState(
         listStore: state.listStore,
         submissionData: state.submissionData,
-        selectedTaskid: event.id));
+        selectedTaskid: event.id,
+        selectedListIdTwo: state.selectedListIdTwo));
+  }
+
+  void _onSelectedListIdTwoEvent(
+      SelectedListIdTwoEvent event, Emitter<ListsState> emit) {
+    return emit(ListsState(
+        listStore: state.listStore,
+        submissionData: state.submissionData,
+        selectedTaskid: state.selectedTaskid,
+        selectedListIdTwo: event.id));
   }
 
   void _onStatListCreated(

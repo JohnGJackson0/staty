@@ -51,3 +51,9 @@ class SelectedTaskIdEvent extends ListsEvent {
 
   SelectedTaskIdEvent({required this.id});
 }
+
+class SelectedListIdTwoEvent extends ListsEvent {
+  final String id;
+
+  SelectedListIdTwoEvent({required this.id});
+}

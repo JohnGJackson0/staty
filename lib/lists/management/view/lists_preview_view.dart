@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:staty/lists/calculation/twoVarTTest/view/two_var_t_test_data.dart';
 import 'package:staty/lists/calculation/oneVarZTest/zTestData/view/one_var_z_test_data_form.dart';
+import 'package:staty/lists/management/multi_list_selection.dart';
 import 'package:staty/lists/management/view/edit_list_view.dart';
 import 'package:staty/lists/calculation/oneVarStats/view/one_var_stats.dart';
 import 'package:staty/lists/management/view/select_list.dart';
 import 'package:staty/view/drawer_view.dart';
+import '../../../services/app_router.dart';
 import '../../../services/feature_flags.dart';
 import '../bloc/lists_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -191,9 +193,9 @@ class _ListBodyTile extends StatelessWidget {
                   twoVarTTest()
                       ? GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, TwoVarTTestData.id,
+                            Navigator.pushNamed(context, MultiListSelection.id,
                                 arguments:
-                                    ListModelParam(listModel: listStore));
+                                    SelectionListParam(TwoVarTTestData.id));
                           },
                           child: ThemedChip(
                               avatar: const Icon(Icons.calculate),
@@ -201,7 +203,6 @@ class _ListBodyTile extends StatelessWidget {
                               label: '2-Var T-Test'),
                         )
                       : const SizedBox(height: 0),
-                  
                 ],
               ),
             ),

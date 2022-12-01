@@ -1,9 +1,11 @@
 part of 'lists_bloc.dart';
+
 class ListsState extends Equatable {
   final List<ListModel> listStore;
   final SubmissionData submissionData;
   final FormSubmissionStatus formStatus;
   final String selectedTaskid;
+  final String selectedListIdTwo;
 
   bool isValidDatapointInput() {
     try {
@@ -16,19 +18,27 @@ class ListsState extends Equatable {
 
   const ListsState(
       {this.listStore = const [],
+      this.selectedListIdTwo = '',
       this.submissionData = const SubmissionData(),
       this.formStatus = const InitialFormStatus(),
       this.selectedTaskid = ''});
 
   @override
   List<Object?> get props =>
-      [listStore, submissionData, formStatus, selectedTaskid];
+      [
+        listStore,
+        submissionData,
+        formStatus,
+        selectedTaskid,
+        selectedListIdTwo
+      ];
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'listStore': listStore.map((x) => x.toMap()).toList(),
       'submissionData': submissionData.toMap(),
       'selectedTaskid': selectedTaskid,
+      'selectedListIdTwo': selectedListIdTwo,
     };
   }
 
@@ -55,6 +65,7 @@ class ListsState extends Equatable {
       submissionData:
           SubmissionData.fromMap(map['submissionData'] as Map<String, dynamic>),
       selectedTaskid: map['selectedTaskid'] as String,
+      selectedListIdTwo: map['selectedListIdTwo'] as String,
     );
   }
 }

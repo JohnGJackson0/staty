@@ -9,6 +9,7 @@ import '../lists/calculation/oneVarStats/view/one_var_stats.dart';
 import '../lists/calculation/oneVarZTest/view/one_var_z_test_selection.dart';
 import '../lists/calculation/oneVarZTest/view/z_test_result.dart';
 import '../lists/calculation/oneVarZTest/zTestData/view/one_var_z_test_data_form.dart';
+import '../lists/management/multi_list_selection.dart';
 import '../lists/management/view/edit_list_view.dart';
 import '../lists/management/view/lists_preview_view.dart';
 import '../lists/management/view/select_list.dart';
@@ -45,6 +46,13 @@ class AppRouter {
 
           return SelectList(idToGoOnFinished: args.idToGoOnFinished);
         });
+      case MultiListSelection.id:
+        return MaterialPageRoute(builder: (_) {
+          final SelectionListParam args =
+              settings.arguments as SelectionListParam;
+
+          return MultiListSelection(idToGoOnFinished: args.idToGoOnFinished);
+        });
       case OneVarTTestDataForm.id:
         return MaterialPageRoute(builder: (_) {
           final ListModelParam args = settings.arguments as ListModelParam;
@@ -53,9 +61,10 @@ class AppRouter {
         });
       case TwoVarTTestData.id:
         return MaterialPageRoute(builder: (_) {
-          final ListModelParam args = settings.arguments as ListModelParam;
+          final MultiListModelParam args =
+              settings.arguments as MultiListModelParam;
 
-          return TwoVarTTestData(list: args.listModel);
+          return TwoVarTTestData(listOne: args.listOne, listTwo: args.listTwo);
         });
       case OneVarZTestDataForm.id:
         return MaterialPageRoute(builder: (_) {
