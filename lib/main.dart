@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, state) {
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'Staty',
               theme: getTheme(state.isDarkTheme),
               home: const ListsPreview(),
