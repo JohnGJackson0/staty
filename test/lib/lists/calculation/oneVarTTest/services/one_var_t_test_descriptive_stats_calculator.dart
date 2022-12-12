@@ -24,7 +24,7 @@ void main() {
     var tTestStats = TTestDescriptiveStatsCalculator(list: list)
         .getTTestStatsModel() as OneVarTTestDescriptiveStats;
 
-    test('p&t on list less than', () {
+    test('ttest descriptive stats are correct', () {
       expect(tTestStats.sampleMean, closeTo(131.36, .1));
       expect(tTestStats.sampleStandardDeviation, closeTo(11.41, .1));
       expect(tTestStats.length, 14);
