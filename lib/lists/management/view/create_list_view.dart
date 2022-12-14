@@ -6,6 +6,7 @@ import 'package:staty/lists/management/view/select_list.dart';
 import '../../../model/form_submission_status.dart';
 import '../../calculation/oneVarTTest/data/view/one_var_t_test_data_form.dart';
 import '../model/model_exports.dart';
+import '../services/list.dart';
 import 'edit_list_view.dart';
 import '../../calculation/oneVarStats/view/one_var_stats.dart';
 import '../../../widgets/themed_chip.dart';
@@ -19,22 +20,18 @@ class CreateList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ListsBloc, ListsState>(
       builder: (context, state) {
-        List<ListModel> filter = [];
-        filter.addAll(state.listStore);
-
-        filter.retainWhere((e) {
-          return e.uid == state.selectedTaskid;
-        });
+        ListModel filter = getList(state.listStore, state.selectedListIdOne);
         return Scaffold(
           appBar: AppBar(
-              title: filter.isEmpty ? const Text('') : Text(filter[0].name)
+              title: filter.data.isEmpty ? const Text('') : Text(filter.name)
           ),
           body: Container(
             padding: const EdgeInsets.all(20),
             alignment: Alignment.topLeft,
             child: BlocBuilder<ListsBloc, ListsState>(
               builder: (context, state) {
-                return state.formStatus is SubmissionFailed || filter.isEmpty
+                return state.formStatus is SubmissionFailed ||
+                        filter.data.isEmpty
                     ? const Text('Something went wrong.')
                     : Column(
                         children: [
@@ -43,10 +40,10 @@ class CreateList extends StatelessWidget {
                               child: EditableDataPoint()),
                           SizedBox(
                               height: 175,
-                              child: RecentlyEnteredData(list: filter[0].data)),
+                              child: RecentlyEnteredData(list: filter.data)),
                           Align(
                             alignment: Alignment.topLeft,
-                            child: filter[0].data.isEmpty
+                            child: filter.data.isEmpty
                                 ? const SizedBox(width: 20)
                                 : _Actions(filter: filter),
                           )
@@ -67,7 +64,7 @@ class _Actions extends StatelessWidget {
     required this.filter,
   }) : super(key: key);
 
-  final List<ListModel> filter;
+  final ListModel filter;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +76,7 @@ class _Actions extends StatelessWidget {
             onTap: () {
               context
                   .read<ListsBloc>()
-                  .add(SelectedTaskIdEvent(id: filter[0].uid));
+                  .add(SelectListOneEvent(id: filter.uid));
               Navigator.of(context).pushNamed(EditList.id);
             },
             child: ThemedChip(
@@ -94,10 +91,10 @@ class _Actions extends StatelessWidget {
               onTap: () {
                 context
                     .read<ListsBloc>()
-                    .add(SelectedTaskIdEvent(id: filter[0].uid));
+                    .add(SelectListOneEvent(id: filter.uid));
                 Navigator.pushNamed(
                     context, OneVarStats.id,
-                    arguments: ListModelParam(listModel: filter[0]));
+                    arguments: ListModelParam(listModel: filter));
               },
               child: ThemedChip(
                   avatar: const Icon(Icons.calculate),
@@ -109,7 +106,7 @@ class _Actions extends StatelessWidget {
           child: GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, OneVarZTestDataForm.id,
-                  arguments: ListModelParam(listModel: filter[0]));
+                  arguments: ListModelParam(listModel: filter));
             },
             child: ThemedChip(
                 avatar: const Icon(Icons.calculate),
@@ -123,10 +120,10 @@ class _Actions extends StatelessWidget {
             onTap: () {
               context
                   .read<ListsBloc>()
-                  .add(SelectedTaskIdEvent(id: filter[0].uid));
+                  .add(SelectListOneEvent(id: filter.uid));
 
               Navigator.pushNamed(context, OneVarTTestDataForm.id,
-                  arguments: ListModelParam(listModel: filter[0]));
+                  arguments: ListModelParam(listModel: filter));
             },
             child: ThemedChip(
                 avatar: const Icon(Icons.calculate),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:staty/lists/management/services/list.dart';
 import '../../../widgets/themed_chip.dart';
 import 'bloc/lists_bloc.dart';
 import 'model/list_model.dart';
@@ -30,33 +31,20 @@ class MultiListSelection extends StatelessWidget {
                 return state.listStore.length < 2
                     ? const Text('There is not enough lists for the selection.')
                     : Column(children: [
-                        (state.selectedTaskid != '' &&
+                        (state.selectedListIdOne != '' &&
                                 state.selectedListIdTwo != '')
                             ? GestureDetector(
                                 onTap: () {
-                                  List<ListModel> listOne = [];
-                                  listOne.addAll(state.listStore);
+                                  ListModel listOne = getList(
+                                      state.listStore, state.selectedListIdOne);
 
-                                  listOne.retainWhere((e) {
-                                    return e.uid == state.selectedTaskid;
-                                  });
-
-                                  List<ListModel> listTwo = [];
-                                  listTwo.addAll(state.listStore);
-
-                                  listTwo.retainWhere((e) {
-                                    return e.uid == state.selectedListIdTwo;
-                                  });
-                                  // TODO
-                                  // refactor business logic
-                                  // fix first list event name
-                                  // remove lists on navigating
+                                  ListModel listTwo = getList(
+                                      state.listStore, state.selectedListIdTwo);
 
                                   Navigator.pushReplacementNamed(
                                       context, idToGoOnFinished,
                                       arguments: MultiListModelParam(
-                                          listOne: listOne[0],
-                                          listTwo: listTwo[0]));
+                                          listOne: listOne, listTwo: listTwo));
                                 },
                                 child: ThemedChip(
                                     avatar: const Icon(Icons.addchart),
@@ -67,7 +55,7 @@ class MultiListSelection extends StatelessWidget {
                         _ListContent(
                             listStore: state.listStore,
                             navOnFinished: idToGoOnFinished,
-                            listOneSelection: state.selectedTaskid,
+                            listOneSelection: state.selectedListIdOne,
                             listTwoSelection: state.selectedListIdTwo)
                       ]);
               },
@@ -145,7 +133,7 @@ class _ListBodyTile extends StatelessWidget {
                             onTap: () {
                               context
                                   .read<ListsBloc>()
-                                  .add(SelectedTaskIdEvent(id: listStore.uid));
+                                  .add(SelectListOneEvent(id: listStore.uid));
                             },
                             child: ThemedChip(
                                 avatar: const Icon(Icons.add),
@@ -156,7 +144,7 @@ class _ListBodyTile extends StatelessWidget {
                             onTap: () {
                               context
                                   .read<ListsBloc>()
-                                  .add(SelectedTaskIdEvent(id: ''));
+                                  .add(SelectListOneEvent(id: ''));
                             },
                             child: ThemedChip(
                                 avatar: const Icon(Icons.remove),
@@ -166,8 +154,9 @@ class _ListBodyTile extends StatelessWidget {
                     !isListTwoSelected
                         ? GestureDetector(
                             onTap: () {
-                              context.read<ListsBloc>().add(
-                                  SelectedListIdTwoEvent(id: listStore.uid));
+                              context
+                                  .read<ListsBloc>()
+                                  .add(SelectListTwoEvent(id: listStore.uid));
                             },
                             child: ThemedChip(
                                 avatar: const Icon(Icons.add),
@@ -177,7 +166,7 @@ class _ListBodyTile extends StatelessWidget {
                             onTap: () {
                               context
                                   .read<ListsBloc>()
-                                  .add(SelectedListIdTwoEvent(id: ''));
+                                  .add(SelectListTwoEvent(id: ''));
                             },
                             child: ThemedChip(
                                 avatar: const Icon(Icons.remove),

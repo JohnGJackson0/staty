@@ -10,6 +10,7 @@ import '../bloc/lists_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/model_exports.dart';
 import '../../../widgets/form_submit.dart';
+import '../services/list.dart';
 
 class EditList extends StatelessWidget {
   const EditList({super.key});
@@ -19,15 +20,10 @@ class EditList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ListsBloc, ListsState>(
       builder: (context, state) {
-        List<ListModel> filter = [];
-        filter.addAll(state.listStore);
-
-        filter.retainWhere((e) {
-          return e.uid == state.selectedTaskid;
-        });
+        ListModel filter = getList(state.listStore, state.selectedListIdOne);
         return Scaffold(
           appBar: AppBar(
-            title: filter.isEmpty
+            title: filter.data.isEmpty
                 ? const Text('')
                 : _ListHeaderTitle(filter: filter),
           ),
@@ -36,12 +32,13 @@ class EditList extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: BlocBuilder<ListsBloc, ListsState>(
               builder: (context, state) {
-                return state.formStatus is SubmissionFailed || filter.isEmpty
+                return state.formStatus is SubmissionFailed ||
+                        filter.data.isEmpty
                     ? const Text('Something went wrong.')
                     : Column(
                         children: [
                           const _DeleteList(),
-                          Expanded(child: _EditableData(list: filter[0].data)),
+                          Expanded(child: _EditableData(list: filter.data)),
                         ],
                       );
               },
@@ -119,7 +116,7 @@ class _ListHeaderTitle extends StatefulWidget {
     required this.filter,
   }) : super(key: key);
 
-  final List<ListModel> filter;
+  final ListModel filter;
 
   @override
   State<_ListHeaderTitle> createState() => _ListHeaderTitleState();
@@ -135,7 +132,7 @@ class _ListHeaderTitleState extends State<_ListHeaderTitle> {
         _isEditable
             ? Flexible(
                 child: TextFormField(
-                  initialValue: widget.filter[0].name,
+                  initialValue: widget.filter.name,
                   onFieldSubmitted: (input) {
                     setState(() {
                       _isEditable = false;
@@ -148,7 +145,7 @@ class _ListHeaderTitleState extends State<_ListHeaderTitle> {
               )
             : Expanded(
                 child: Text(
-                  widget.filter[0].name,
+                  widget.filter.name,
                   softWrap: false,
                   maxLines: 1,
                   style: const TextStyle(fontSize: 16),
@@ -356,7 +353,8 @@ class _SubmitDataPoint extends StatelessWidget {
               // add no data submit
               context
                   .read<ListsBloc>()
-                  .add(UpdateDataPointSubmitted(listId: state.selectedTaskid));
+                  .add(
+                  UpdateDataPointSubmitted(listId: state.selectedListIdOne));
               Fluttertoast.showToast(
                   msg: "Submitted",
                   toastLength: Toast.LENGTH_SHORT,

@@ -43,7 +43,7 @@ class DrawerView extends StatelessWidget {
                 )),
             GestureDetector(
                 onTap: () {
-                  context.read<ListsBloc>().add(SelectedTaskIdEvent(id: ''));
+                  context.read<ListsBloc>().add(SelectListOneEvent(id: ''));
                   Navigator.of(context).pushNamed(OneVarTTestSelection.id);
                 },
                 child: const ListTile(
@@ -52,7 +52,7 @@ class DrawerView extends StatelessWidget {
                 )),
             GestureDetector(
                 onTap: () {
-                  context.read<ListsBloc>().add(SelectedTaskIdEvent(id: ''));
+                  context.read<ListsBloc>().add(SelectListOneEvent(id: ''));
                   Navigator.of(context).pushNamed(OneVarZTestSelection.id);
                 },
                 child: const ListTile(

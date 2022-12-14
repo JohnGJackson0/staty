@@ -162,7 +162,7 @@ class _AddDataPoint extends StatelessWidget {
             onSubmitEvent: () => {
                   context
                       .read<ListsBloc>()
-                      .add(NewDataPointSubmitted(listId: state.selectedTaskid))
+                      .add(NewDataPointSubmitted(listId: state.selectedListIdOne))
                 }),
       );
     });

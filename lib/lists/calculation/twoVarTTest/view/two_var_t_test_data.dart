@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:staty/lists/calculation/widgets/multi_selection_prompt.dart';
 import '../../../management/model/model_exports.dart';
-import '../../widgets/selection_promt.dart';
 
 class TwoVarTTestData extends StatelessWidget {
   final ListModel listOne;
@@ -15,20 +14,19 @@ class TwoVarTTestData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: listOne.data.length < 2 || listTwo.data.length < 2
-            ? const Text('There is not enough data in one of the lists.')
-            : Text(listOne.name),
+        title: const Text('Two Var T-Test'),
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
         alignment: Alignment.topLeft,
         child: listOne.data.length < 2 || listTwo.data.length < 2
-            ? const SelectionPrompt(idToGoOnFinished: TwoVarTTestData.id)
+            ? const MultiSelectionPrompt(idToGoOnFinished: TwoVarTTestData.id)
             : Column(
                 children: [
                   Expanded(
-                      child: listOne.data.length < 2 || listTwo.data.length < 2
-                          ? const Text('There is no data in the list')
+                      child: listOne.data.length < 2 || listTwo.data.length < 2 
+                          ? const MultiSelectionPrompt(
+                              idToGoOnFinished: TwoVarTTestData.id)
                           : _TwoVarTTestDataView(
                               listOne: listOne.data, listTwo: listTwo.data)),
                 ],

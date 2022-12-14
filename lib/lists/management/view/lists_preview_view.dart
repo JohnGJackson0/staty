@@ -133,7 +133,7 @@ class _ListBodyTile extends StatelessWidget {
                     onTap: () {
                       context
                           .read<ListsBloc>()
-                          .add(SelectedTaskIdEvent(id: listStore.uid));
+                          .add(SelectListOneEvent(id: listStore.uid));
                       Navigator.of(context).pushNamed(CreateList.id);
                     },
                     child: ThemedChip(
@@ -145,7 +145,7 @@ class _ListBodyTile extends StatelessWidget {
                     onTap: () {
                       context
                           .read<ListsBloc>()
-                          .add(SelectedTaskIdEvent(id: listStore.uid));
+                          .add(SelectListOneEvent(id: listStore.uid));
                       Navigator.of(context).pushNamed(EditList.id);
                     },
                     child: ThemedChip(
@@ -157,7 +157,7 @@ class _ListBodyTile extends StatelessWidget {
                     onTap: () {
                       context
                           .read<ListsBloc>()
-                          .add(SelectedTaskIdEvent(id: listStore.uid));
+                          .add(SelectListOneEvent(id: listStore.uid));
                       Navigator.pushNamed(context, OneVarStats.id,
                           arguments: ListModelParam(listModel: listStore));
                     },
@@ -170,7 +170,7 @@ class _ListBodyTile extends StatelessWidget {
                     onTap: () {
                       context
                           .read<ListsBloc>()
-                          .add(SelectedTaskIdEvent(id: listStore.uid));
+                          .add(SelectListOneEvent(id: listStore.uid));
 
                       Navigator.pushNamed(context, OneVarTTestDataForm.id,
                           arguments: ListModelParam(listModel: listStore));
@@ -193,6 +193,12 @@ class _ListBodyTile extends StatelessWidget {
                   twoVarTTest()
                       ? GestureDetector(
                           onTap: () {
+                            context
+                                .read<ListsBloc>()
+                                .add(SelectListOneEvent(id: listStore.uid));
+                            context
+                                .read<ListsBloc>()
+                                .add(SelectListTwoEvent(id: ''));
                             Navigator.pushNamed(context, MultiListSelection.id,
                                 arguments:
                                     SelectionListParam(TwoVarTTestData.id));

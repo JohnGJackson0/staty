@@ -95,7 +95,7 @@ class _ListBodyTile extends StatelessWidget {
                   onTap: () {
                     context
                         .read<ListsBloc>()
-                        .add(SelectedTaskIdEvent(id: listStore.uid));
+                        .add(SelectListOneEvent(id: listStore.uid));
 
                     Navigator.pushReplacementNamed(context, navOnFinished,
                         arguments: ListModelParam(listModel: listStore));

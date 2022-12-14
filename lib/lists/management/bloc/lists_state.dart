@@ -4,7 +4,7 @@ class ListsState extends Equatable {
   final List<ListModel> listStore;
   final SubmissionData submissionData;
   final FormSubmissionStatus formStatus;
-  final String selectedTaskid;
+  final String selectedListIdOne;
   final String selectedListIdTwo;
 
   bool isValidDatapointInput() {
@@ -21,7 +21,7 @@ class ListsState extends Equatable {
       this.selectedListIdTwo = '',
       this.submissionData = const SubmissionData(),
       this.formStatus = const InitialFormStatus(),
-      this.selectedTaskid = ''});
+      this.selectedListIdOne = ''});
 
   @override
   List<Object?> get props =>
@@ -29,7 +29,7 @@ class ListsState extends Equatable {
         listStore,
         submissionData,
         formStatus,
-        selectedTaskid,
+        selectedListIdOne,
         selectedListIdTwo
       ];
 
@@ -37,7 +37,7 @@ class ListsState extends Equatable {
     return <String, dynamic>{
       'listStore': listStore.map((x) => x.toMap()).toList(),
       'submissionData': submissionData.toMap(),
-      'selectedTaskid': selectedTaskid,
+      'selectedTaskid': selectedListIdOne,
       'selectedListIdTwo': selectedListIdTwo,
     };
   }
@@ -64,7 +64,7 @@ class ListsState extends Equatable {
       listStore: listModel,
       submissionData:
           SubmissionData.fromMap(map['submissionData'] as Map<String, dynamic>),
-      selectedTaskid: map['selectedTaskid'] as String,
+      selectedListIdOne: map['selectedTaskid'] as String,
       selectedListIdTwo: map['selectedListIdTwo'] as String,
     );
   }

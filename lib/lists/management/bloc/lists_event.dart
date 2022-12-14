@@ -46,14 +46,14 @@ class StatListCreatedEvent extends ListsEvent {}
 
 class OnErrorEvent extends ListsEvent {}
 
-class SelectedTaskIdEvent extends ListsEvent {
+class SelectListOneEvent extends ListsEvent {
   final String id;
 
-  SelectedTaskIdEvent({required this.id});
+  SelectListOneEvent({required this.id});
 }
 
-class SelectedListIdTwoEvent extends ListsEvent {
+class SelectListTwoEvent extends ListsEvent {
   final String id;
 
-  SelectedListIdTwoEvent({required this.id});
+  SelectListTwoEvent({required this.id});
 }
