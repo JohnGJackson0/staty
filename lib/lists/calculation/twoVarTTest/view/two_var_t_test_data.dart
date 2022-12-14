@@ -24,10 +24,7 @@ class TwoVarTTestData extends StatelessWidget {
             : Column(
                 children: [
                   Expanded(
-                      child: listOne.data.length < 2 || listTwo.data.length < 2 
-                          ? const MultiSelectionPrompt(
-                              idToGoOnFinished: TwoVarTTestData.id)
-                          : _TwoVarTTestDataView(
+                      child: _TwoVarTTestDataView(
                               listOne: listOne.data, listTwo: listTwo.data)),
                 ],
               ),
