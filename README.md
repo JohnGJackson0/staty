@@ -1,8 +1,8 @@
 # Stat-y Statistics Calculator
 
-The project's goal is to get a single application to provide all statistics functions needed for elementary statistics classes. Other projects exist that can provide the same but they are not easy to use for students. The applications that are easy to use do not have many statistics calculations. This is a multiplatform application aimed at providing all basic functions that can be used in replace of popular graphing calculators. Today it provides some basic functions but I hope to provide all the functions in time.
+The project's goal is to provide all statistic functions needed for elementary statistics classes. Other projects exist that can provide the same but they are not easy to use for students. The applications that are easy to use do not have all calculations. This is a multiplatform application aimed at replacing graphing calculators for homework or independent study. 
 
-It's longer term goal is about providing context to the user as a part of the experience. For example, the project wants to have alpha input which would put factual statistics sentences together rather then just outputting a p and t value. It will have tooltips to support understanding. This ability is something that is missing in modern technology solutions in statistics. An example is <a href='https://github.com/JohnGJackson0/GoStat'>Go Stat<a/>. This is a remake of the same to support multiplatform with the help of flutter.
+Its second major goal is to provide context. For example, the project wants to have alpha input which would put factual sentences together rather then just outputting a p and t value. It will have tooltips to support understanding. This ability is something that is missing in even the more modern solutions. An example is <a href='https://github.com/JohnGJackson0/GoStat'>Go Stat<a/>. This is a remake of the same to support multiplatform with the help of flutter.
 
 ## Download today
 
