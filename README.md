@@ -6,10 +6,6 @@ This is a multiplatform application using a single code base with the help of th
 
 ## Download today
 
-<a href='https://play.google.com/store/apps/details?id=me.johnjackson.staty&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height = '150' width = '350'/></a>
+<a href='https://play.google.com/store/apps/details?id=me.johnjackson.staty&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height = '110' width = '270'/></a>
 
-
-(still in review - please wait)
-
-<a href=''><img alt='Get it on ios App Store' src='https://user-images.githubusercontent.com/23160192/206177852-5a8e503b-5e4a-40e2-b0cf-120b1fdfab6e.svg' height = '100' width = '350'/></a>
-
+<a href='https://apps.apple.com/us/app/staty-statistics-calculator/id1658300476'><img alt='Get it on ios App Store' src='https://user-images.githubusercontent.com/23160192/206177852-5a8e503b-5e4a-40e2-b0cf-120b1fdfab6e.svg' height = '75' width = '250'/></a>
