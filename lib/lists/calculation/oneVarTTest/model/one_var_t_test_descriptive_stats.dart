@@ -1,7 +1,7 @@
 class OneVarTTestDescriptiveStats {
-  final double sampleMean; // this
-  final num sampleStandardDeviation; // this
-  final num length; // this
+  final double sampleMean;
+  final num sampleStandardDeviation;
+  final num length;
 
   OneVarTTestDescriptiveStats(
       {required this.sampleMean,

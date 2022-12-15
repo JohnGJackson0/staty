@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:staty/lists/calculation/oneVarTTest/view/one_var_t_test_selection.dart';
-import 'package:staty/lists/calculation/twoVarTTest/view/two_var_t_test_data.dart';
+import 'package:staty/lists/calculation/twoVarTTest/twoVarTTestData/view/two_var_t_test_data.dart';
 import '../lists/calculation/model/hypothesis_equality.dart';
 import '../lists/calculation/oneVarTTest/model/one_var_t_test_descriptive_stats.dart';
 import '../lists/calculation/oneVarTTest/data/view/one_var_t_test_data_form.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:staty/lists/calculation/twoVarTTest/view/two_var_t_test_data.dart';
+import 'package:staty/lists/calculation/twoVarTTest/twoVarTTestData/view/two_var_t_test_data.dart';
 import 'package:staty/lists/calculation/oneVarZTest/zTestData/view/one_var_z_test_data_form.dart';
 import 'package:staty/lists/management/multi_list_selection.dart';
 import 'package:staty/lists/management/view/edit_list_view.dart';
