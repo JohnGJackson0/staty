@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staty/lists/calculation/widgets/form_hypothesis_equality.dart';
 import 'package:staty/lists/calculation/widgets/multi_selection_prompt.dart';
+import '../../../../../widgets/form_submit.dart';
 import '../../../../management/model/model_exports.dart';
 import '../bloc/two_var_t_test_data_bloc.dart';
 
@@ -22,7 +23,6 @@ class TwoVarTTestData extends StatelessWidget {
       body: BlocProvider(
         create: (context) => TwoVarTTestDataBloc(),
         child: Container(
-          padding: const EdgeInsets.all(20),
           alignment: Alignment.topLeft,
           child: listOne.data.length < 2 || listTwo.data.length < 2
               ? const MultiSelectionPrompt(idToGoOnFinished: TwoVarTTestData.id)
@@ -30,7 +30,7 @@ class TwoVarTTestData extends StatelessWidget {
                   children: [
                     Expanded(
                         child: _TwoVarTTestDataView(
-                            listOne: listOne.data, listTwo: listTwo.data)),
+                            listOne: listOne, listTwo: listTwo)),
                   ],
                 ),
         ),
@@ -39,25 +39,57 @@ class TwoVarTTestData extends StatelessWidget {
   }
 }
 
-class _TwoVarTTestDataView extends StatelessWidget {
+class _TwoVarTTestDataView extends StatefulWidget {
   const _TwoVarTTestDataView(
       {Key? key, required this.listOne, required this.listTwo})
       : super(key: key);
 
-  final List<DataPoint> listOne;
-  final List<DataPoint> listTwo;
+  final ListModel listOne;
+  final ListModel listTwo;
 
   @override
+  State<_TwoVarTTestDataView> createState() => _TwoVarTTestDataViewState();
+}
+
+class _TwoVarTTestDataViewState extends State<_TwoVarTTestDataView> {
+  final formKey = GlobalKey<FormState>();
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const Text('\nThe hypothesis statement'),
-        FormHypothesisEquality(onChanged: (value) {
-          context
-              .read<TwoVarTTestDataBloc>()
-              .add(OnChangedEqualityValue(equalityValue: value));
-        }),
-      ],
+    return BlocBuilder<TwoVarTTestDataBloc, TwoVarTTestDataState>(
+      builder: (context, state) {
+        return Form(
+          key: formKey,
+          child: Column(
+            children: <Widget>[
+              const Text('\nThe hypothesis statement'),
+              FormHypothesisEquality(onChanged: (value) {
+                context
+                    .read<TwoVarTTestDataBloc>()
+                    .add(OnChangedEqualityValue(equalityValue: value));
+              }),
+              const Text('Selected List One:'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(widget.listOne.name),
+              ),
+              const Text('Selected List Two:'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(widget.listTwo.name),
+              ),
+              FormSubmit(
+                  formStatus: state.formStatus,
+                  formKey: formKey,
+                  onSubmitEvent: () {
+                    // submit event here
+
+                    //context.read<TTestStatsBloc>().add(StatFormSubmitted());
+                  },
+                  label: 'Calculate'),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -11,3 +11,5 @@ class OnChangedEqualityValue extends TwoVarTTestDataEvent {
   final HypothesisEquality? equalityValue;
   const OnChangedEqualityValue({required this.equalityValue});
 }
+
+class OnFormSubmitted extends TwoVarTTestDataEvent {}
