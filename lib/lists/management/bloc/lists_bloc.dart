@@ -147,6 +147,7 @@ class ListsBloc extends HydratedBloc<ListsEvent, ListsState> {
 
   void _onDeleteDataPointSubmitted(
       DeleteDataPointSubmitted event, Emitter<ListsState> emit) {
+    // delete and edit at the same position in the list
     emit(ListsState(
         listStore: state.listStore,
         selectedListIdOne: state.selectedListIdOne,

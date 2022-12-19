@@ -23,15 +23,14 @@ class CreateList extends StatelessWidget {
         ListModel filter = getList(state.listStore, state.selectedListIdOne);
         return Scaffold(
           appBar: AppBar(
-              title: filter.data.isEmpty ? const Text('') : Text(filter.name)
+              title: Text(filter.name)
           ),
           body: Container(
             padding: const EdgeInsets.all(20),
             alignment: Alignment.topLeft,
             child: BlocBuilder<ListsBloc, ListsState>(
               builder: (context, state) {
-                return state.formStatus is SubmissionFailed ||
-                        filter.data.isEmpty
+                return state.formStatus is SubmissionFailed
                     ? const Text('Something went wrong.')
                     : Column(
                         children: [

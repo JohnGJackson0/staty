@@ -23,17 +23,14 @@ class EditList extends StatelessWidget {
         ListModel filter = getList(state.listStore, state.selectedListIdOne);
         return Scaffold(
           appBar: AppBar(
-            title: filter.data.isEmpty
-                ? const Text('')
-                : _ListHeaderTitle(filter: filter),
+            title: _ListHeaderTitle(filter: filter),
           ),
           body: Container(
             padding: const EdgeInsets.all(20),
             alignment: Alignment.topLeft,
             child: BlocBuilder<ListsBloc, ListsState>(
               builder: (context, state) {
-                return state.formStatus is SubmissionFailed ||
-                        filter.data.isEmpty
+                return state.formStatus is SubmissionFailed
                     ? const Text('Something went wrong.')
                     : Column(
                         children: [
@@ -326,6 +323,7 @@ class _DataPointItemState extends State<_DataPointItem> {
                     context.read<ListsBloc>().add(DeleteDataPointSubmitted(
                         deletedDataPoint: DataPoint(
                             id: widget.item.id, value: widget.item.value)));
+                    Navigator.popAndPushNamed(context, EditList.id);
                   },
                   child: const Icon(Icons.delete_forever, color: Colors.red))
             ],
@@ -359,7 +357,9 @@ class _SubmitDataPoint extends StatelessWidget {
                   msg: "Submitted",
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.TOP);
+              Navigator.popAndPushNamed(context, EditList.id);
             });
+            
       },
     );
   }
