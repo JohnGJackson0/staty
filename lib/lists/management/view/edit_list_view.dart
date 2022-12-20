@@ -13,17 +13,17 @@ import '../../../widgets/form_submit.dart';
 import '../services/list.dart';
 
 class EditList extends StatelessWidget {
-  const EditList({super.key});
+  final ListModel list;
+  const EditList({super.key, required this.list});
   static const id = 'edit_list_screen';
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ListsBloc, ListsState>(
       builder: (context, state) {
-        ListModel filter = getList(state.listStore, state.selectedListIdOne);
         return Scaffold(
           appBar: AppBar(
-            title: _ListHeaderTitle(filter: filter),
+            title: _ListHeaderTitle(filter: list),
           ),
           body: Container(
             padding: const EdgeInsets.all(20),
@@ -35,7 +35,7 @@ class EditList extends StatelessWidget {
                     : Column(
                         children: [
                           const _DeleteList(),
-                          Expanded(child: _EditableData(list: filter.data)),
+                          Expanded(child: _EditableData(list: list.data)),
                         ],
                       );
               },
@@ -76,12 +76,11 @@ class _DeleteList extends StatelessWidget {
                                   color: Theme.of(context).errorColor),
                             ),
                             onPressed: () {
-                              Navigator.of(context).pop();
                               context
                                   .read<ListsBloc>()
                                   .add(DeleteListSubmittedEvent());
-                              Navigator.of(context)
-                                  .popAndPushNamed(ListsPreview.id);
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
                             },
                           ),
                           TextButton(
@@ -323,7 +322,7 @@ class _DataPointItemState extends State<_DataPointItem> {
                     context.read<ListsBloc>().add(DeleteDataPointSubmitted(
                         deletedDataPoint: DataPoint(
                             id: widget.item.id, value: widget.item.value)));
-                    Navigator.popAndPushNamed(context, EditList.id);
+                    // Navigator.popAndPushNamed(context, EditList.id);
                   },
                   child: const Icon(Icons.delete_forever, color: Colors.red))
             ],
@@ -349,17 +348,14 @@ class _SubmitDataPoint extends StatelessWidget {
             label: 'UPDATE',
             onSubmitEvent: () {
               // add no data submit
-              context
-                  .read<ListsBloc>()
-                  .add(
+              context.read<ListsBloc>().add(
                   UpdateDataPointSubmitted(listId: state.selectedListIdOne));
               Fluttertoast.showToast(
                   msg: "Submitted",
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.TOP);
-              Navigator.popAndPushNamed(context, EditList.id);
+              // Navigator.popAndPushNamed(context, EditList.id);
             });
-            
       },
     );
   }

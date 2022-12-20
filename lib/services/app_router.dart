@@ -93,7 +93,10 @@ class AppRouter {
               stats: args.stats);
         });
       case EditList.id:
-        return MaterialPageRoute(builder: (_) => const EditList());
+        return MaterialPageRoute(builder: (_) {
+          final ListModelParam args = settings.arguments as ListModelParam;
+          return EditList(list: args.listModel);
+        });
       case OneVarTTestSelection.id:
         return MaterialPageRoute(builder: (_) => const OneVarTTestSelection());
       case OneVarZTestSelection.id:

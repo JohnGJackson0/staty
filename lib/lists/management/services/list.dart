@@ -8,5 +8,7 @@ getList(List<ListModel> listStore, String whereSelectedIdis) {
     return e.uid == whereSelectedIdis;
   });
 
-  return list[0];
+  if (list.isNotEmpty) {
+    return list[0];
+  }
 }

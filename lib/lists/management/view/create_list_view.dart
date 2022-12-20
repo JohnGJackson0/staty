@@ -76,7 +76,8 @@ class _Actions extends StatelessWidget {
               context
                   .read<ListsBloc>()
                   .add(SelectListOneEvent(id: filter.uid));
-              Navigator.of(context).pushNamed(EditList.id);
+              Navigator.pushNamed(context, EditList.id,
+                  arguments: ListModelParam(listModel: filter));
             },
             child: ThemedChip(
                 avatar: const Icon(Icons.edit),

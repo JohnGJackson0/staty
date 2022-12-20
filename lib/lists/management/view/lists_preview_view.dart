@@ -146,7 +146,8 @@ class _ListBodyTile extends StatelessWidget {
                       context
                           .read<ListsBloc>()
                           .add(SelectListOneEvent(id: listStore.uid));
-                      Navigator.of(context).pushNamed(EditList.id);
+                      Navigator.pushNamed(context, EditList.id,
+                          arguments: ListModelParam(listModel: listStore));
                     },
                     child: ThemedChip(
                         avatar: const Icon(Icons.edit),
