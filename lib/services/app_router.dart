@@ -95,7 +95,7 @@ class AppRouter {
       case EditList.id:
         return MaterialPageRoute(builder: (_) {
           final ListModelParam args = settings.arguments as ListModelParam;
-          return EditList(list: args.listModel);
+          return EditList(initialList: args.listModel);
         });
       case OneVarTTestSelection.id:
         return MaterialPageRoute(builder: (_) => const OneVarTTestSelection());

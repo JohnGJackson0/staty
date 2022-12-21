@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
-import 'package:staty/lists/management/view/lists_preview_view.dart';
 import '../../../model/form_submission_status.dart';
 import '../../../widgets/themed_chip.dart';
 import '../bloc/lists_bloc.dart';
@@ -12,37 +11,59 @@ import '../model/model_exports.dart';
 import '../../../widgets/form_submit.dart';
 import '../services/list.dart';
 
-class EditList extends StatelessWidget {
-  final ListModel list;
-  const EditList({super.key, required this.list});
+class EditList extends StatefulWidget {
+  final ListModel initialList;
+  const EditList({super.key, required this.initialList});
   static const id = 'edit_list_screen';
 
   @override
+  State<EditList> createState() => _EditListState();
+}
+
+class _EditListState extends State<EditList> {
+  late ListModel mutatedList;
+  @override
+  void initState() {
+    mutatedList = widget.initialList;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ListsBloc, ListsState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: _ListHeaderTitle(filter: list),
-          ),
-          body: Container(
-            padding: const EdgeInsets.all(20),
-            alignment: Alignment.topLeft,
-            child: BlocBuilder<ListsBloc, ListsState>(
-              builder: (context, state) {
-                return state.formStatus is SubmissionFailed
-                    ? const Text('Something went wrong.')
-                    : Column(
-                        children: [
-                          const _DeleteList(),
-                          Expanded(child: _EditableData(list: list.data)),
-                        ],
-                      );
-              },
-            ),
-          ),
-        );
+    return BlocListener<ListsBloc, ListsState>(
+      listener: (context, state) {
+        try {
+          setState(() {
+            mutatedList:
+            getList(state.listStore, state.selectedListIdOne);
+          });
+        } catch (e) {
+          if (kDebugMode) {
+            print('no list on screen editable list');
+          }
+        }
       },
+      child: Scaffold(
+        appBar: AppBar(
+          title: _ListHeaderTitle(filter: mutatedList),
+        ),
+        body: Container(
+          padding: const EdgeInsets.all(20),
+          alignment: Alignment.topLeft,
+          child: BlocBuilder<ListsBloc, ListsState>(
+            builder: (context, state) {
+              return state.formStatus is SubmissionFailed
+                  ? const Text('Something went wrong.')
+                  : Column(
+                      children: [
+                        const _DeleteList(),
+                        Expanded(child: _EditableData(list: mutatedList.data)),
+                      ],
+                    );
+            },
+          ),
+        ),
+      ),
     );
   }
 }
@@ -208,6 +229,7 @@ class _DataPointList extends StatelessWidget {
         child: Align(
           alignment: Alignment.topLeft,
           child: ListView.builder(
+              key: UniqueKey(),
               itemCount: list.length,
               itemBuilder: (BuildContext context, int index) =>
                   _DataPointItem(item: list[index])),
@@ -322,7 +344,6 @@ class _DataPointItemState extends State<_DataPointItem> {
                     context.read<ListsBloc>().add(DeleteDataPointSubmitted(
                         deletedDataPoint: DataPoint(
                             id: widget.item.id, value: widget.item.value)));
-                    // Navigator.popAndPushNamed(context, EditList.id);
                   },
                   child: const Icon(Icons.delete_forever, color: Colors.red))
             ],
